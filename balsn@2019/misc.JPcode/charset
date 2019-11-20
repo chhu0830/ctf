@@ -1,0 +1,616 @@
+   0:   e3 81                   jecxz  0xffffff83
+   2:   81                      .byte 0x81
+   0:   e3 81                   jecxz  0xffffff83
+   2:   82                      .byte 0x82
+   0:   e3 81                   jecxz  0xffffff83
+   2:   83                      .byte 0x83
+   0:   e3 81                   jecxz  0xffffff83
+   2:   84                      .byte 0x84
+   0:   e3 81                   jecxz  0xffffff83
+   2:   85                      .byte 0x85
+   0:   e3 81                   jecxz  0xffffff83
+   2:   86                      .byte 0x86
+   0:   e3 81                   jecxz  0xffffff83
+   2:   87                      .byte 0x87
+   0:   e3 81                   jecxz  0xffffff83
+   2:   88                      .byte 0x88
+   0:   e3 81                   jecxz  0xffffff83
+   2:   89                      .byte 0x89
+   0:   e3 81                   jecxz  0xffffff83
+   2:   8a                      .byte 0x8a
+   0:   e3 81                   jecxz  0xffffff83
+   2:   8b                      .byte 0x8b
+   0:   e3 81                   jecxz  0xffffff83
+   2:   8c                      .byte 0x8c
+   0:   e3 81                   jecxz  0xffffff83
+   2:   8d                      .byte 0x8d
+   0:   e3 81                   jecxz  0xffffff83
+   2:   8e                      .byte 0x8e
+   0:   e3 81                   jecxz  0xffffff83
+   2:   8f                      .byte 0x8f
+   0:   e3 81                   jecxz  0xffffff83
+   2:   90                      nop
+   0:   e3 81                   jecxz  0xffffff83
+   2:   91                      xchg   ecx,eax
+   0:   e3 81                   jecxz  0xffffff83
+   2:   92                      xchg   edx,eax
+   0:   e3 81                   jecxz  0xffffff83
+   2:   93                      xchg   ebx,eax
+   0:   e3 81                   jecxz  0xffffff83
+   2:   94                      xchg   esp,eax
+   0:   e3 81                   jecxz  0xffffff83
+   2:   95                      xchg   ebp,eax
+   0:   e3 81                   jecxz  0xffffff83
+   2:   96                      xchg   esi,eax
+   0:   e3 81                   jecxz  0xffffff83
+   2:   97                      xchg   edi,eax
+   0:   e3 81                   jecxz  0xffffff83
+   2:   98                      cwde
+   0:   e3 81                   jecxz  0xffffff83
+   2:   99                      cdq
+   0:   e3 81                   jecxz  0xffffff83
+   2:   9a                      .byte 0x9a
+   0:   e3 81                   jecxz  0xffffff83
+   2:   9b                      fwait
+   0:   e3 81                   jecxz  0xffffff83
+   2:   9c                      pushf
+   0:   e3 81                   jecxz  0xffffff83
+   2:   9d                      popf
+   0:   e3 81                   jecxz  0xffffff83
+   2:   9e                      sahf
+   0:   e3 81                   jecxz  0xffffff83
+   2:   9f                      lahf
+   0:   e3 81                   jecxz  0xffffff83
+   2:   a0                      .byte 0xa0
+   0:   e3 81                   jecxz  0xffffff83
+   2:   a1                      .byte 0xa1
+   0:   e3 81                   jecxz  0xffffff83
+   2:   a2                      .byte 0xa2
+   0:   e3 81                   jecxz  0xffffff83
+   2:   a3                      .byte 0xa3
+   0:   e3 81                   jecxz  0xffffff83
+   2:   a4                      movs   BYTE PTR es:[edi],BYTE PTR ds:[esi]
+   0:   e3 81                   jecxz  0xffffff83
+   2:   a5                      movs   DWORD PTR es:[edi],DWORD PTR ds:[esi]
+   0:   e3 81                   jecxz  0xffffff83
+   2:   a6                      cmps   BYTE PTR ds:[esi],BYTE PTR es:[edi]
+   0:   e3 81                   jecxz  0xffffff83
+   2:   a7                      cmps   DWORD PTR ds:[esi],DWORD PTR es:[edi]
+   0:   e3 81                   jecxz  0xffffff83
+   2:   a8                      .byte 0xa8
+   0:   e3 81                   jecxz  0xffffff83
+   2:   a9                      .byte 0xa9
+   0:   e3 81                   jecxz  0xffffff83
+   2:   aa                      stos   BYTE PTR es:[edi],al
+   0:   e3 81                   jecxz  0xffffff83
+   2:   ab                      stos   DWORD PTR es:[edi],eax
+   0:   e3 81                   jecxz  0xffffff83
+   2:   ac                      lods   al,BYTE PTR ds:[esi]
+   0:   e3 81                   jecxz  0xffffff83
+   2:   ad                      lods   eax,DWORD PTR ds:[esi]
+   0:   e3 81                   jecxz  0xffffff83
+   2:   ae                      scas   al,BYTE PTR es:[edi]
+   0:   e3 81                   jecxz  0xffffff83
+   2:   af                      scas   eax,DWORD PTR es:[edi]
+   0:   e3 81                   jecxz  0xffffff83
+   2:   b0                      .byte 0xb0
+   0:   e3 81                   jecxz  0xffffff83
+   2:   b1                      .byte 0xb1
+   0:   e3 81                   jecxz  0xffffff83
+   2:   b2                      .byte 0xb2
+   0:   e3 81                   jecxz  0xffffff83
+   2:   b3                      .byte 0xb3
+   0:   e3 81                   jecxz  0xffffff83
+   2:   b4                      .byte 0xb4
+   0:   e3 81                   jecxz  0xffffff83
+   2:   b5                      .byte 0xb5
+   0:   e3 81                   jecxz  0xffffff83
+   2:   b6                      .byte 0xb6
+   0:   e3 81                   jecxz  0xffffff83
+   2:   b7                      .byte 0xb7
+   0:   e3 81                   jecxz  0xffffff83
+   2:   b8                      .byte 0xb8
+   0:   e3 81                   jecxz  0xffffff83
+   2:   b9                      .byte 0xb9
+   0:   e3 81                   jecxz  0xffffff83
+   2:   ba                      .byte 0xba
+   0:   e3 81                   jecxz  0xffffff83
+   2:   bb                      .byte 0xbb
+   0:   e3 81                   jecxz  0xffffff83
+   2:   bc                      .byte 0xbc
+   0:   e3 81                   jecxz  0xffffff83
+   2:   bd                      .byte 0xbd
+   0:   e3 81                   jecxz  0xffffff83
+   2:   be                      .byte 0xbe
+   0:   e3 81                   jecxz  0xffffff83
+   2:   bf                      .byte 0xbf
+   0:   e3 82                   jecxz  0xffffff84
+   2:   80                      .byte 0x80
+   0:   e3 82                   jecxz  0xffffff84
+   2:   81                      .byte 0x81
+   0:   e3 82                   jecxz  0xffffff84
+   2:   82                      .byte 0x82
+   0:   e3 82                   jecxz  0xffffff84
+   2:   83                      .byte 0x83
+   0:   e3 82                   jecxz  0xffffff84
+   2:   84                      .byte 0x84
+   0:   e3 82                   jecxz  0xffffff84
+   2:   85                      .byte 0x85
+   0:   e3 82                   jecxz  0xffffff84
+   2:   86                      .byte 0x86
+   0:   e3 82                   jecxz  0xffffff84
+   2:   87                      .byte 0x87
+   0:   e3 82                   jecxz  0xffffff84
+   2:   88                      .byte 0x88
+   0:   e3 82                   jecxz  0xffffff84
+   2:   89                      .byte 0x89
+   0:   e3 82                   jecxz  0xffffff84
+   2:   8a                      .byte 0x8a
+   0:   e3 82                   jecxz  0xffffff84
+   2:   8b                      .byte 0x8b
+   0:   e3 82                   jecxz  0xffffff84
+   2:   8c                      .byte 0x8c
+   0:   e3 82                   jecxz  0xffffff84
+   2:   8d                      .byte 0x8d
+   0:   e3 82                   jecxz  0xffffff84
+   2:   8e                      .byte 0x8e
+   0:   e3 82                   jecxz  0xffffff84
+   2:   8f                      .byte 0x8f
+   0:   e3 82                   jecxz  0xffffff84
+   2:   90                      nop
+   0:   e3 82                   jecxz  0xffffff84
+   2:   91                      xchg   ecx,eax
+   0:   e3 82                   jecxz  0xffffff84
+   2:   92                      xchg   edx,eax
+   0:   e3 82                   jecxz  0xffffff84
+   2:   93                      xchg   ebx,eax
+   0:   e3 82                   jecxz  0xffffff84
+   2:   94                      xchg   esp,eax
+   0:   e3 82                   jecxz  0xffffff84
+   2:   95                      xchg   ebp,eax
+   0:   e3 82                   jecxz  0xffffff84
+   2:   96                      xchg   esi,eax
+   0:   e3 82                   jecxz  0xffffff84
+   2:   99                      cdq
+   0:   e3 82                   jecxz  0xffffff84
+   2:   9a                      .byte 0x9a
+   0:   e3 82                   jecxz  0xffffff84
+   2:   9b                      fwait
+   0:   e3 82                   jecxz  0xffffff84
+   2:   9c                      pushf
+   0:   e3 82                   jecxz  0xffffff84
+   2:   9d                      popf
+   0:   e3 82                   jecxz  0xffffff84
+   2:   9e                      sahf
+   0:   e3 82                   jecxz  0xffffff84
+   2:   9f                      lahf
+   0:   e3 82                   jecxz  0xffffff84
+   2:   a0                      .byte 0xa0
+   0:   e3 82                   jecxz  0xffffff84
+   2:   a1                      .byte 0xa1
+   0:   e3 82                   jecxz  0xffffff84
+   2:   a2                      .byte 0xa2
+   0:   e3 82                   jecxz  0xffffff84
+   2:   a3                      .byte 0xa3
+   0:   e3 82                   jecxz  0xffffff84
+   2:   a4                      movs   BYTE PTR es:[edi],BYTE PTR ds:[esi]
+   0:   e3 82                   jecxz  0xffffff84
+   2:   a5                      movs   DWORD PTR es:[edi],DWORD PTR ds:[esi]
+   0:   e3 82                   jecxz  0xffffff84
+   2:   a6                      cmps   BYTE PTR ds:[esi],BYTE PTR es:[edi]
+   0:   e3 82                   jecxz  0xffffff84
+   2:   a7                      cmps   DWORD PTR ds:[esi],DWORD PTR es:[edi]
+   0:   e3 82                   jecxz  0xffffff84
+   2:   a8                      .byte 0xa8
+   0:   e3 82                   jecxz  0xffffff84
+   2:   a9                      .byte 0xa9
+   0:   e3 82                   jecxz  0xffffff84
+   2:   aa                      stos   BYTE PTR es:[edi],al
+   0:   e3 82                   jecxz  0xffffff84
+   2:   ab                      stos   DWORD PTR es:[edi],eax
+   0:   e3 82                   jecxz  0xffffff84
+   2:   ac                      lods   al,BYTE PTR ds:[esi]
+   0:   e3 82                   jecxz  0xffffff84
+   2:   ad                      lods   eax,DWORD PTR ds:[esi]
+   0:   e3 82                   jecxz  0xffffff84
+   2:   ae                      scas   al,BYTE PTR es:[edi]
+   0:   e3 82                   jecxz  0xffffff84
+   2:   af                      scas   eax,DWORD PTR es:[edi]
+   0:   e3 82                   jecxz  0xffffff84
+   2:   b0                      .byte 0xb0
+   0:   e3 82                   jecxz  0xffffff84
+   2:   b1                      .byte 0xb1
+   0:   e3 82                   jecxz  0xffffff84
+   2:   b2                      .byte 0xb2
+   0:   e3 82                   jecxz  0xffffff84
+   2:   b3                      .byte 0xb3
+   0:   e3 82                   jecxz  0xffffff84
+   2:   b4                      .byte 0xb4
+   0:   e3 82                   jecxz  0xffffff84
+   2:   b5                      .byte 0xb5
+   0:   e3 82                   jecxz  0xffffff84
+   2:   b6                      .byte 0xb6
+   0:   e3 82                   jecxz  0xffffff84
+   2:   b7                      .byte 0xb7
+   0:   e3 82                   jecxz  0xffffff84
+   2:   b8                      .byte 0xb8
+   0:   e3 82                   jecxz  0xffffff84
+   2:   b9                      .byte 0xb9
+   0:   e3 82                   jecxz  0xffffff84
+   2:   ba                      .byte 0xba
+   0:   e3 82                   jecxz  0xffffff84
+   2:   bb                      .byte 0xbb
+   0:   e3 82                   jecxz  0xffffff84
+   2:   bc                      .byte 0xbc
+   0:   e3 82                   jecxz  0xffffff84
+   2:   bd                      .byte 0xbd
+   0:   e3 82                   jecxz  0xffffff84
+   2:   be                      .byte 0xbe
+   0:   e3 82                   jecxz  0xffffff84
+   2:   bf                      .byte 0xbf
+   0:   e3 83                   jecxz  0xffffff85
+   2:   80                      .byte 0x80
+   0:   e3 83                   jecxz  0xffffff85
+   2:   81                      .byte 0x81
+   0:   e3 83                   jecxz  0xffffff85
+   2:   82                      .byte 0x82
+   0:   e3 83                   jecxz  0xffffff85
+   2:   83                      .byte 0x83
+   0:   e3 83                   jecxz  0xffffff85
+   2:   84                      .byte 0x84
+   0:   e3 83                   jecxz  0xffffff85
+   2:   85                      .byte 0x85
+   0:   e3 83                   jecxz  0xffffff85
+   2:   86                      .byte 0x86
+   0:   e3 83                   jecxz  0xffffff85
+   2:   87                      .byte 0x87
+   0:   e3 83                   jecxz  0xffffff85
+   2:   88                      .byte 0x88
+   0:   e3 83                   jecxz  0xffffff85
+   2:   89                      .byte 0x89
+   0:   e3 83                   jecxz  0xffffff85
+   2:   8a                      .byte 0x8a
+   0:   e3 83                   jecxz  0xffffff85
+   2:   8b                      .byte 0x8b
+   0:   e3 83                   jecxz  0xffffff85
+   2:   8c                      .byte 0x8c
+   0:   e3 83                   jecxz  0xffffff85
+   2:   8d                      .byte 0x8d
+   0:   e3 83                   jecxz  0xffffff85
+   2:   8e                      .byte 0x8e
+   0:   e3 83                   jecxz  0xffffff85
+   2:   8f                      .byte 0x8f
+   0:   e3 83                   jecxz  0xffffff85
+   2:   90                      nop
+   0:   e3 83                   jecxz  0xffffff85
+   2:   91                      xchg   ecx,eax
+   0:   e3 83                   jecxz  0xffffff85
+   2:   92                      xchg   edx,eax
+   0:   e3 83                   jecxz  0xffffff85
+   2:   93                      xchg   ebx,eax
+   0:   e3 83                   jecxz  0xffffff85
+   2:   94                      xchg   esp,eax
+   0:   e3 83                   jecxz  0xffffff85
+   2:   95                      xchg   ebp,eax
+   0:   e3 83                   jecxz  0xffffff85
+   2:   96                      xchg   esi,eax
+   0:   e3 83                   jecxz  0xffffff85
+   2:   97                      xchg   edi,eax
+   0:   e3 83                   jecxz  0xffffff85
+   2:   98                      cwde
+   0:   e3 83                   jecxz  0xffffff85
+   2:   99                      cdq
+   0:   e3 83                   jecxz  0xffffff85
+   2:   9a                      .byte 0x9a
+   0:   e3 83                   jecxz  0xffffff85
+   2:   9b                      fwait
+   0:   e3 83                   jecxz  0xffffff85
+   2:   9c                      pushf
+   0:   e3 83                   jecxz  0xffffff85
+   2:   9d                      popf
+   0:   e3 83                   jecxz  0xffffff85
+   2:   9e                      sahf
+   0:   e3 83                   jecxz  0xffffff85
+   2:   9f                      lahf
+   0:   e3 83                   jecxz  0xffffff85
+   2:   a0                      .byte 0xa0
+   0:   e3 83                   jecxz  0xffffff85
+   2:   a1                      .byte 0xa1
+   0:   e3 83                   jecxz  0xffffff85
+   2:   a2                      .byte 0xa2
+   0:   e3 83                   jecxz  0xffffff85
+   2:   a3                      .byte 0xa3
+   0:   e3 83                   jecxz  0xffffff85
+   2:   a4                      movs   BYTE PTR es:[edi],BYTE PTR ds:[esi]
+   0:   e3 83                   jecxz  0xffffff85
+   2:   a5                      movs   DWORD PTR es:[edi],DWORD PTR ds:[esi]
+   0:   e3 83                   jecxz  0xffffff85
+   2:   a6                      cmps   BYTE PTR ds:[esi],BYTE PTR es:[edi]
+   0:   e3 83                   jecxz  0xffffff85
+   2:   a7                      cmps   DWORD PTR ds:[esi],DWORD PTR es:[edi]
+   0:   e3 83                   jecxz  0xffffff85
+   2:   a8                      .byte 0xa8
+   0:   e3 83                   jecxz  0xffffff85
+   2:   a9                      .byte 0xa9
+   0:   e3 83                   jecxz  0xffffff85
+   2:   aa                      stos   BYTE PTR es:[edi],al
+   0:   e3 83                   jecxz  0xffffff85
+   2:   ab                      stos   DWORD PTR es:[edi],eax
+   0:   e3 83                   jecxz  0xffffff85
+   2:   ac                      lods   al,BYTE PTR ds:[esi]
+   0:   e3 83                   jecxz  0xffffff85
+   2:   ad                      lods   eax,DWORD PTR ds:[esi]
+   0:   e3 83                   jecxz  0xffffff85
+   2:   ae                      scas   al,BYTE PTR es:[edi]
+   0:   e3 83                   jecxz  0xffffff85
+   2:   af                      scas   eax,DWORD PTR es:[edi]
+   0:   e3 83                   jecxz  0xffffff85
+   2:   b0                      .byte 0xb0
+   0:   e3 83                   jecxz  0xffffff85
+   2:   b1                      .byte 0xb1
+   0:   e3 83                   jecxz  0xffffff85
+   2:   b2                      .byte 0xb2
+   0:   e3 83                   jecxz  0xffffff85
+   2:   b3                      .byte 0xb3
+   0:   e3 83                   jecxz  0xffffff85
+   2:   b4                      .byte 0xb4
+   0:   e3 83                   jecxz  0xffffff85
+   2:   b5                      .byte 0xb5
+   0:   e3 83                   jecxz  0xffffff85
+   2:   b6                      .byte 0xb6
+   0:   e3 83                   jecxz  0xffffff85
+   2:   b7                      .byte 0xb7
+   0:   e3 83                   jecxz  0xffffff85
+   2:   b8                      .byte 0xb8
+   0:   e3 83                   jecxz  0xffffff85
+   2:   b9                      .byte 0xb9
+   0:   e3 83                   jecxz  0xffffff85
+   2:   ba                      .byte 0xba
+   0:   e3 83                   jecxz  0xffffff85
+   2:   bb                      .byte 0xbb
+   0:   e3 83                   jecxz  0xffffff85
+   2:   bc                      .byte 0xbc
+   0:   e3 83                   jecxz  0xffffff85
+   2:   bd                      .byte 0xbd
+   0:   e3 83                   jecxz  0xffffff85
+   2:   be                      .byte 0xbe
+   0:   e3 83                   jecxz  0xffffff85
+   2:   bf                      .byte 0xbf
+   0:   e3 86                   jecxz  0xffffff88
+   2:   90                      nop
+   0:   e3 86                   jecxz  0xffffff88
+   2:   91                      xchg   ecx,eax
+   0:   e3 86                   jecxz  0xffffff88
+   2:   92                      xchg   edx,eax
+   0:   e3 86                   jecxz  0xffffff88
+   2:   93                      xchg   ebx,eax
+   0:   e3 86                   jecxz  0xffffff88
+   2:   94                      xchg   esp,eax
+   0:   e3 86                   jecxz  0xffffff88
+   2:   95                      xchg   ebp,eax
+   0:   e3 86                   jecxz  0xffffff88
+   2:   96                      xchg   esi,eax
+   0:   e3 86                   jecxz  0xffffff88
+   2:   97                      xchg   edi,eax
+   0:   e3 86                   jecxz  0xffffff88
+   2:   98                      cwde
+   0:   e3 86                   jecxz  0xffffff88
+   2:   99                      cdq
+   0:   e3 86                   jecxz  0xffffff88
+   2:   9a                      .byte 0x9a
+   0:   e3 86                   jecxz  0xffffff88
+   2:   9b                      fwait
+   0:   e3 86                   jecxz  0xffffff88
+   2:   9c                      pushf
+   0:   e3 86                   jecxz  0xffffff88
+   2:   9d                      popf
+   0:   e3 86                   jecxz  0xffffff88
+   2:   9e                      sahf
+   0:   e3 86                   jecxz  0xffffff88
+   2:   9f                      lahf
+   0:   e3 87                   jecxz  0xffffff89
+   2:   b0                      .byte 0xb0
+   0:   e3 87                   jecxz  0xffffff89
+   2:   b1                      .byte 0xb1
+   0:   e3 87                   jecxz  0xffffff89
+   2:   b2                      .byte 0xb2
+   0:   e3 87                   jecxz  0xffffff89
+   2:   b3                      .byte 0xb3
+   0:   e3 87                   jecxz  0xffffff89
+   2:   b4                      .byte 0xb4
+   0:   e3 87                   jecxz  0xffffff89
+   2:   b5                      .byte 0xb5
+   0:   e3 87                   jecxz  0xffffff89
+   2:   b6                      .byte 0xb6
+   0:   e3 87                   jecxz  0xffffff89
+   2:   b7                      .byte 0xb7
+   0:   e3 87                   jecxz  0xffffff89
+   2:   b8                      .byte 0xb8
+   0:   e3 87                   jecxz  0xffffff89
+   2:   b9                      .byte 0xb9
+   0:   e3 87                   jecxz  0xffffff89
+   2:   ba                      .byte 0xba
+   0:   e3 87                   jecxz  0xffffff89
+   2:   bb                      .byte 0xbb
+   0:   e3 87                   jecxz  0xffffff89
+   2:   bc                      .byte 0xbc
+   0:   e3 87                   jecxz  0xffffff89
+   2:   bd                      .byte 0xbd
+   0:   e3 87                   jecxz  0xffffff89
+   2:   be                      .byte 0xbe
+   0:   e3 87                   jecxz  0xffffff89
+   2:   bf                      .byte 0xbf
+   0:   ef                      out    dx,eax
+   1:   bd                      .byte 0xbd
+   2:   a6                      cmps   BYTE PTR ds:[esi],BYTE PTR es:[edi]
+   0:   ef                      out    dx,eax
+   1:   bd                      .byte 0xbd
+   2:   a7                      cmps   DWORD PTR ds:[esi],DWORD PTR es:[edi]
+   0:   ef                      out    dx,eax
+   1:   bd                      .byte 0xbd
+   2:   a8                      .byte 0xa8
+   0:   ef                      out    dx,eax
+   1:   bd                      .byte 0xbd
+   2:   a9                      .byte 0xa9
+   0:   ef                      out    dx,eax
+   1:   bd                      .byte 0xbd
+   2:   aa                      stos   BYTE PTR es:[edi],al
+   0:   ef                      out    dx,eax
+   1:   bd                      .byte 0xbd
+   2:   ab                      stos   DWORD PTR es:[edi],eax
+   0:   ef                      out    dx,eax
+   1:   bd                      .byte 0xbd
+   2:   ac                      lods   al,BYTE PTR ds:[esi]
+   0:   ef                      out    dx,eax
+   1:   bd                      .byte 0xbd
+   2:   ad                      lods   eax,DWORD PTR ds:[esi]
+   0:   ef                      out    dx,eax
+   1:   bd                      .byte 0xbd
+   2:   ae                      scas   al,BYTE PTR es:[edi]
+   0:   ef                      out    dx,eax
+   1:   bd                      .byte 0xbd
+   2:   af                      scas   eax,DWORD PTR es:[edi]
+   0:   ef                      out    dx,eax
+   1:   bd                      .byte 0xbd
+   2:   b0                      .byte 0xb0
+   0:   ef                      out    dx,eax
+   1:   bd                      .byte 0xbd
+   2:   b1                      .byte 0xb1
+   0:   ef                      out    dx,eax
+   1:   bd                      .byte 0xbd
+   2:   b2                      .byte 0xb2
+   0:   ef                      out    dx,eax
+   1:   bd                      .byte 0xbd
+   2:   b3                      .byte 0xb3
+   0:   ef                      out    dx,eax
+   1:   bd                      .byte 0xbd
+   2:   b4                      .byte 0xb4
+   0:   ef                      out    dx,eax
+   1:   bd                      .byte 0xbd
+   2:   b5                      .byte 0xb5
+   0:   ef                      out    dx,eax
+   1:   bd                      .byte 0xbd
+   2:   b6                      .byte 0xb6
+   0:   ef                      out    dx,eax
+   1:   bd                      .byte 0xbd
+   2:   b7                      .byte 0xb7
+   0:   ef                      out    dx,eax
+   1:   bd                      .byte 0xbd
+   2:   b8                      .byte 0xb8
+   0:   ef                      out    dx,eax
+   1:   bd                      .byte 0xbd
+   2:   b9                      .byte 0xb9
+   0:   ef                      out    dx,eax
+   1:   bd                      .byte 0xbd
+   2:   ba                      .byte 0xba
+   0:   ef                      out    dx,eax
+   1:   bd                      .byte 0xbd
+   2:   bb                      .byte 0xbb
+   0:   ef                      out    dx,eax
+   1:   bd                      .byte 0xbd
+   2:   bc                      .byte 0xbc
+   0:   ef                      out    dx,eax
+   1:   bd                      .byte 0xbd
+   2:   bd                      .byte 0xbd
+   0:   ef                      out    dx,eax
+   1:   bd                      .byte 0xbd
+   2:   be                      .byte 0xbe
+   0:   ef                      out    dx,eax
+   1:   bd                      .byte 0xbd
+   2:   bf                      .byte 0xbf
+   0:   ef                      out    dx,eax
+   1:   be                      .byte 0xbe
+   2:   80                      .byte 0x80
+   0:   ef                      out    dx,eax
+   1:   be                      .byte 0xbe
+   2:   81                      .byte 0x81
+   0:   ef                      out    dx,eax
+   1:   be                      .byte 0xbe
+   2:   82                      .byte 0x82
+   0:   ef                      out    dx,eax
+   1:   be                      .byte 0xbe
+   2:   83                      .byte 0x83
+   0:   ef                      out    dx,eax
+   1:   be                      .byte 0xbe
+   2:   84                      .byte 0x84
+   0:   ef                      out    dx,eax
+   1:   be                      .byte 0xbe
+   2:   85                      .byte 0x85
+   0:   ef                      out    dx,eax
+   1:   be                      .byte 0xbe
+   2:   86                      .byte 0x86
+   0:   ef                      out    dx,eax
+   1:   be                      .byte 0xbe
+   2:   87                      .byte 0x87
+   0:   ef                      out    dx,eax
+   1:   be                      .byte 0xbe
+   2:   88                      .byte 0x88
+   0:   ef                      out    dx,eax
+   1:   be                      .byte 0xbe
+   2:   89                      .byte 0x89
+   0:   ef                      out    dx,eax
+   1:   be                      .byte 0xbe
+   2:   8a                      .byte 0x8a
+   0:   ef                      out    dx,eax
+   1:   be                      .byte 0xbe
+   2:   8b                      .byte 0x8b
+   0:   ef                      out    dx,eax
+   1:   be                      .byte 0xbe
+   2:   8c                      .byte 0x8c
+   0:   ef                      out    dx,eax
+   1:   be                      .byte 0xbe
+   2:   8d                      .byte 0x8d
+   0:   ef                      out    dx,eax
+   1:   be                      .byte 0xbe
+   2:   8e                      .byte 0x8e
+   0:   ef                      out    dx,eax
+   1:   be                      .byte 0xbe
+   2:   8f                      .byte 0x8f
+   0:   ef                      out    dx,eax
+   1:   be                      .byte 0xbe
+   2:   90                      nop
+   0:   ef                      out    dx,eax
+   1:   be                      .byte 0xbe
+   2:   91                      xchg   ecx,eax
+   0:   ef                      out    dx,eax
+   1:   be                      .byte 0xbe
+   2:   92                      xchg   edx,eax
+   0:   ef                      out    dx,eax
+   1:   be                      .byte 0xbe
+   2:   93                      xchg   ebx,eax
+   0:   ef                      out    dx,eax
+   1:   be                      .byte 0xbe
+   2:   94                      xchg   esp,eax
+   0:   ef                      out    dx,eax
+   1:   be                      .byte 0xbe
+   2:   95                      xchg   ebp,eax
+   0:   ef                      out    dx,eax
+   1:   be                      .byte 0xbe
+   2:   96                      xchg   esi,eax
+   0:   ef                      out    dx,eax
+   1:   be                      .byte 0xbe
+   2:   97                      xchg   edi,eax
+   0:   ef                      out    dx,eax
+   1:   be                      .byte 0xbe
+   2:   98                      cwde
+   0:   ef                      out    dx,eax
+   1:   be                      .byte 0xbe
+   2:   99                      cdq
+   0:   ef                      out    dx,eax
+   1:   be                      .byte 0xbe
+   2:   9a                      .byte 0x9a
+   0:   ef                      out    dx,eax
+   1:   be                      .byte 0xbe
+   2:   9b                      fwait
+   0:   ef                      out    dx,eax
+   1:   be                      .byte 0xbe
+   2:   9c                      pushf
+   0:   ef                      out    dx,eax
+   1:   be                      .byte 0xbe
+   2:   9d                      popf
+   0:   ef                      out    dx,eax
+   1:   be                      .byte 0xbe
+   2:   9e                      sahf
+   0:   ef                      out    dx,eax
+   1:   be                      .byte 0xbe
+   2:   9f                      lahf
