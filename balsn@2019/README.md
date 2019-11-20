@@ -1,4 +1,10 @@
 # Balsn CTF 2019
+| Solved             | Category | Points | Solver        |
+| ------------------ | -------- | ------ | ------------- |
+| Welcome to hell    | Welcome  | 106    |               |
+| 卍乂Oo韓國魚oO乂卍 | Web      | 527    | phwu          |
+| listcomp ppm       | PPM      | 371    | Chia-Hsuan Hu |
+| SecureCheck        | Misc     | 330    | Wei-Ti Su     |
 
 ## Smart Contract
 
