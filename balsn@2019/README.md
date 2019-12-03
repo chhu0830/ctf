@@ -6,6 +6,7 @@
 | [listcomp ppm](#listcomp-ppm)             | PPM      | 371    | Chia-Hsuan Hu |
 | [SecureCheck](#securecheck)               | Misc     | 330    | Wei-Ti Su     |
 
+
 ## Smart Contract
 
 ### simple sol aeg
@@ -302,6 +303,8 @@ Hint: OSX library offset will not change if system is still up
 ### 卍乂Oo韓國魚oO乂卍
 `web` `527 pts` `15 solves` `Balsn{Korea_fish_is_good_to_eat}` `phwu`
 
+[solve.py](web.卍乂Oo韓國魚oO乂卍/solution/solve.py)
+
 > Taiwanese people love korean fish. 
 > 
 > ![](https://i.imgur.com/WOUAMVm.png)
@@ -538,6 +541,10 @@ Hint: OSX library offset will not change if system is still up
 
 ### listcomp ppm
 `ppm` `371 pts` `26 solves` `Balse{8_8_l13t_c0mp63h3ns10n_0r_A_5en8_80x_ch01l3n93}` `Chia-Hsuan Hu`
+
+[p1.py](ppm.listcomp_ppm/p1.py)
+[p2.py](ppm.listcomp_ppm/p2.py)
+[p3.py](ppm.listcomp_ppm/p3.py)
 
 > Solve 3 super easy list-comp challenges!!!
 > Short! Shorter!! Shortest!!!
