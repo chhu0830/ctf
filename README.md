@@ -1,6 +1,13 @@
 # ctf
 
+
 ## Participate
+
+### DawgCTF 2020
+`PaperPlaneJR` `695 pts` `482nd`
+
+https://umbccd.io
+2020/04/11 06:00 - 2020/04/13 06:00
 
 ### BreakAllCTF Web-CTF 2019
 `oH5U4No` `1300 pts` `25th`
