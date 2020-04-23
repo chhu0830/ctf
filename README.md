@@ -3,10 +3,16 @@
 
 ## Participate
 
+### WPICTF 2020
+`PaperPlaneJr` `151 pts` `384th`
+
+https://ctf.wpictf.xyz  
+2020/04/18 05:00 - 2020/04/20 05:00
+
 ### DawgCTF 2020
 `PaperPlaneJR` `695 pts` `482nd`
 
-https://umbccd.io
+https://umbccd.io  
 2020/04/11 06:00 - 2020/04/13 06:00
 
 ### BreakAllCTF Web-CTF 2019
