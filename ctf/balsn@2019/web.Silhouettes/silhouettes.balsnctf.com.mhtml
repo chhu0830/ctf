@@ -1,0 +1,676 @@
+From: <Saved by Blink>
+Snapshot-Content-Location: http://silhouettes.balsnctf.com/
+Subject: 
+Date: Sun, 6 Oct 2019 21:41:20 -0000
+MIME-Version: 1.0
+Content-Type: multipart/related;
+	type="text/html";
+	boundary="----MultipartBoundary--tyTGzzrXW7vO3AIkdm3HsHvKBcJfBFEZ6Hqqy3qVlG----"
+
+
+------MultipartBoundary--tyTGzzrXW7vO3AIkdm3HsHvKBcJfBFEZ6Hqqy3qVlG----
+Content-Type: text/html
+Content-ID: <frame-B961AFDAFA6C9849D2F19A089801341E@mhtml.blink>
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://silhouettes.balsnctf.com/
+
+<html><head><meta http-equiv=3D"Content-Type" content=3D"text/html; charset=
+=3DUTF-8"><style>#cVim-command-bar, #cVim-command-bar-mode, #cVim-command-b=
+ar-input, #cVim-command-bar-search-results,
+.cVim-completion-item, .cVim-completion-item .cVim-full, .cVim-completion-i=
+tem .cVim-left,
+.cVim-completion-item .cVim-right {
+  font-family: Helvetica, Helvetica Neue, Neue, sans-serif, monospace, Aria=
+l;
+  font-size: 10pt !important;
+  -webkit-font-smoothing: antialiased !important;
+}
+
+#cVim-command-bar {
+  position: fixed;
+  z-index: 2147483646;
+  background-color: #1b1d1e;
+  color: #bbb;
+  display: none;
+  box-sizing: content-box;
+  box-shadow: 0 3px 3px rgba(0,0,0,0.4);
+  left: 0;
+  width: 100%;
+  height: 20px;
+}
+
+#cVim-command-bar-mode {
+  display: inline-block;
+  vertical-align: middle;
+  box-sizing: border-box;
+  padding-left: 2px;
+  height: 100%;
+  width: 10px;
+  padding-top: 2px;
+  color: #888;
+}
+
+#cVim-command-bar-input {
+  background-color: #1b1d1e;
+  color: #bbb;
+  height: 100%;
+  right: 0;
+  top: 0;
+  width: calc(100% - 10px);
+  position: absolute;
+}
+
+#cVim-command-bar-search-results {
+  position: fixed;
+  width: 100%;
+  overflow: hidden;
+  z-index: 2147483647;
+  left: 0;
+  box-shadow: 0 3px 3px rgba(0,0,0,0.4);
+  background-color: #1c1c1c;
+}
+
+.cVim-completion-item, .cVim-completion-item .cVim-full, .cVim-completion-i=
+tem .cVim-left, .cVim-completion-item .cVim-right {
+  text-overflow: ellipsis;
+  padding: 1px;
+  display: inline-block;
+  box-sizing: border-box;
+  vertical-align: middle;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.cVim-completion-item:nth-child(even) {
+  background-color: #1f1f1f;
+}
+
+.cVim-completion-item {
+  width: 100%; left: 0;
+  color: #bcbcbc;
+}
+
+.cVim-completion-item[active] {
+  width: 100%; left: 0;
+  color: #1b1d1e;
+  background-color: #f1f1f1;
+}
+
+.cVim-completion-item[active] span {
+  color: #1b1d1e;
+}
+
+.cVim-completion-item .cVim-left {
+  color: #fff;
+  width: 37%;
+}
+
+.cVim-completion-item .cVim-right {
+  font-style: italic;
+  color: #888;
+  width: 57%;
+}
+
+
+#cVim-link-container, .cVim-link-hint,
+#cVim-hud, #cVim-status-bar {
+  font-family: Helvetica, Helvetica Neue, Neue, sans-serif, monospace, Aria=
+l;
+  font-size: 10pt !important;
+  -webkit-font-smoothing: antialiased !important;
+}
+
+#cVim-link-container {
+  position: absolute;
+  pointer-events: none;
+  width: 100%; left: 0;
+  height: 100%; top: 0;
+  z-index: 2147483647;
+}
+
+.cVim-link-hint {
+  position: absolute;
+  color: #302505 !important;
+  background-color: #ffd76e !important;
+  border-radius: 2px !important;
+  padding: 2px !important;
+  font-size: 8pt !important;
+  font-weight: 500 !important;
+  text-transform: uppercase !important;
+  border: 1px solid #ad810c;
+  display: inline-block !important;
+  vertical-align: middle !important;
+  text-align: center !important;
+  box-shadow: 2px 2px 1px rgba(0,0,0,0.25) !important;
+}
+
+.cVim-link-hint_match {
+  color: #777;
+  text-transform: uppercase !important;
+}
+
+
+#cVim-hud {
+  background-color: rgba(28,28,28,0.9);
+  position: fixed !important;
+  transition: right 0.2s ease-out;
+  z-index: 24724289;
+}
+
+#cVim-hud span {
+  padding: 2px;
+  padding-left: 4px;
+  padding-right: 4px;
+  color: #8f8f8f;
+  font-size: 10pt;
+}
+
+#cVim-frames-outline {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  right: 0;
+  z-index: 9999999999;
+  box-sizing: border-box;
+  border: 3px solid yellow;
+}
+</style></head><body><h2>What is this application?</h2>
+<p>We use the latest machine learning technique "Revolutional Neural Networ=
+k (RNN)"<br>
+to help users get the size of images. You know, artificial intelligence is =
+written<br>
+in PowerPoint, but my machine learning is written in Python 3.7.4 and image=
+io 2.5.0.</p>
+
+<h2>Which operation system do you use?</h2>
+<p> Windows Server 2019 version 10.0.17763.0, and this OS is designed by th=
+e company who owns GitHub.</p>
+
+<h2>What kind of image format do you support?</h2>
+<p>Here is <a href=3D"https://imageio.readthedocs.io/en/v2.5.0/formats.html=
+#single-images">the list</a> of support image formats. Some require externa=
+l libraries or programs.<br>
+I think I installed all of them. If you find some library or program is mis=
+sing, please let me know.</p>
+
+<h2>Is pwn/binary exploit skill required to solve this?</h2>
+<p>No.</p>
+
+<h2>I found Ghostscript is missing. Could you install it?</h2>
+<p>No.</p>
+
+<form action=3D"http://silhouettes.balsnctf.com/" method=3D"POST" enctype=
+=3D"multipart/form-data">
+    Select image to upload:
+    <input type=3D"file" name=3D"file">
+    <input type=3D"submit" value=3D"Upload" name=3D"submit">
+</form>
+
+<code><span style=3D"color: #000000">
+<span style=3D"color: #0000BB">&lt;?php<br></span><span style=3D"color: #00=
+7700">if&nbsp;(</span><span style=3D"color: #0000BB">$_SERVER</span><span s=
+tyle=3D"color: #007700">[</span><span style=3D"color: #DD0000">'REQUEST_MET=
+HOD'</span><span style=3D"color: #007700">]&nbsp;=3D=3D=3D&nbsp;</span><spa=
+n style=3D"color: #DD0000">'POST'</span><span style=3D"color: #007700">)&nb=
+sp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;</span><span style=3D"color: #0000BB">$file=
+&nbsp;</span><span style=3D"color: #007700">=3D&nbsp;</span><span style=3D"=
+color: #0000BB">$_FILES</span><span style=3D"color: #007700">[</span><span =
+style=3D"color: #DD0000">"file"</span><span style=3D"color: #007700">];<br>=
+&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(</span><span style=3D"color: #0000BB">$fil=
+e</span><span style=3D"color: #007700">[</span><span style=3D"color: #DD000=
+0">"size"</span><span style=3D"color: #007700">]&nbsp;&gt;&nbsp;</span><spa=
+n style=3D"color: #0000BB">1000000</span><span style=3D"color: #007700">)<b=
+r>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;die(</span><span style=3D=
+"color: #DD0000">"file&nbsp;too&nbsp;large"</span><span style=3D"color: #00=
+7700">);<br>&nbsp;&nbsp;&nbsp;&nbsp;</span><span style=3D"color: #0000BB">s=
+et_time_limit</span><span style=3D"color: #007700">(</span><span style=3D"c=
+olor: #0000BB">15</span><span style=3D"color: #007700">);<br>&nbsp;&nbsp;&n=
+bsp;&nbsp;</span><span style=3D"color: #0000BB">ini_set</span><span style=
+=3D"color: #007700">(</span><span style=3D"color: #DD0000">'max_execution_t=
+ime'</span><span style=3D"color: #007700">,&nbsp;</span><span style=3D"colo=
+r: #0000BB">15</span><span style=3D"color: #007700">);<br>&nbsp;&nbsp;&nbsp=
+;&nbsp;</span><span style=3D"color: #0000BB">$name&nbsp;</span><span style=
+=3D"color: #007700">=3D&nbsp;</span><span style=3D"color: #DD0000">"C:/uplo=
+ad/"&nbsp;</span><span style=3D"color: #007700">.&nbsp;</span><span style=
+=3D"color: #0000BB">basename</span><span style=3D"color: #007700">(</span><=
+span style=3D"color: #0000BB">$_FILES</span><span style=3D"color: #007700">=
+[</span><span style=3D"color: #DD0000">"file"</span><span style=3D"color: #=
+007700">][</span><span style=3D"color: #DD0000">"name"</span><span style=3D=
+"color: #007700">]);<br>&nbsp;&nbsp;&nbsp;&nbsp;</span><span style=3D"color=
+: #0000BB">move_uploaded_file</span><span style=3D"color: #007700">(</span>=
+<span style=3D"color: #0000BB">$file</span><span style=3D"color: #007700">[=
+</span><span style=3D"color: #DD0000">"tmp_name"</span><span style=3D"color=
+: #007700">],&nbsp;</span><span style=3D"color: #0000BB">$name</span><span =
+style=3D"color: #007700">);<br>&nbsp;&nbsp;&nbsp;&nbsp;</span><span style=
+=3D"color: #0000BB">system</span><span style=3D"color: #007700">(</span><sp=
+an style=3D"color: #DD0000">"python&nbsp;getsize.py&nbsp;"</span><span styl=
+e=3D"color: #007700">.</span><span style=3D"color: #0000BB">escapeshellarg<=
+/span><span style=3D"color: #007700">(</span><span style=3D"color: #0000BB"=
+>$name</span><span style=3D"color: #007700">));<br>&nbsp;&nbsp;&nbsp;&nbsp;=
+</span><span style=3D"color: #0000BB">unlink</span><span style=3D"color: #0=
+07700">(</span><span style=3D"color: #0000BB">$name</span><span style=3D"co=
+lor: #007700">);<br>&nbsp;&nbsp;&nbsp;&nbsp;die();<br>}<br></span><span sty=
+le=3D"color: #0000BB">?&gt;<br></span><br>&lt;h2&gt;What&nbsp;is&nbsp;this&=
+nbsp;application?&lt;/h2&gt;<br>&lt;p&gt;We&nbsp;use&nbsp;the&nbsp;latest&n=
+bsp;machine&nbsp;learning&nbsp;technique&nbsp;"Revolutional&nbsp;Neural&nbs=
+p;Network&nbsp;(RNN)"&lt;/br&gt;<br>to&nbsp;help&nbsp;users&nbsp;get&nbsp;t=
+he&nbsp;size&nbsp;of&nbsp;images.&nbsp;You&nbsp;know,&nbsp;artificial&nbsp;=
+intelligence&nbsp;is&nbsp;written&lt;/br&gt;<br>in&nbsp;PowerPoint,&nbsp;bu=
+t&nbsp;my&nbsp;machine&nbsp;learning&nbsp;is&nbsp;written&nbsp;in&nbsp;Pyth=
+on&nbsp;3.7.4&nbsp;and&nbsp;imageio&nbsp;2.5.0.&lt;/p&gt;<br><br>&lt;h2&gt;=
+Which&nbsp;operation&nbsp;system&nbsp;do&nbsp;you&nbsp;use?&lt;/h2&gt;<br>&=
+lt;p&gt;&nbsp;Windows&nbsp;Server&nbsp;2019&nbsp;version&nbsp;10.0.17763.0,=
+&nbsp;and&nbsp;this&nbsp;OS&nbsp;is&nbsp;designed&nbsp;by&nbsp;the&nbsp;com=
+pany&nbsp;who&nbsp;owns&nbsp;GitHub.&lt;/p&gt;<br><br>&lt;h2&gt;What&nbsp;k=
+ind&nbsp;of&nbsp;image&nbsp;format&nbsp;do&nbsp;you&nbsp;support?&lt;/h2&gt=
+;<br>&lt;p&gt;Here&nbsp;is&nbsp;&lt;a&nbsp;href=3D"https://imageio.readthed=
+ocs.io/en/v2.5.0/formats.html#single-images"&gt;the&nbsp;list&lt;/a&gt;&nbs=
+p;of&nbsp;support&nbsp;image&nbsp;formats.&nbsp;Some&nbsp;require&nbsp;exte=
+rnal&nbsp;libraries&nbsp;or&nbsp;programs.&lt;/br&gt;<br>I&nbsp;think&nbsp;=
+I&nbsp;installed&nbsp;all&nbsp;of&nbsp;them.&nbsp;If&nbsp;you&nbsp;find&nbs=
+p;some&nbsp;library&nbsp;or&nbsp;program&nbsp;is&nbsp;missing,&nbsp;please&=
+nbsp;let&nbsp;me&nbsp;know.&lt;/p&gt;<br><br>&lt;h2&gt;Is&nbsp;pwn/binary&n=
+bsp;exploit&nbsp;skill&nbsp;required&nbsp;to&nbsp;solve&nbsp;this?&lt;/h2&g=
+t;<br>&lt;p&gt;No.&lt;/p&gt;<br><br>&lt;h2&gt;I&nbsp;found&nbsp;Ghostscript=
+&nbsp;is&nbsp;missing.&nbsp;Could&nbsp;you&nbsp;install&nbsp;it?&lt;/h2&gt;=
+<br>&lt;p&gt;No.&lt;/p&gt;<br><br>&lt;form&nbsp;action=3D"/"&nbsp;method=3D=
+"POST"&nbsp;enctype=3D"multipart/form-data"&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;=
+Select&nbsp;image&nbsp;to&nbsp;upload:<br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;input=
+&nbsp;type=3D"file"&nbsp;name=3D"file"&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;i=
+nput&nbsp;type=3D"submit"&nbsp;value=3D"Upload"&nbsp;name=3D"submit"&gt;<br=
+>&lt;/form&gt;<br><br><span style=3D"color: #0000BB">&lt;?php<br>highlight_=
+file</span><span style=3D"color: #007700">(</span><span style=3D"color: #00=
+00BB">__FILE__</span><span style=3D"color: #007700">);<br></span><span styl=
+e=3D"color: #0000BB">highlight_file</span><span style=3D"color: #007700">(<=
+/span><span style=3D"color: #DD0000">"getsize.py"</span><span style=3D"colo=
+r: #007700">);<br></span><span style=3D"color: #0000BB">?&gt;<br></span>
+</span>
+</code><code><span style=3D"color: #000000">
+import&nbsp;sys,&nbsp;imageio<br>assert&nbsp;imageio.__version__&nbsp;=3D=
+=3D&nbsp;'2.5.0'<br>print('(w,&nbsp;h)&nbsp;=3D',&nbsp;imageio.imread(sys.a=
+rgv[1]).shape[:2])<br></span>
+</code></body><div id=3D"cVim-status-bar" style=3D"top: 0px;"></div><iframe=
+ src=3D"cid:frame-94DFA53D3AE4F4A2B7477C3EAAC6FC13@mhtml.blink" id=3D"cVim-=
+command-frame"></iframe></html>
+------MultipartBoundary--tyTGzzrXW7vO3AIkdm3HsHvKBcJfBFEZ6Hqqy3qVlG----
+Content-Type: text/html
+Content-ID: <frame-94DFA53D3AE4F4A2B7477C3EAAC6FC13@mhtml.blink>
+Content-Transfer-Encoding: quoted-printable
+Content-Location: chrome-extension://ihlenndgcmojhcghmfjfneahoeklbjjh/cmdline_frame.html
+
+<!DOCTYPE html><html><head><meta http-equiv=3D"Content-Type" content=3D"tex=
+t/html; charset=3Dwindows-1252">
+       =20
+       =20
+       =20
+       =20
+       =20
+       =20
+       =20
+       =20
+       =20
+       =20
+       =20
+       =20
+       =20
+       =20
+       =20
+       =20
+       =20
+       =20
+       =20
+       =20
+       =20
+        <link rel=3D"stylesheet" href=3D"chrome-extension://ihlenndgcmojhcg=
+hmfjfneahoeklbjjh/content_scripts/main.css">
+    <style>#cVim-command-bar, #cVim-command-bar-mode, #cVim-command-bar-inp=
+ut, #cVim-command-bar-search-results,
+.cVim-completion-item, .cVim-completion-item .cVim-full, .cVim-completion-i=
+tem .cVim-left,
+.cVim-completion-item .cVim-right {
+  font-family: Helvetica, Helvetica Neue, Neue, sans-serif, monospace, Aria=
+l;
+  font-size: 10pt !important;
+  -webkit-font-smoothing: antialiased !important;
+}
+
+#cVim-command-bar {
+  position: fixed;
+  z-index: 2147483646;
+  background-color: #1b1d1e;
+  color: #bbb;
+  display: none;
+  box-sizing: content-box;
+  box-shadow: 0 3px 3px rgba(0,0,0,0.4);
+  left: 0;
+  width: 100%;
+  height: 20px;
+}
+
+#cVim-command-bar-mode {
+  display: inline-block;
+  vertical-align: middle;
+  box-sizing: border-box;
+  padding-left: 2px;
+  height: 100%;
+  width: 10px;
+  padding-top: 2px;
+  color: #888;
+}
+
+#cVim-command-bar-input {
+  background-color: #1b1d1e;
+  color: #bbb;
+  height: 100%;
+  right: 0;
+  top: 0;
+  width: calc(100% - 10px);
+  position: absolute;
+}
+
+#cVim-command-bar-search-results {
+  position: fixed;
+  width: 100%;
+  overflow: hidden;
+  z-index: 2147483647;
+  left: 0;
+  box-shadow: 0 3px 3px rgba(0,0,0,0.4);
+  background-color: #1c1c1c;
+}
+
+.cVim-completion-item, .cVim-completion-item .cVim-full, .cVim-completion-i=
+tem .cVim-left, .cVim-completion-item .cVim-right {
+  text-overflow: ellipsis;
+  padding: 1px;
+  display: inline-block;
+  box-sizing: border-box;
+  vertical-align: middle;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.cVim-completion-item:nth-child(even) {
+  background-color: #1f1f1f;
+}
+
+.cVim-completion-item {
+  width: 100%; left: 0;
+  color: #bcbcbc;
+}
+
+.cVim-completion-item[active] {
+  width: 100%; left: 0;
+  color: #1b1d1e;
+  background-color: #f1f1f1;
+}
+
+.cVim-completion-item[active] span {
+  color: #1b1d1e;
+}
+
+.cVim-completion-item .cVim-left {
+  color: #fff;
+  width: 37%;
+}
+
+.cVim-completion-item .cVim-right {
+  font-style: italic;
+  color: #888;
+  width: 57%;
+}
+
+
+#cVim-link-container, .cVim-link-hint,
+#cVim-hud, #cVim-status-bar {
+  font-family: Helvetica, Helvetica Neue, Neue, sans-serif, monospace, Aria=
+l;
+  font-size: 10pt !important;
+  -webkit-font-smoothing: antialiased !important;
+}
+
+#cVim-link-container {
+  position: absolute;
+  pointer-events: none;
+  width: 100%; left: 0;
+  height: 100%; top: 0;
+  z-index: 2147483647;
+}
+
+.cVim-link-hint {
+  position: absolute;
+  color: #302505 !important;
+  background-color: #ffd76e !important;
+  border-radius: 2px !important;
+  padding: 2px !important;
+  font-size: 8pt !important;
+  font-weight: 500 !important;
+  text-transform: uppercase !important;
+  border: 1px solid #ad810c;
+  display: inline-block !important;
+  vertical-align: middle !important;
+  text-align: center !important;
+  box-shadow: 2px 2px 1px rgba(0,0,0,0.25) !important;
+}
+
+.cVim-link-hint_match {
+  color: #777;
+  text-transform: uppercase !important;
+}
+
+
+#cVim-hud {
+  background-color: rgba(28,28,28,0.9);
+  position: fixed !important;
+  transition: right 0.2s ease-out;
+  z-index: 24724289;
+}
+
+#cVim-hud span {
+  padding: 2px;
+  padding-left: 4px;
+  padding-right: 4px;
+  color: #8f8f8f;
+  font-size: 10pt;
+}
+
+#cVim-frames-outline {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  right: 0;
+  z-index: 9999999999;
+  box-sizing: border-box;
+  border: 3px solid yellow;
+}
+</style></head>
+    <body>
+   =20
+
+</body><div id=3D"cVim-status-bar" style=3D"top: 0px;"></div><div id=3D"cVi=
+m-command-bar" spellcheck=3D"false" style=3D"top: 0px;"><span id=3D"cVim-co=
+mmand-bar-mode"></span><input type=3D"text" id=3D"cVim-command-bar-input"><=
+/div><div id=3D"cVim-command-bar-search-results" style=3D"top: 20px;"></div=
+></html>
+------MultipartBoundary--tyTGzzrXW7vO3AIkdm3HsHvKBcJfBFEZ6Hqqy3qVlG----
+Content-Type: text/css
+Content-Transfer-Encoding: quoted-printable
+Content-Location: chrome-extension://ihlenndgcmojhcghmfjfneahoeklbjjh/content_scripts/main.css
+
+@charset "windows-1252";
+
+#cVim-command-frame { display: none; border: 0px; position: fixed; margin: =
+0px; padding: 0px; left: 0px; width: 100%; top: 0px; height: 100%; z-index:=
+ 2147483647 !important; }
+
+#cVim-link-container { transition: opacity 0.1s ease 0s; opacity: 0; }
+
+.cVim-hint-scale { animation: 0.25s ease 0s 1 normal none running scale; }
+
+@keyframes scale {=20
+  0% { transform: scale(0) perspective(1px); }
+  60% { transform: scale(1.15) perspective(1px); }
+  100% { transform: scale(1) perspective(0px); }
+}
+
+.cVim-link-hint_match { opacity: 0.6; }
+
+.cVim-link-hint_match_hidden { display: none; }
+
+.cVim-link-hint { line-height: 1; }
+
+#cVim-command-bar { }
+
+#cVim-command-bar-mode { }
+
+#cVim-command-bar-input { box-sizing: border-box; outline-style: none; bord=
+er: 0px; }
+
+#cVim-command-bar-search-results { }
+
+.cVim-completion-item { }
+
+.cVim-completion-item .cVim-full { }
+
+.cVim-completion-item .cVim-left { }
+
+.cVim-completion-item .cVim-right { }
+
+.cVim-highlight { background-color: yellow; min-height: 0px !important; bor=
+der-radius: 0px !important; border: 0px !important; text-shadow: none !impo=
+rtant; outline: none 0px !important; padding: 0px !important; margin: 0px !=
+important; }
+
+#cVim-hud { bottom: 0px; min-height: 0px !important; border-radius: 0px !im=
+portant; box-sizing: border-box !important; box-shadow: none !important; ma=
+rgin: 0px !important; -webkit-appearance: none !important; letter-spacing: =
+normal !important; word-spacing: normal !important; text-transform: none !i=
+mportant; text-indent: 0px !important; text-shadow: none !important; text-a=
+lign: start !important; outline: none 0px !important; border: 0px !importan=
+t; line-height: 1 !important; font-style: normal !important; display: inlin=
+e-block !important; vertical-align: middle !important; position: fixed !imp=
+ortant; z-index: 24724289 !important; }
+
+#cVim-hud span { display: inline-block !important; box-sizing: border-box !=
+important; vertical-align: middle !important; }
+
+#cVim-status-bar { display: none; vertical-align: middle; padding-left: 2px=
+; padding-top: 2px; box-shadow: rgba(0, 0, 0, 0.4) 0px 3px 3px; min-height:=
+ 0px !important; border-radius: 0px !important; border: 0px !important; -we=
+bkit-appearance: none !important; letter-spacing: normal !important; word-s=
+pacing: normal !important; text-transform: none !important; text-indent: 0p=
+x !important; text-shadow: none !important; text-align: start !important; o=
+utline: none 0px !important; margin: 0px !important; font-style: normal !im=
+portant; position: fixed !important; z-index: 2147483647 !important; backgr=
+ound-color: rgb(27, 29, 30) !important; color: rgb(187, 187, 187) !importan=
+t; box-sizing: border-box !important; left: 0px !important; width: 100% !im=
+portant; height: 20px !important; }
+
+.cVim-error { min-height: 0px !important; border-radius: 0px !important; bo=
+x-sizing: content-box !important; box-shadow: none !important; margin: 0px =
+!important; -webkit-appearance: none !important; letter-spacing: normal !im=
+portant; word-spacing: normal !important; text-transform: none !important; =
+text-indent: 0px !important; text-shadow: none !important; text-align: star=
+t !important; outline: none 0px !important; border: 0px !important; line-he=
+ight: 1 !important; font-style: normal !important; }
+
+#cVim-cursor { display: none; min-height: 0px !important; border-radius: 0p=
+x !important; box-sizing: content-box !important; box-shadow: none !importa=
+nt; margin: 0px !important; -webkit-appearance: none !important; letter-spa=
+cing: normal !important; word-spacing: normal !important; text-transform: n=
+one !important; text-indent: 0px !important; text-shadow: none !important; =
+text-align: start !important; outline: none 0px !important; border: 0px !im=
+portant; line-height: 1 !important; font-style: normal !important; position=
+: fixed !important; background: none !important; left: 0px !important; widt=
+h: 100% !important; top: 0px !important; height: 100% !important; z-index: =
+2147483647 !important; cursor: none !important; transform: translateZ(0px) =
+!important; }
+
+.cVim-find-mark { animation: unset; transition: unset; color: rgb(17, 17, 1=
+7); font: unset; font-feature-settings: unset; font-kerning: unset; font-va=
+riation-settings: unset; text-orientation: unset; text-rendering: unset; -w=
+ebkit-font-smoothing: unset; -webkit-locale: unset; -webkit-text-orientatio=
+n: unset; -webkit-writing-mode: unset; writing-mode: unset; zoom: unset; pl=
+ace-content: unset; place-items: unset; place-self: unset; alignment-baseli=
+ne: unset; backface-visibility: unset; background-attachment: unset; backgr=
+ound-blend-mode: unset; background-clip: unset; background-color: rgb(255, =
+255, 0); background-image: unset; background-origin: unset; background-posi=
+tion: unset; background-repeat: unset; background-size: unset; baseline-shi=
+ft: unset; block-size: unset; border-block-end: unset; border-block-start: =
+unset; border: unset; border-radius: unset; border-collapse: unset; border-=
+inline-end: unset; border-inline-start: unset; bottom: unset; box-shadow: u=
+nset; box-sizing: unset; break-after: unset; break-before: unset; break-ins=
+ide: unset; buffered-rendering: unset; caption-side: unset; caret-color: un=
+set; clear: unset; clip: unset; clip-path: unset; clip-rule: unset; color-i=
+nterpolation: unset; color-interpolation-filters: unset; color-rendering: u=
+nset; columns: unset; column-fill: unset; gap: unset; column-rule: unset; c=
+olumn-span: unset; contain: unset; content: unset; counter-increment: unset=
+; counter-reset: unset; cursor: unset; cx: unset; cy: unset; d: unset; disp=
+lay: unset; dominant-baseline: unset; empty-cells: unset; fill: unset; fill=
+-opacity: unset; fill-rule: unset; filter: unset; flex: unset; flex-flow: u=
+nset; float: unset; flood-color: unset; flood-opacity: unset; grid: unset; =
+grid-area: unset; height: unset; hyphens: unset; image-rendering: unset; in=
+line-size: unset; isolation: unset; left: unset; letter-spacing: unset; lig=
+hting-color: unset; line-break: unset; list-style: unset; margin-block-end:=
+ unset; margin-block-start: unset; margin: unset; margin-inline-end: unset;=
+ margin-inline-start: unset; marker: unset; mask: unset; mask-type: unset; =
+max-block-size: unset; max-height: unset; max-inline-size: unset; max-width=
+: unset; min-block-size: unset; min-height: unset; min-inline-size: unset; =
+min-width: unset; mix-blend-mode: unset; object-fit: unset; object-position=
+: unset; offset: unset; opacity: unset; order: unset; orphans: unset; outli=
+ne: unset; outline-offset: unset; overflow-anchor: unset; overflow-wrap: un=
+set; overflow: unset; overscroll-behavior: unset; padding-block-end: unset;=
+ padding-block-start: unset; padding: unset; padding-inline-end: unset; pad=
+ding-inline-start: unset; page: unset; paint-order: unset; perspective: uns=
+et; perspective-origin: unset; pointer-events: unset; position: unset; quot=
+es: unset; r: unset; resize: unset; right: unset; rx: unset; ry: unset; scr=
+oll-behavior: unset; scroll-margin-block: unset; scroll-margin: unset; scro=
+ll-margin-inline: unset; scroll-padding-block: unset; scroll-padding: unset=
+; scroll-padding-inline: unset; scroll-snap-align: unset; scroll-snap-stop:=
+ unset; scroll-snap-type: unset; shape-image-threshold: unset; shape-margin=
+: unset; shape-outside: unset; shape-rendering: unset; size: unset; speak: =
+unset; stop-color: unset; stop-opacity: unset; stroke: unset; stroke-dashar=
+ray: unset; stroke-dashoffset: unset; stroke-linecap: unset; stroke-linejoi=
+n: unset; stroke-miterlimit: unset; stroke-opacity: unset; stroke-width: un=
+set; tab-size: unset; table-layout: unset; text-align: unset; text-align-la=
+st: unset; text-anchor: unset; text-combine-upright: unset; text-decoration=
+: unset; text-decoration-skip-ink: unset; text-indent: unset; text-overflow=
+: unset; text-shadow: unset; text-size-adjust: unset; text-transform: unset=
+; text-underline-position: unset; top: unset; touch-action: unset; transfor=
+m: unset; transform-box: unset; transform-origin: unset; transform-style: u=
+nset; user-select: unset; vector-effect: unset; vertical-align: unset; visi=
+bility: unset; -webkit-app-region: unset; -webkit-appearance: unset; border=
+-spacing: unset; -webkit-border-image: unset; -webkit-box-align: unset; -we=
+bkit-box-decoration-break: unset; -webkit-box-direction: unset; -webkit-box=
+-flex: unset; -webkit-box-ordinal-group: unset; -webkit-box-orient: unset; =
+-webkit-box-pack: unset; -webkit-box-reflect: unset; -webkit-font-size-delt=
+a: unset; -webkit-highlight: unset; -webkit-hyphenate-character: unset; -we=
+bkit-line-break: unset; -webkit-line-clamp: unset; -webkit-margin-collapse:=
+ unset; -webkit-margin-bottom-collapse: unset; -webkit-margin-top-collapse:=
+ unset; -webkit-mask-box-image: unset; -webkit-mask: unset; -webkit-mask-co=
+mposite: unset; -webkit-perspective-origin-x: unset; -webkit-perspective-or=
+igin-y: unset; -webkit-print-color-adjust: unset; -webkit-rtl-ordering: uns=
+et; -webkit-ruby-position: unset; -webkit-tap-highlight-color: unset; -webk=
+it-text-combine: unset; -webkit-text-decorations-in-effect: unset; -webkit-=
+text-emphasis: unset; -webkit-text-emphasis-position: unset; -webkit-text-f=
+ill-color: unset; -webkit-text-security: unset; -webkit-text-stroke: unset;=
+ -webkit-transform-origin-x: unset; -webkit-transform-origin-y: unset; -web=
+kit-transform-origin-z: unset; -webkit-user-drag: unset; -webkit-user-modif=
+y: unset; white-space: unset; widows: unset; width: unset; will-change: uns=
+et; word-break: unset; word-spacing: unset; x: unset; y: unset; z-index: un=
+set; }
+
+.cVim-find-mark[active] { background-color: rgb(255, 150, 50); }
+
+#cVim-frames-outline { position: fixed; width: 100%; height: 100%; left: 0p=
+x; top: 0px; right: 0px; z-index: 2147483647; box-sizing: border-box; borde=
+r: 3px solid yellow; }
+
+.cVim-completion-item[active] { width: 100%; left: 0px; color: rgb(27, 29, =
+30); background-color: rgb(241, 241, 241); }
+
+.cVim-completion-item[active] span { color: rgb(27, 29, 30); }
+------MultipartBoundary--tyTGzzrXW7vO3AIkdm3HsHvKBcJfBFEZ6Hqqy3qVlG------
