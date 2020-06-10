@@ -4,6 +4,14 @@
 ## Participate
 
 
+### TJCTF 2020
+`PaperPlaneJr` `270 pts` `247th / 868`
+
+> 2020-05-22T08:00:00 - 2020-05-26T08:00:00  
+> https://tjctf.org/  
+> 21.5
+
+
 ### OOO DEF CON CTF Quals
 `PaperPlaneJr` `200 pts` `442nd`
 
