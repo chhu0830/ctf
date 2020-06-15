@@ -1,4 +1,4 @@
-# competition
+# Competition
 
 
 ## Participate
