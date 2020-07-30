@@ -1,4 +1,6 @@
 # OOO DEF CON CTF Quals
+`PaperPlaneJr` `200 pts` `442nd`
+
 > 2020-05-16T08:00:00 - 2020-05-18T08:00:00  
 > https://www.oooverflow.io/dc-ctf-2020-quals/  
 > 67.72

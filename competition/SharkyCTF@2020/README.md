@@ -1,4 +1,9 @@
 # Sharky CTF 2020
+`PaperPlaneJr` `429 pts` `376th`
+
+> 2020/05/09 08:01 - 2020/05/11 07:59  
+> https://ctfd.sharkyctf.xyz  
+> 24.58
 
 
 ## Writeup

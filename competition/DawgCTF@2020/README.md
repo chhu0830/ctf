@@ -1,4 +1,9 @@
 # DawgCTF 2020
+`PaperPlaneJR` `695 pts` `482nd`
+
+> 2020/04/11 06:00 - 2020/04/13 06:00  
+> https://umbccd.io  
+> 23.14
 
 
 ## Writeup

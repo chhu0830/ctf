@@ -1,4 +1,9 @@
 # WPICTF 2020
+`PaperPlaneJr` `151 pts` `384th`
+
+> 2020/04/18 05:00 - 2020/04/20 05:00  
+> https://ctf.wpictf.xyz  
+> 31.04
 
 
 ## Writeup

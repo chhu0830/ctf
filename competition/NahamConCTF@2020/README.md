@@ -1,7 +1,14 @@
 # NahamCon CTF 2020
+`oH5U4No` `350 pts` `1151/2854`
+
+> 2020-06-12T23:00:00 - 2020-06-14T06:00:00  
+> https://ctf.nahamcon.com/  
+> 0
+
+Only participate 4 hours.
 
 
-## Solves
+## Writeup
 
 
 ### Agent 95
