@@ -126,17 +126,20 @@ This is a cheatsheet for different types of CTF challenges.
   * Process
     * SectionAlignment: 0x1000
     * Page Model
-* Content
-  | Layout  | | Headers                       |
-  |:--------| |:------------------------------|
-  | Headers | | Dos MZ Header                 |
-  | Null    | | DOS Stub                      |
-  | .text   | | PE Header (IMAGE\_NT\_HEADER) |
-  | Null    | | Section Headers               |
-  | .data   |
-  | Null    |
-  | .rsrc   |
-  | Null    |
+* Layout
+  | Layout  |                               |
+  |:--------|:------------------------------|
+  | Headers | Dos MZ Header                 |
+  |         | DOS Stub                      |
+  |         | PE Header (IMAGE\_NT\_HEADER) |
+  |         | Section Headers               |
+  | Null    |                               |
+  | .text   |                               |
+  | Null    |                               |
+  | .data   |                               |
+  | Null    |                               |
+  | .rsrc   |                               |
+  | Null    |                               |
 
 
 ## Crypto
