@@ -27,6 +27,7 @@ This is a payload collection and references for CTF challenges.
   - C|PENT
 - News
   - [CISA](https://www.cisa.gov/)
+  - [MS-ISAC]
   - [BleepingComputer](https://www.bleepingcomputer.com/)
   - [The Hacker News](https://thehackernews.com/)
   - [PENETRATION TESTING BLOG](https://securityonline.info/)
@@ -39,26 +40,42 @@ This is a payload collection and references for CTF challenges.
 
 
 #### File Analyzer
-- General
-  - `$ file`
-  - `$ c++filt`
-- ELF
-  - `$ readelf -S <binary>`
-  - `$ objdump -R <binary>`
-  - `$ objdump -d <binary>`
-- PE Viewer
-  - reshacker
-  - CFF Explorer (ExplorerSuite)
-  - PE Detective (ExplorerSuite)
-  - Signature Explorer (ExplorerSuite)
-  - PE-bear
-  - PEview
-  - 010 editor
-- Pack Detector
-  - PEiD
-  - DIE (detect it easy)
-    - identify shell and other info
 
+##### General
+- `$ file`
+
+##### ELF
+- readelf
+  | Usage | Description |
+  |-------|-------------|
+  | `$ readelf -S <binary>` | Display the sections' header. |
+  | `$ readelf -s <binary>` | Display the symbol table. |
+
+- objdump
+  | Usage | Description |
+  |-------|-------------|
+  | `$ objdump -x <binary>` | Display the contents of all headers. |
+  | `$ objdump -R <binary>` | Display the dynamic relocation entries in the file. |
+  | `$ objdump -M intel -S <binary>` | Intermix source code with disassembly. |
+
+##### PE
+- PE-bear
+- PEview
+- PE Detective (ExplorerSuite)
+- [reshacker](https://www.angusj.com/resourcehacker/)
+  - Add, modify or replace resources.
+  - Support strings, images, dialogs, menus, VersionInfo and Manifest resources.
+- CFF Explorer (ExplorerSuite)
+- Signature Explorer (ExplorerSuite)
+- 010 editor
+
+#### Pack Detector
+- PEiD
+- DIE (detect it easy)
+  - identify shell and other info
+
+#### Demangler
+- `$ c++filt`
 
 #### Decompiler
 - [Decompiler Explorer Online](https://dogbolt.org/)
@@ -210,17 +227,22 @@ This is a payload collection and references for CTF challenges.
   | Null    |                               |
 
 
-### Buffer Over Flow
+### Technique
 
 
-### Fuzzing
+#### Buffer Over Flow
+
+
+#### Fuzzing
+
+
+#### Heap
+> [how2heap](https://github.com/shellphish/how2heap)
 
 
 ## Crypto
 
-
 ### Tool
-
 
 #### Decrypt
 - pyCryptodome
@@ -240,7 +262,7 @@ This is a payload collection and references for CTF challenges.
 - unt-wister
 
 
-#### Certificate
+#### openssl
 - Generate
   > [Generate cert chain](https://blog.davy.tw/posts/use-openssl-to-sign-intermediate-ca/)  
   > [SAN](https://medium.com/@antelle/how-to-generate-a-self-signed-ssl-certificate-for-an-ip-address-f0dd8dddf754)  
@@ -426,6 +448,9 @@ This is a payload collection and references for CTF challenges.
   signtool.exe verify /pa <binary>
   ```
 
+- Signed Certificate Timestamp (SCT)
+  - [Signed Certificate Timestamp (SCT) Validation | Google](https://github.com/google/certificate-transparency/blob/master/docs/SCTValidation.md)
+
 
 ### Background
 
@@ -522,7 +547,10 @@ This is a payload collection and references for CTF challenges.
 - `qpdf --qdf --object-streams=disable <infile> <outfile>`
 
 
-### QRcode
+### Background
+
+
+#### QRcode
 - Content
 - Encode
 
@@ -564,8 +592,64 @@ This is a payload collection and references for CTF challenges.
 ### Background
 
 
-#### Windows
+#### Windows 🟦
 > https://lolbas-project.github.io/
+
+- Common Command
+  | Run | Pannel |
+  |-----|--------|
+  | `control` | `控制台`
+  | `ncpa.cpl` | `網路連線` |
+  | `wf.msc` | `防火牆規則` |
+  | `taskschd.msc` | `工作排程` |
+  | `services.msc` | `服務` |
+  | `winver` | 
+  | `msinfo32` |
+
+- Essential Folder
+  | Folder | Usage |
+  |--------|-------|
+  | `%SystemRoot%\System32\Tasks` | Schedule Tasks |
+  | `%SystemRoot%\Tasks` | Schedule Tasks (Legacy) |
+  | `%SystemRoot%\System32\winevt\Logs` | Event Logs |
+  | `%SystemRoot%\System32\config` | HKLM |
+  | `%USERPROFILE%\NTUSER.DAT` | HKCU |
+  | `%LOCALAPPDATA%\Microsoft\Windows\Usrclass.dat` | |
+
+- Essential Registry
+  | Path | Usage |
+  |------|-------|
+  | `HKLM\System\CurrentControlSet\Services\SharedAccess\Parameters\FirewallPolicy\FirewallRules\{GUID}` | Firewall Policy |
+  | `HKLM\System\CurrentControlSet\Services\BFE\Parameters\Policy\Persistent\Provider\{GUID}` | WFP |
+  | `HKLM\System\CurrentControlSet\Services\BFE\Parameters\Policy\Persistent\Filter\{GUID}` | WFP |
+
+- Active Directory (AD)
+  - Command
+    - `$ Get-ADObject -Filter * -Properties *`  
+    - `$ Get-ADObject -Filter {ObjectGUID -eq <GUID>} -Properties *`
+  - Event
+    - `5137` `A directory service object was created`
+
+- wmi
+  - GUI Tool
+    - wbemtest
+    - WMI Explorer
+  - Command
+    | Description | Powershell | wmic | WQL |
+    |-------------|------------|------|-------|
+    | List Namespaces | `Get-CimInstance [-Namespace <namespace:(root/cimv2)>] -ClassName __NAMESPACE` | | `SELECT * From __NAMESPACE` |
+    | List Classes | `Get-CimClass [-Namespace <namespace:(root/cimv2)>] [[-ClassName] <classname:(*)>]` |
+    | List Instances | `Get-CimInstance [-Namespace <namespace:(root/cimv2)>] -ClassName <classname>` | `wmic [/namespace:<namespace:(\\root\cimv2)>] path <classname>` | `Select * From <classname>` |
+    
+  - Important Instance
+    | Namespace | ClassName |
+    |-----------|-----------|
+    | `root/Microsoft/Windows/Defender` | `MSFT_MpComputerStatus` |
+    | `root/SecurityCenter2` | `AntivirusProduct` |
+    | `root/SecurityCenter2` | `FirewallProduct` |
+    | `root/cimv2` | `Win32_Account` |
+    | `root/cimv2` | `Win32_LoggedOnUser` |
+    | `root/cimv2` | `Win32_Process` |
 
 - `SET __COMPAT_LAYER=RunAsInvoker`
 - File
@@ -625,8 +709,6 @@ This is a payload collection and references for CTF challenges.
     | EOF | input device that produced end-of-file characters, ASCII 0x1A |
     | INP | custom input device, by default the same as EOF: |
     | OUT | custom output device, by default the same as NUL: |
-- wmi
-  - `wbemtest.exe`
 - Remote Command
   - psexec
     - Make sure `\\<host>\admin$` can be accessed
@@ -652,15 +734,21 @@ This is a payload collection and references for CTF challenges.
 - minifilter
 - WFP
 
-#### Linix/Unix
+
+#### Linux 🐧
 > https://gtfobins.github.io/
 
-#### macOS
+
+#### macOS 🍎
 - Resource Fork
 - Named Fork
 - Data Fork
 
-### DLL Injection
+
+### Technique
+
+
+#### DLL Injection
 - [Injecting API Hooking Attack with DLL Injection | S12 - H4CK](https://medium.com/@s12deff/injecting-api-hooking-attack-with-dll-injection-897548af47a8)
 - [Malware Technique: DLL Injection | Ricky Severino](https://rickyseverino.medium.com/malware-technique-dll-injection-ffcb960ab2a1)
   ```mermaid
@@ -681,6 +769,29 @@ This is a payload collection and references for CTF challenges.
   AdjustTokenPrivileges -. needed when process owned by another account .-> VirtualAllocEx
   WriteProcessMemory -.-> CreateRemoteThread
   ```
+
+#### Persistent
+- Startup
+  - 🟦 `%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup\` (`$ shell:startup`)  
+    🟦 `%SystemDrive%\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp` (`$ shell:Common Startup`)
+  - 🟦 `HKLM\Software\Microsoft\Windows\CurrentVersion\Run\`  
+    🟦 `HKLM\Software\Microsoft\Windows\CurrentVersion\RunOnce\`  
+    🟦 `HKCU\Software\Microsoft\Windows\CurrentVersion\Run\`  
+    🟦 `HKCU\Software\Microsoft\Windows\CurrentVersion\RunOnce\`
+  - 🐧 `/etc/profile`
+- Service
+  - 🟦 `HKLM\SYSTEM\CurrentControlSet\Services\`  
+    🟦 `HKLM\SYSTEM\CurrentControlSet\Control\SafeBoot\`
+- Scheduled
+  - 🟦 `$ taskschd.msc`  
+    🟦 `$ schtasks /query /FO list /V`  
+    🟦 `%SystemRoot%\System32\Tasks\`  
+    🟦 `%SystemRoot%\Tasks\`  
+    🟦 `HKLM\Software\Microsoft\Windows NT\CurrentVersion\Schedule\Taskcache\Tasks\`  
+    🟦 `HKLM\Software\Microsoft\Windows NT\CurrentVersion\Schedule\Taskcache\Tree\`
+  - 🟦 GPO
+  - 🐧 `/etc/crontab`  
+    🐧 `/etc/cron.d/`
 
 
 ## Web
@@ -768,6 +879,8 @@ This is a payload collection and references for CTF challenges.
 
 
 ### Background
+
+#### HTTP Protocol
 - [Basics of HTTP](https://developer.mozilla.org/zh-TW/docs/Web/HTTP/Basics_of_HTTP)
   - MIME
     > type/subtype;parameter=value
@@ -775,12 +888,176 @@ This is a payload collection and references for CTF challenges.
   - Data URI
     > data:[\<mediatype\>][;base64],\<data\>
 
-### Broken Access Control
+#### The Onion Routing Protocol (Tor)
+> [The Tor Project](https://www.torproject.org/)  
+> [TOR internals, for those of us who also have a life (1/n) | microlab.red](https://microlab.red/2024/09/03/tor-internals-for-those-of-us-who-also-have-a-life-1-n/)  
+> [TOR internals, for those of us who also have a life (2/n) | microlab.red](https://microlab.red/2024/09/23/tor-internals-for-those-of-us-who-also-have-a-life-2-n/)  
+> [Creating a Testing Tor Network From Scratch | dax](https://medium.com/@dax_dev/creating-a-testing-tor-network-from-scratch-e952d76a18cb)  
+> [Decentralized Routing in Tor Hidden Services](https://medium.com/@kyodo-tech/decentralized-routing-in-tor-hidden-services-40e0bc0793d5)
+
+> Tor is an overlay network.
+> 
+> It is composed by thousands (~ 6-11k) **relays**, connected through
+> **channels** that form **circuits** inside which **cells** are sent
+> and received.
+>
+> -- <cite>[microlab.red](https://microlab.red/2024/09/03/tor-internals-for-those-of-us-who-also-have-a-life-1-n/)</cite>
+
+- Directory Authority
+  > They are a set of specialized servers within the Tor network that
+  > collectively generate and distribute a signed document (known as
+  > the **consensus**) containing information about all known Tor relays.
+  >
+  > -- <cite>[The Tor Proejct](https://community.torproject.org/relay/governance/policies-and-proposals/directory-authority/)</cite>
+
+  - [DA List](https://gitlab.torproject.org/tpo/core/tor/-/blob/HEAD/src/app/config/auth_dirs.inc)
+  - Consensus
+    - `$ curl https://collector.torproject.org/recent/relay-descriptors/consensuses/`
+- Tor Circuit
+  > ```
+  > Tor User → Guard Relay / Bridge Relay → Middle Relay → Exit Relay → Destination (example[.]com)
+  > ```
+  >
+  > -- <cite>[The Tor Project](https://community.torproject.org/relay/types-of-relays/)</cite>
+
+  - Bridge Relay
+    - not listed in the public Tor directory
+    - use pluggable transports to obfuscate their traffic to make it harder to detect
+  - Guard Relay
+    - first relay (hop) in a Tor circuit
+    - stable and fast
+  - Middle Relay
+    - concealment
+  - Exit Relay
+    - Exit Policy
+- Onion Hidden Service (.onion)
+  ```mermaid
+  sequenceDiagram
+    actor Client
+    participant RP as Rendezvous Point
+    participant SD as Hidden Service Directory
+    participant IP as Introduction Point
+    participant OS as Onion Service
+
+    OS->>IP: estabilish long-term circuit
+    activate IP
+    OS->>SD: publish service descriptor (introduction point)
+    Client->>RP: choose a relay
+    activate RP
+    Client->>SD: request service descriptor
+    Client->>IP: request service (rendezvous point)
+    IP->>OS: pass the request
+    deactivate IP
+    OS->>RP: meet the client
+    deactivate RP
+  ```
+  - Onion Service
+    - Period
+      ```
+      period_number = floor(unix_timestamp / period_length)
+      period_length = 1440 min [default 1 day]
+      ```
+
+    - Identity Key
+      > A 32 bytes ed25519 master key pair.
+      ```
+      identity_pubkey
+      identity_prikey
+      ```
+
+    - Blinded Key
+      > A daily-rotated identifier derived from **identity_pubkey**
+      > related to the **period_number** and **period_length**.
+      ```
+      blinded_pubkey
+      blinded_prikey
+      ```
+
+    - Descriptor Key
+      > A key pair signed by **blinded_prikey** that is used to sign
+      > the service descriptors.
+
+    - Credential & Subcredential
+      ```
+      CREDENTIAL    = SHA3_256("credential" | identity_pubkey)
+      SUBCREDENTIAL = SHA3_256("subcredential" | CREDENTIAL | blinded_pubkey)
+      ```
+
+    - Service Address (v3)
+      > A 56 bytes long base32 encoded string with ".onion" suffix.
+      ```
+      service_address = base32(identity_pubkey | CHECKSUM | VERSION) + ".onion"
+      CHECKSUM        = blake2b(".onion checksum" | identity_pubkey | VERSION)[:2]
+      VERSION         = "\x03"
+      ```
+
+  - Hidden Service Directory (HSDir)
+    > A subset of Tor relays that store **service descriptors**.
+
+    - Descriptor ID
+      > One can determine the HDDir that stores the **service_descripter**
+      > from the **identity_pubkey** (embeded in the **service_address**) and the timestamp.
+      >
+      > Distributed Hash Table (DHT) Model
+      > - The first **hsdir_spread_store** relays with the **relay_id**
+      >   greater than **descriptor_id** are the target HSDirs.
+      > 
+      > - Client choose the HSDir randomly from **hsdir_spread_fetch** relays
+      >   start from the first match.
+
+      ```
+      hsdir_n_replicas    = an integer in range [1, 16] with default value 2.
+      hsdir_spread_fetch  = an integer in range [1,128] with default value 3.
+      hsdir_spread_store  = an integer in range [1,128] with default value 4.
+      shared_random_value = a pre-shared value determined by directory authorities for each period.
+
+      descriptor_id = SHA3-256("stored-at-idx" | blinded_pubkey | hsdir_n_replicas | period_length | period_number)
+      relay_id      = SHA3-256("node-idx" | node_identity | shared_random_value | period_number | period_length)
+      ```
+    - Service Descriptor
+      > A service descriptor contains the introduction points, as long
+      > as the signature, which can be verified by the pubkey embedded
+      > in the service address.
+      >
+      > [HS-DESC-ENCRYPTION-KEYS](https://spec.torproject.org/rend-spec/hsdesc-encrypt.html#HS-DESC-ENCRYPTION-KEYS)
+
+      - descriptor-lifetime
+      - descriptor-signing-key-cert
+        > A certificate that is signed by the blinded key to ensure the integrity.
+      - superencrypted
+        > Data encrypted with a symmetric key derived from **blinded_pubkey**
+        > and **SUBCREDENTIAL** to make sure the client knows the **service_address**.
+        - auth-client
+          > Decrypt information for authenticated users if restricted
+          > discovery is enabled.
+        - encrypted
+          > Data encrypted with a symmetric key derived from **blinded_pubkey**,
+          > **subcredentail**, and **descriptor_cookie** (if restricted
+          > discovery is enabled, leave blank otherwise)
+          - introduction-point
+            > Provide 3 relays by default.
+      - signature
+  - Introduction Point
+    > An onion service establishes long-term circuits to 3 different
+    > Tor relays, called introduction points, to conceal its location
+    > from clients.
+    >
+    > A client selects one of these introduction points, as listed in
+    > the service descriptor, to initiate communication with the
+    > service.
+  - Rendezvous Point
+    - verify secret from both side
+
+
+### Technique
+
+
+#### Broken Access Control
 - Insecure Direct Object References (IDOR)
 
-### Cache Poisoning
+#### Cache Poisoning
 
-### Command Injection
+#### Command Injection
 - Basic
   - $ ping 127.0.0.1 `; id`
   - $ ping 127.0.0.1 `| id`
@@ -804,7 +1081,7 @@ This is a payload collection and references for CTF challenges.
   - $ cat /f?a?
   - $ cat ${HOME:0:1}etc${HOME:0:1}passwd
 
-### CRLF Injection
+#### CRLF Injection
 - Inject `\r\n` to headers
 
   ```txt
@@ -841,7 +1118,7 @@ This is a payload collection and references for CTF challenges.
   SET key "value"\r\n
   ```
 
-### CSRF
+#### CSRF
 - Cookies Security
   - HttpOnly
   - Secure
@@ -859,7 +1136,7 @@ This is a payload collection and references for CTF challenges.
     - [SameSite Cookie Changes in February 2020: What You Need to Know](https://blog.chromium.org/2020/02/samesite-cookie-changes-in-february.html)
   - CSRF token
 
-### CSS Injection
+#### CSS Injection
 - expression()
 - import URL (CSRF)
   - Referer
@@ -885,7 +1162,7 @@ This is a payload collection and references for CTF challenges.
   <input type="text" name="csrf" avlue="2e58ca...">
   ```
 
-### Deserialization
+#### Deserialization
 - ASP.NET Deserialization
   > `ViewState`, `Session`, ... are highly possible to have serialize data
   > encrypted by `machine key` stored in `web.config`.
@@ -961,7 +1238,7 @@ This is a payload collection and references for CTF challenges.
     #pickletools.dis(serialized)
     ```
 
-### DOM Clobbering
+#### DOM Clobbering
 - Inject HTML into a page to manipulate the DOM to change the behavior of JavaScript on the page
   - Access by `id` directly or by `windows.id`
     ```html
@@ -1011,9 +1288,9 @@ This is a payload collection and references for CTF challenges.
 - Case Study
   - [XSS in GMail’s AMP4Email via DOM Clobbering](https://research.securitum.com/xss-in-amp4email-dom-clobbering/)
 
-### HTTP Desync Attacks
+#### HTTP Desync Attacks
 
-### Local File Inclusion (LFI)
+#### Local File Inclusion (LFI)
 - RCE
   - [PHP filter chain generator](https://github.com/synacktiv/php_filter_chain_generator)
   - access.log / error.log
@@ -1135,7 +1412,7 @@ This is a payload collection and references for CTF challenges.
     ```
 
         
-### Prototype Pollution
+#### Prototype Pollution
 - `a = new A()`
   - `a`.  \_\_proto\_\_ === `A`.prototype
 - `undefined` may be replaced when its prototype has the attribute.
@@ -1163,7 +1440,7 @@ This is a payload collection and references for CTF challenges.
   - [Client-Side Prototype Pollution](https://github.com/BlackFan/client-side-prototype-pollution)
   - [Exploiting Client-Side Prototype Pollution in the wild](https://blog.s1r1us.ninja/research/PP)
 
-### SQL Injection
+#### SQL Injection
 - Type
   > Prevent: Parameterized Query, Prepared Statement
 
@@ -1226,7 +1503,7 @@ This is a payload collection and references for CTF challenges.
   |              | `SELECT table_name FROM information_schema.tables WHERE table_schema = '<database>';`                  | Tables    |
   |              | `SELECT group_concat(column_name) FROM information_schema.columns WHERE table_schema = '<database>' AND table_name = '<table>'`  | Columns   |
 
-### SSRF
+#### SSRF
 > [SSRF bible Cheatsheet](https://cheatsheetseries.owasp.org/assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_SSRF_Bible.pdf)
 
 - Scheme
@@ -1307,7 +1584,7 @@ This is a payload collection and references for CTF challenges.
   - [$1.000 SSRF in Slack](https://elbs.medium.com/1-000-ssrf-in-slack-7737935d3884)
   - [A New Era of SSRF - Exploiting URL Parser in Trending Programming Languages!](https://www.blackhat.com/docs/us-17/thursday/us-17-Tsai-A-New-Era-Of-SSRF-Exploiting-URL-Parser-In-Trending-Programming-Languages.pdf)
 
-### SSTI
+#### SSTI
 - Identify Template Engine
   ![](https://miro.medium.com/max/701/1*3hIShkWH_gjOt1b0LNPURQ.png)
 - Jinja2
@@ -1427,13 +1704,13 @@ This is a payload collection and references for CTF challenges.
   - `<%= global.process.mainModule.require("child_process").execSync("id").toString() %>`
 - Format String Attack
 
-### XS-Leaks
-> [xsleaks.dev](https://xsleaks.dev/)
+#### XS-Leaks
+> [XS-Leaks Wiki](https://xsleaks.dev/)
 > [xsleaks/xsleaks](https://github.com/xsleaks/xsleaks)  
 
 - Browser-based side channel attack  
 
-### XSS
+#### XSS
 > [Cross-site scripting (XSS) cheat sheet](https://portswigger.net/web-security/cross-site-scripting/cheat-sheet)
 
 - Type
@@ -1474,7 +1751,7 @@ This is a payload collection and references for CTF challenges.
   - [Mutation XSS in Google Search](https://www.acunetix.com/blog/web-security-zone/mutation-xss-in-google-search/)
   - [Breaking XSS mitigations via Script Gadgets](https://www.blackhat.com/docs/us-17/thursday/us-17-Lekies-Dont-Trust-The-DOM-Bypassing-XSS-Mitigations-Via-Script-Gadgets.pdf)
 
-### XXE (XML External Entity Injection)
+#### XXE (XML External Entity Injection)
 
 
 ## Programming & Framework
@@ -1578,6 +1855,7 @@ This is a payload collection and references for CTF challenges.
   - [php.net](https://www.php.net/)
 - Weak Type (comparison `==`)
   - [PHP Truth Table](https://www.php.net/manual/en/types.comparisons.php)
+  - [String to Number Comparison](https://www.php.net/manual/en/migration80.incompatible.php#migration80.incompatible.core.string-number-comparision)
   - `0eXXXX == 0eYYYY`
   - PHP Array
     - $arr[idx] <-> $arr{idx}
