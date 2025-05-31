@@ -1,4 +1,5 @@
-# Programming & Framework
+# Programming
+<!-- toc -->
 
 ## C
 - .init / .fini
@@ -24,6 +25,7 @@
 
 ## Shell
 - [Shell Parameter Expansion](https://www.gnu.org/software/bash/manual/html_node/Shell-Parameter-Expansion.html#Shell-Parameter-Expansion)
+
   | Parameter Expansion   | x="a1 b1 c2 d2" |
   |:----------------------|:----------------|
   | `${x#*1}`             | &nbsp; b1 c2 d2 |
@@ -34,6 +36,7 @@
   | `${x//1/3}`           | a3 b3 c2 d2     |
   | `${x//?1/z3}`         | z3 z3 c2 d2     |
   | `${x:0:2}`            | a1              |
+
 - Command
   - printf
 

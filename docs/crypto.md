@@ -1,24 +1,25 @@
 # Crypto
+<!-- toc -->
 
 ## Tool
 
 ### Decrypt
 - pyCryptodome
 - Crypto.Util.number
+
   | Function | Comment         |
   |:---------|:----------------|
   | inverse  | modulus inverse |
+
 - Sage
   - [sagemath](https://sagecell.sagemath.org/)
   - [CoCalc](https://cocalc.com/)
-
 
 ### Brute Force
 - hashcat
 - hydra
   - crunch
 - unt-wister
-
 
 ### openssl
 - Generate
@@ -212,7 +213,6 @@
 
 ## Background
 
-
 ### Cryptanalysis
 - Kerckhoff's Principle
 - Classical Cryptanalysis
@@ -225,7 +225,6 @@
       - Letter Frequency Analysis
 - Implementation Attacks
 - Social Engineering
-
 
 ### Symmetric Cipher
 - Stream Cipher

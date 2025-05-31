@@ -1,4 +1,5 @@
 # System
+<!-- toc -->
 
 ## Tool
 
@@ -86,8 +87,6 @@
   > [Understanding a negative offset of a registry data reference to a dll file](https://stackoverflow.com/questions/7350480/understanding-a-negative-offset-of-a-registry-data-reference-to-a-dll-file)
   > - Positive numbers are resource indices. Negative numbers (once you've removed the minus sign) are resource identifiers  
   > - `EmbedCtxt=@FirewallAPI.dll,-32252`
-
-
 
 #### Active Directory (AD)
 - Command
@@ -177,6 +176,7 @@
     ```
 
 - Important Instance
+
   | Namespace | ClassName |
   |-----------|-----------|
   | `root/Microsoft/Windows/Defender` | `MSFT_MpComputerStatus` |
@@ -225,12 +225,13 @@
       >
       > A "fake" prefix which refers to per-user Dos devices
       >
-      > ![file path handling, user / kernal mode](https://i.stack.imgur.com/LOeeO.png)
+      > ![file path handling, user / kernal mode](https://i.sstatic.net/LOeeO.png)
     - | Path         | Content             |
       |:-------------|:--------------------|
       | `\Global??\` | Win32 namespace     |
       | `\Device\`   | Named device object |
 - Reserved Name (`\Global??\`)
+
   | Filename | Meaning |
   |:----|:---------------------------|
   | CON | console (input and output) |
@@ -293,57 +294,7 @@
 ### Linux 🐧
 > https://gtfobins.github.io/
 
-
 ### macOS 🍎
 - Resource Fork
 - Named Fork
 - Data Fork
-
-
-## Technique
-
-
-### DLL Injection
-- [Injecting API Hooking Attack with DLL Injection | S12 - H4CK](https://medium.com/@s12deff/injecting-api-hooking-attack-with-dll-injection-897548af47a8)
-- [Malware Technique: DLL Injection | Ricky Severino](https://rickyseverino.medium.com/malware-technique-dll-injection-ffcb960ab2a1)
-  ```mermaid
-  flowchart
-
-  malproc((malicious process))
-
-  malproc --> GetCurrentProcess --handle--> OpenProcessToken --handle--> AdjustTokenPrivileges
-  malproc --SE_DEBUG_NAME--> LookupPrivilegeValue --LUID--> AdjustTokenPrivileges
-
-  malproc --target process name--> CreateToolhelp32Snapshot --pid--> OpenProcess --hProcess--> VirtualAllocEx --lpRemoteMemory--> WriteProcessMemory
-  malproc --injected dll path-->GetFullPathName --path--> WriteProcessMemory
-
-  malproc --kernel32.dll--> GetModuleHandle --hKernel32--> GetProcAddress --lpLoadLibrary--> CreateRemoteThread
-  OpenProcess --hProcess--> CreateRemoteThread
-  VirtualAllocEx --lpRemoteMemory--> CreateRemoteThread --> dll((injected dll))
-
-  AdjustTokenPrivileges -. needed when process owned by another account .-> VirtualAllocEx
-  WriteProcessMemory -.-> CreateRemoteThread
-  ```
-
-### Persistent
-- Startup
-  - 🟦 `%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup\` (`$ shell:startup`)  
-    🟦 `%SystemDrive%\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp` (`$ shell:Common Startup`)
-  - 🟦 `HKLM\Software\Microsoft\Windows\CurrentVersion\Run\`  
-    🟦 `HKLM\Software\Microsoft\Windows\CurrentVersion\RunOnce\`  
-    🟦 `HKCU\Software\Microsoft\Windows\CurrentVersion\Run\`  
-    🟦 `HKCU\Software\Microsoft\Windows\CurrentVersion\RunOnce\`
-  - 🐧 `/etc/profile`
-- Service
-  - 🟦 `HKLM\SYSTEM\CurrentControlSet\Services\`  
-    🟦 `HKLM\SYSTEM\CurrentControlSet\Control\SafeBoot\`
-- Scheduled
-  - 🟦 `$ taskschd.msc`  
-    🟦 `$ schtasks /query /FO list /V`  
-    🟦 `%SystemRoot%\System32\Tasks\`  
-    🟦 `%SystemRoot%\Tasks\`  
-    🟦 `HKLM\Software\Microsoft\Windows NT\CurrentVersion\Schedule\Taskcache\Tasks\`  
-    🟦 `HKLM\Software\Microsoft\Windows NT\CurrentVersion\Schedule\Taskcache\Tree\`
-  - 🟦 GPO
-  - 🐧 `/etc/crontab`  
-    🐧 `/etc/cron.d/`

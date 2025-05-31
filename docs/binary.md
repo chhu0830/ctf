@@ -1,4 +1,5 @@
 # Binary
+<!-- toc -->
 
 ## Tool
 
@@ -9,12 +10,14 @@
 
 #### ELF
 - readelf
+
   | Usage | Description |
   |-------|-------------|
   | `$ readelf -S <binary>` | Display the sections' header. |
   | `$ readelf -s <binary>` | Display the symbol table. |
 
 - objdump
+
   | Usage | Description |
   |-------|-------------|
   | `$ objdump -x <binary>` | Display the contents of all headers. |
@@ -31,6 +34,7 @@
 - CFF Explorer (ExplorerSuite)
 - Signature Explorer (ExplorerSuite)
 - 010 editor
+
 
 ### Pack Detector
 - PEiD
@@ -50,6 +54,7 @@
 
 ### Debugger
 - IDA pro
+
   | Usage                                                | Description            |
   |:-----------------------------------------------------|:-----------------------|
   | `<S-F1>`                                             | set variable structure |
@@ -59,29 +64,33 @@
   | `y`                                                  | type declaration       |
   | `<C-f>`                                              | search                 |
   | `<R>` > `reset pointer type` > `create new struct type` |                        |
+
   - [IDA Skins](https://github.com/zyantific/IDASkins)
 - Ghidra
 - Windbg preview
 - x64dbg
+
   | Usage       | Description  |
   |:------------|:-------------|
   | `<Space>`   | modify code  |
   | `<C-p>`     | patch binary |
   | `<R>` > `s` | search       |
+
 - gdb
+
   | Usage  | Description |
   |:-------|:------------|
   | watch  |             |
   | rwatch |             |
   | awatch |             |
   | x/[N][g,w,h,b]x | |
+
   - plugins
     - peda
     - gef
     - pwndbg
     - pwngdb
 - CheatEngine72
-
 
 ### Running Environ
 - x86 binary on x64 OS
@@ -96,7 +105,6 @@
   - pintool
   - strace / ltrace
 
-
 ### Payload
 - pwntools
 - one\_gadget
@@ -105,9 +113,9 @@
 
 ## Background
 
-
 ### Calling Convention
 - Compare
+
   | Type                             | Platform            | Ret     | Parameters                  | Stack Cleaner | Note                                      | 
   |----------------------------------|---------------------|---------|-----------------------------|---------------|-------------------------------------------|
   | stdcall                          | Win32 API           | eax     | stack                       | callee        |                                           |
@@ -172,6 +180,7 @@
     - SectionAlignment: 0x1000
     - Page Model
 - [PE Format](https://learn.microsoft.com/en-us/windows/win32/debug/pe-format)
+
   | Layout  |                               |
   |:--------|:------------------------------|
   | Headers | Dos MZ Header                 |
@@ -185,16 +194,3 @@
   | Null    |                               |
   | .rsrc   |                               |
   | Null    |                               |
-
-
-## Technique
-
-
-### Buffer Over Flow
-
-
-### Fuzzing
-
-
-### Heap
-> [how2heap](https://github.com/shellphish/how2heap)
