@@ -2,7 +2,7 @@
 This is a payload collection and references for CTF challenges.
 - Guide
   - [HackTricks](https://book.hacktricks.xyz/welcome/readme)  
-  - [PortSwigger Web Security Academy](https://portswigger.net/web-security)
+  - [Red Team Notes](https://www.ired.team/)
   - [Bamboofox](https://bamboofox.cs.nctu.edu.tw/courses)
   - [Computer Security](https://edu-ctf.csie.org/)
   - [Hacker101](https://www.hacker101.com/resources)
@@ -15,29 +15,28 @@ This is a payload collection and references for CTF challenges.
   - [Hack The Box](https://www.hackthebox.com/)
   - [prompt(1) to win](https://prompt.ml/0)
   - [TryHackMe](https://tryhackme.com)
-- Real World
   - [Hackerone Bug Bounty](https://hackerone.com/directory/programs)
-  - [SOCPrime](https://socprime.com/)
-  - [AlienVault](https://otx.alienvault.com/)
-  - [Anomali](https://www.anomali.com/)
+- Threat Hunting
   - [MITRE ATT&CK](https://attack.mitre.org/)
-- Certification
-  - CEHP
-  - OSCP
-  - C|PENT
+  - [Hunting Queries Detection Rules | Bert-JanP](https://github.com/Bert-JanP/Hunting-Queries-Detection-Rules)
+  - [SOCPrime](https://tdm.socprime.com/light-search/) - SIGMA Rules  
+  - [AlienVault](https://otx.alienvault.com/api) - STIX/TAXII Feed
+  - [Anomali Limo](https://www.anomali.com/blog/anomali-limo-service) - STIX/TAXII Feed
+  - [Malpedia](https://malpedia.caad.fkie.fraunhofer.de/library)
 - News
   - [CISA](https://www.cisa.gov/)
   - [MS-ISAC]
   - [BleepingComputer](https://www.bleepingcomputer.com/)
   - [The Hacker News](https://thehackernews.com/)
   - [PENETRATION TESTING BLOG](https://securityonline.info/)
-
+- Certification
+  - CEHP
+  - OSCP
+  - C|PENT
 
 ## Binary
 
-
 ### Tool
-
 
 #### File Analyzer
 
@@ -85,36 +84,33 @@ This is a payload collection and references for CTF challenges.
 - [dnSpy](https://github.com/dnSpy/dnSpy) (.Net Framwork)
 - Telerik/JustAssembly
 
-
 #### Debugger
 - IDA pro
-  - Command
-    | Key                                                  | Comment                |
-    |:-----------------------------------------------------|:-----------------------|
-    | `<S-F1>`                                             | set variable structure |
-    | `<S-F12>`                                            | string list            |
-    | `r` / `h`                                            | encode                 |
-    | `x`                                                  | xrefs                  |
-    | `y`                                                  | type declaration       |
-    | `<C-f>`                                              | search                 |
-    | `<R>` > reset pointer type > create  new struct type |                        |
+  | Usage                                                | Description            |
+  |:-----------------------------------------------------|:-----------------------|
+  | `<S-F1>`                                             | set variable structure |
+  | `<S-F12>`                                            | string list            |
+  | `r` / `h`                                            | encode                 |
+  | `x`                                                  | xrefs                  |
+  | `y`                                                  | type declaration       |
+  | `<C-f>`                                              | search                 |
+  | `<R>` > `reset pointer type` > `create new struct type` |                        |
   - [IDA Skins](https://github.com/zyantific/IDASkins)
 - Ghidra
 - Windbg preview
 - x64dbg
-  | Key         | Comment      |
+  | Usage       | Description  |
   |:------------|:-------------|
-  | `<space>`   | modify code  |
+  | `<Space>`   | modify code  |
   | `<C-p>`     | patch binary |
   | `<R>` > `s` | search       |
 - gdb
-  - command
-    | Cmd    | Comment |
-    |:-------|:--------|
-    | watch  |         |
-    | rwatch |         |
-    | awatch |         |
-    | x/[N][g,w,h,b]x | |
+  | Usage  | Description |
+  |:-------|:------------|
+  | watch  |             |
+  | rwatch |             |
+  | awatch |             |
+  | x/[N][g,w,h,b]x | |
   - plugins
     - peda
     - gef
@@ -302,10 +298,10 @@ This is a payload collection and references for CTF challenges.
     )
 
     #CA in one command
-    openssl req -new -out ca.crt -sha256 \
+    openssl req -new -sha256 -x509 -days 3650 -out ca.crt \
       -newkey rsa:4096 -nodes -keyout ca.key \
       -subj "/C=TW/ST=Taiwan/L=Hsinchu/O=Organization/OU=Organization Unit/CN=Common Name" \
-      -x509 -days 7300
+      -addext "subjectAltName=DNS:example.com"
       ```
 
   - Sign certificate
@@ -557,16 +553,14 @@ This is a payload collection and references for CTF challenges.
 
 ## System
 
-
 ### Tool
-
 
 #### Malware Scanner
 - [Microsoft Safety Scanner](https://docs.microsoft.com/en-us/windows/security/threat-protection/intelligence/safety-scanner-download)
+- [MSRT (Windows Malicious Software Removal Tool)](https://www.microsoft.com/en-us/download/details.aspx?id=9905)
 - [Trend Micro Anti-Threat Toolkit](https://www.trendmicro.com/zh_tw/business/capabilities/solutions-for/ransomware/free-tools.html)
 - [VirusTotal](https://www.virustotal.com/gui/)
 - [nodistribute](https://nodistribute.com/)
-
 
 #### System Forensic
 - wireshark
@@ -581,7 +575,6 @@ This is a payload collection and references for CTF challenges.
 - Driver List (ExplorerSuite)
 - FTK Imager
 
-
 #### Vulnerability Assessment
 - OpenVAS
 - metasploit
@@ -591,11 +584,11 @@ This is a payload collection and references for CTF challenges.
 
 ### Background
 
-
 #### Windows 🟦
 > https://lolbas-project.github.io/
 
 - Common Command
+
   | Run | Pannel |
   |-----|--------|
   | `control` | `控制台`
@@ -606,110 +599,203 @@ This is a payload collection and references for CTF challenges.
   | `winver` | 
   | `msinfo32` |
 
-- Essential Folder
-  | Folder | Usage |
-  |--------|-------|
-  | `%SystemRoot%\System32\Tasks` | Schedule Tasks |
-  | `%SystemRoot%\Tasks` | Schedule Tasks (Legacy) |
-  | `%SystemRoot%\System32\winevt\Logs` | Event Logs |
-  | `%SystemRoot%\System32\config` | HKLM |
-  | `%USERPROFILE%\NTUSER.DAT` | HKCU |
-  | `%LOCALAPPDATA%\Microsoft\Windows\Usrclass.dat` | |
+- Forensic Artifacts
+  - Essential Folder
 
-- Essential Registry
-  | Path | Usage |
-  |------|-------|
-  | `HKLM\System\CurrentControlSet\Services\SharedAccess\Parameters\FirewallPolicy\FirewallRules\{GUID}` | Firewall Policy |
-  | `HKLM\System\CurrentControlSet\Services\BFE\Parameters\Policy\Persistent\Provider\{GUID}` | WFP |
-  | `HKLM\System\CurrentControlSet\Services\BFE\Parameters\Policy\Persistent\Filter\{GUID}` | WFP |
+    | Folder | Usage |
+    |--------|-------|
+    | `%SystemRoot%\System32\Tasks` | Schedule Tasks |
+    | `%SystemRoot%\Tasks` | Schedule Tasks (Legacy) |
+    | `%SystemRoot%\System32\winevt\Logs` | Event Logs |
+    | `%SystemRoot%\System32\config` | HKLM |
+    | `%USERPROFILE%\NTUSER.DAT` | HKCU |
+    | `%LOCALAPPDATA%\Microsoft\Windows\Usrclass.dat` | |
+    | `C:\$Recycle.Bin` |
 
-- Active Directory (AD)
-  - Command
-    - `$ Get-ADObject -Filter * -Properties *`  
-    - `$ Get-ADObject -Filter {ObjectGUID -eq <GUID>} -Properties *`
-  - Event
-    - `5137` `A directory service object was created`
+  - Essential Registry
 
-- wmi
-  - GUI Tool
-    - wbemtest
-    - WMI Explorer
-  - Command
-    | Description | Powershell | wmic | WQL |
-    |-------------|------------|------|-------|
-    | List Namespaces | `Get-CimInstance [-Namespace <namespace:(root/cimv2)>] -ClassName __NAMESPACE` | | `SELECT * From __NAMESPACE` |
-    | List Classes | `Get-CimClass [-Namespace <namespace:(root/cimv2)>] [[-ClassName] <classname:(*)>]` |
-    | List Instances | `Get-CimInstance [-Namespace <namespace:(root/cimv2)>] -ClassName <classname>` | `wmic [/namespace:<namespace:(\\root\cimv2)>] path <classname>` | `Select * From <classname>` |
-    
-  - Important Instance
-    | Namespace | ClassName |
-    |-----------|-----------|
-    | `root/Microsoft/Windows/Defender` | `MSFT_MpComputerStatus` |
-    | `root/SecurityCenter2` | `AntivirusProduct` |
-    | `root/SecurityCenter2` | `FirewallProduct` |
-    | `root/cimv2` | `Win32_Account` |
-    | `root/cimv2` | `Win32_LoggedOnUser` |
-    | `root/cimv2` | `Win32_Process` |
+    | Path | Usage |
+    |------|-------|
+    | `HKCR\` | `{HKLM,HKCU}\Software\Classes` |
+    | `HKLM\SYSTEM\CurrentControlSet\Control\SafeBoot`
+    | `HKLM\System\CurrentControlSet\Control\HiveList` | Reg mapping to file |
+    | `HKLM\SYSTEM\CurrentControlSet\Services\` |
+    | `HKLM\System\CurrentControlSet\Services\BFE\Parameters\Policy\Persistent\Filter\{GUID}` | WFP |
+    | `HKLM\System\CurrentControlSet\Services\BFE\Parameters\Policy\Persistent\Provider\{GUID}` | WFP |
+    | `HKLM\System\CurrentControlSet\Services\SharedAccess\Parameters\FirewallPolicy\FirewallRules\{GUID}` | Firewall Policy |
+
+  - File
+    - `$ fsutil file queryfileid <file>`
+    - `$ (Get-Item filename).lastwritetime=(Get-Date "mm/dd/yyyy hh:mm am/pm")`
+  - Process
+    - `$ tasklist`
+    - `$ wmic process`
+    - `$ Get-CimInstance -ClassName Win32_Process`
+  - Task Scheduler
+    - `$ schtasks`
 
 - `SET __COMPAT_LAYER=RunAsInvoker`
-- File
-  - `fsutil file queryfileid <file>`
-  - `$(Get-Item filename).lastwritetime=$(Get-Date "mm/dd/yyyy hh:mm am/pm")`
-- NTFS Stream
-  > [NTFS File Structure](https://www.researchgate.net/profile/Costas_Katsavounidis2/publication/363773832_Master_File_Table_MFT_on-disk_Structures_NTFS_31_httpsgithubcomkacos2000MFT_Browser/links/632da89086b22d3db4d9afad/Master-File-Table-MFT-on-disk-Structures-NTFS-31-https-githubcom-kacos2000-MFT-Browser.pdf)  
-  > [NTFS Streams](https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-fscc/c54dec26-1551-4d3a-a0ea-4fa40f848eb3)  
-  > [File Streams (Local File Systems)](https://docs.microsoft.com/en-us/windows/win32/fileio/file-streams)  
-  - `fsutil file layout <file>`
-  - Extended Attribute
-    - `fsutil file queryEA <file>`
-    - WSL metadata
-  - Alternative Data Stream
-    ```cmd
-    echo abc > note.txt:abc.txt
-    echo C:\Windows\System32\cmd.exe > note.txt:cmd.exe
-    dir /R
+- Registry data reference to a dll file
+  > [Understanding a negative offset of a registry data reference to a dll file](https://stackoverflow.com/questions/7350480/understanding-a-negative-offset-of-a-registry-data-reference-to-a-dll-file)
+  > - Positive numbers are resource indices. Negative numbers (once you've removed the minus sign) are resource identifiers  
+  > - `EmbedCtxt=@FirewallAPI.dll,-32252`
 
-    wmic process call create note.txt:cmd.exe
-    forfiles /M note.txt /C "note.txt:cmd.exe"
 
-    Get-Content note.txt -stream abc.txt
-    more < note.txt:abc.txt:$DATA
+
+##### Active Directory (AD)
+- Command
+  - `$ Get-ADObject -Filter * -Properties *`  
+  - `$ Get-ADObject -Filter {ObjectGUID -eq <GUID>} -Properties *`
+- Event
+  - `Security` `5137` `A directory service object was created`
+
+##### WMI
+> **WMI** (Windows Management Instrumentation) is the Microsoft
+> implementation of **WBEM** (Web-Based Enterprise Management), a set
+> of specifications published by **DMTF** (Distributed Management Task
+> Force) that define how resources modeled using **CIM** (Common
+> Information Model) can be discovered, accessed and manipulated.
+
+> [Windows Management Instrumentation | Microsoft](https://learn.microsoft.com/en-us/windows/win32/wmisdk/wmi-start-page)  
+> [WMI Internals Part 1 | Jonathan Johnson](https://jsecurity101.medium.com/wmi-internals-part-1-41bb97e7f5eb)
+
+- Architecture
+  - WMI Provider
+    > A COM object (COM server) that monitor managed objects, which are
+    > logical or physical enterprise components, such as proccesses,
+    > OS, or hard disk.
+    > 
+    > `C:\Windows\System32\wbem\*`
+    - DLL
+      > COM Object
+    - MOF (Managed Object Format)
+      > A definition for a WMI class.
+  - WMI Infrastructure
+    > svchosts.exe [Winmgmt service] (`C:\WINDOWS\system32\wbem\WMIsvc.dll`)
+    >
+    > Load appropriate WMI Provider (DLL) into WMI Provider Host
+    > (WmiPrvSE, `C:\WINDOWS\system32\wbem\wmiprvse.exe`).
+
+    - WMI Core (CIM Object Manager, CIMOM)
+      > Act as the intermediary between the provider, management applications, and the WMI repository.
+    - WMI Repository
+      > Holding static data at `C:\Windows\System32\wbem\Repository\`, such as Classes.
+  - WMI Consumer (Management Application)
+    - wmic
+    - powershell
+    - wbemtest
+    - WMI Explorer
+- Command
+  - List Namespace
+
     ```
-- [Naming Files, Paths, and Namespaces](https://docs.microsoft.com/en-us/windows/win32/fileio/naming-a-file)
-  - Namespace
-    - Win32 File Namespace
-      - `\\?\`
-        > tells the Windows APIs to disable all string parsing and to send the string that follows it straight to the file system
-      - `\\?\GLOBALROOT\Device\ConDrv\Console`
-        > `\\?\GLOBALROOT` ensures that the path following it looks in the true root path of the system object manager and not a session-dependent path
-    - Win32 Device Namespace
-      - `\\.\`
-        > access the Win32 device namespace instead of the Win32 file namespace
-    - NT Namespace
-      - `\??\` 
-        > NT Object Manager paths that can look up DOS-style devices like drive letters
-        > 1. process's `DosDevices` table
-        > 2. `\GLOBAL??` Object Manager directory
-        >
-        > A "fake" prefix which refers to per-user Dos devices
-        >
-        > ![file path handling, user / kernal mode](https://i.stack.imgur.com/LOeeO.png)
-      - | Path         | Content             |
-        |:-------------|:--------------------|
-        | `\Global??\` | Win32 namespace     |
-        | `\Device\`   | Named device object |
-  - Reserved Name (`\Global??\`)
-    | Filename | Meaning |
-    |:----|:---------------------------|
-    | CON | console (input and output) |
-    | AUX | an auxiliary device. In CP/M 1 and 2, PIP used PUN: (paper tape punch) and RDR: (paper tape reader) instead of AUX: |
-    | LST | list output device, usually the printer |
-    | PRN | as LST:, but lines were numbered, tabs expanded and form feeds added every 60 lines |
-    | NUL | null device, akin to /dev/null |
-    | EOF | input device that produced end-of-file characters, ASCII 0x1A |
-    | INP | custom input device, by default the same as EOF: |
-    | OUT | custom output device, by default the same as NUL: |
-- Remote Command
+    PS$ Get-CimInstance [-Namespace <namespace:(root/cimv2)>] -ClassName __NAMESPACE
+
+    WQL$ SELECT * From __NAMESPACE
+    ```
+
+  - List Class
+
+    ```
+    PS$ Get-CimClass [-Namespace <namespace:(root/cimv2)>] [[-ClassName] <classname:(*)>]
+    ```
+
+  - List Instance
+
+    ```
+    PS$ Get-CimInstance [-Namespace <namespace:(root/cimv2)>] -ClassName <classname>
+
+    CMD$ wmic [/namespace:<namespace:(\\root\cimv2)>] path <classname>
+
+    WQL$ Select * From <classname>
+    ```
+
+  - Invoke CIM Method
+
+    ```powershell
+    PS$ Get-CimClass -MethodName *Create*
+
+    PS$ (Get-CimInstance __Provider -Filter "Name = '$(([WmiClass] 'Win32_Process').Qualifiers['provider'].Value)'").CLSID
+    {d63a5850-8f16-11cf-9f47-00aa00bf345c}
+
+    PS$ Get-ItemPropertyValue -Path "Registry::HKEY_CLASSES_ROOT\CLSID\{d63a5850-8f16-11cf-9f47-00aa00bf345c}\InprocServer32\" -Name '(default)'"
+    C:\WINDOWS\system32\wbem\cimwin32.dll
+
+    PS$ (Get-CimClass -ClassName Win32_Process).CimClassMethods['Create'].Parameters
+    PS$ type C:\Windows\System32\wbem\cimwin32.mof
+
+    PS$ $Win32_ProcessStartupClass = Get-CimClass -ClassName Win32_ProcessStartup
+    PS$ $ProcessStartupInformation = New-CimInstance -CimClass $Win32_ProcessStartupClass -Property @{'ShowWindow' = 0} -ClientOnly #0 = SW_HIDDEN
+    PS$ Invoke-CimMethod -ClassName Win32_Process -MethodName Create -Arguments @{CommandLine='notepad.exe'; CurrentDirectory='C:\'; ProcessStartupInformation=$ProcessStartupInformation}'}
+    ```
+
+- Important Instance
+  | Namespace | ClassName |
+  |-----------|-----------|
+  | `root/Microsoft/Windows/Defender` | `MSFT_MpComputerStatus` |
+  | `root/SecurityCenter2` | `AntivirusProduct` |
+  | `root/SecurityCenter2` | `FirewallProduct` |
+  | `root/cimv2` | `Win32_Account` |
+  | `root/cimv2` | `Win32_LoggedOnUser` |
+  | `root/cimv2` | `Win32_Process` |
+
+##### NTFS Stream
+> [NTFS File Structure](https://www.researchgate.net/profile/Costas_Katsavounidis2/publication/363773832_Master_File_Table_MFT_on-disk_Structures_NTFS_31_httpsgithubcomkacos2000MFT_Browser/links/632da89086b22d3db4d9afad/Master-File-Table-MFT-on-disk-Structures-NTFS-31-https-githubcom-kacos2000-MFT-Browser.pdf)  
+> [NTFS Streams](https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-fscc/c54dec26-1551-4d3a-a0ea-4fa40f848eb3)  
+> [File Streams (Local File Systems)](https://docs.microsoft.com/en-us/windows/win32/fileio/file-streams)  
+- `fsutil file layout <file>`
+- Extended Attribute
+  - `fsutil file queryEA <file>`
+  - WSL metadata
+- Alternative Data Stream
+  ```cmd
+  echo abc > note.txt:abc.txt
+  echo C:\Windows\System32\cmd.exe > note.txt:cmd.exe
+  dir /R
+
+  wmic process call create note.txt:cmd.exe
+  forfiles /M note.txt /C "note.txt:cmd.exe"
+
+  Get-Content note.txt -stream abc.txt
+  more < note.txt:abc.txt:$DATA
+  ```
+
+##### [Naming Files, Paths, and Namespaces](https://docs.microsoft.com/en-us/windows/win32/fileio/naming-a-file)
+- Namespace
+  - Win32 File Namespace
+    - `\\?\`
+      > tells the Windows APIs to disable all string parsing and to send the string that follows it straight to the file system
+    - `\\?\GLOBALROOT\Device\ConDrv\Console`
+      > `\\?\GLOBALROOT` ensures that the path following it looks in the true root path of the system object manager and not a session-dependent path
+  - Win32 Device Namespace
+    - `\\.\`
+      > access the Win32 device namespace instead of the Win32 file namespace
+  - NT Namespace
+    - `\??\` 
+      > NT Object Manager paths that can look up DOS-style devices like drive letters
+      > 1. process's `DosDevices` table
+      > 2. `\GLOBAL??` Object Manager directory
+      >
+      > A "fake" prefix which refers to per-user Dos devices
+      >
+      > ![file path handling, user / kernal mode](https://i.stack.imgur.com/LOeeO.png)
+    - | Path         | Content             |
+      |:-------------|:--------------------|
+      | `\Global??\` | Win32 namespace     |
+      | `\Device\`   | Named device object |
+- Reserved Name (`\Global??\`)
+  | Filename | Meaning |
+  |:----|:---------------------------|
+  | CON | console (input and output) |
+  | AUX | an auxiliary device. In CP/M 1 and 2, PIP used PUN: (paper tape punch) and RDR: (paper tape reader) instead of AUX: |
+  | LST | list output device, usually the printer |
+  | PRN | as LST:, but lines were numbered, tabs expanded and form feeds added every 60 lines |
+  | NUL | null device, akin to /dev/null |
+  | EOF | input device that produced end-of-file characters, ASCII 0x1A |
+  | INP | custom input device, by default the same as EOF: |
+  | OUT | custom output device, by default the same as NUL: |
+
+##### Remote Command
   - psexec
     - Make sure `\\<host>\admin$` can be accessed
 
@@ -727,12 +813,34 @@ This is a payload collection and references for CTF challenges.
     wmic /node:<host> /user:<user> /password:<pass> process call create <cmd>
     ```
 
-- Windows Event
+  - winrm
+
+##### Windows Event
+- Command
+
+  ```
+  Get-EventLog
+  ```
+
+  ```
+  Get-WinEvent -ListLog *
+  Get-WinEvent -ListLog System | Format-List -Property *
+  (Get-WinEvent -ListLog Application).ProviderNames
+  (Get-WinEvent -ListProvider <Provider>).Events | Format-Table Id, Description
+  Get-WinEvent -Path C:\Windows\System32\Winevt\Logs\System.evtx
+  ```
+
+- Channel
   - Sysmon
     - [SysmonSimulator](https://rootdse.org/posts/understanding-sysmon-events/)
 
-- minifilter
-- WFP
+##### minifilter
+
+##### WFP
+
+##### AMSI
+
+##### UWP (app container)
 
 
 #### Linux 🐧
@@ -801,7 +909,8 @@ This is a payload collection and references for CTF challenges.
 > [Awesome Web Security](https://github.com/qazbnm456/awesome-web-security)  
 > [Basic concept of Penetration Testing](https://hackmd.io/@boik/ryf5wZM5Q?type=slide#/)  
 > [OWASP Cheat Sheet Series](https://cheatsheetseries.owasp.org/index.html)
-> [OWASP WSTG](https://owasp.org/www-project-web-security-testing-guide/stable/)
+> [OWASP WSTG](https://owasp.org/www-project-web-security-testing-guide/stable/)  
+> [PortSwigger Web Security Academy](https://portswigger.net/web-security)
 
 
 ### Tool
@@ -889,12 +998,6 @@ This is a payload collection and references for CTF challenges.
     > data:[\<mediatype\>][;base64],\<data\>
 
 #### The Onion Routing Protocol (Tor)
-> [The Tor Project](https://www.torproject.org/)  
-> [TOR internals, for those of us who also have a life (1/n) | microlab.red](https://microlab.red/2024/09/03/tor-internals-for-those-of-us-who-also-have-a-life-1-n/)  
-> [TOR internals, for those of us who also have a life (2/n) | microlab.red](https://microlab.red/2024/09/23/tor-internals-for-those-of-us-who-also-have-a-life-2-n/)  
-> [Creating a Testing Tor Network From Scratch | dax](https://medium.com/@dax_dev/creating-a-testing-tor-network-from-scratch-e952d76a18cb)  
-> [Decentralized Routing in Tor Hidden Services](https://medium.com/@kyodo-tech/decentralized-routing-in-tor-hidden-services-40e0bc0793d5)
-
 > Tor is an overlay network.
 > 
 > It is composed by thousands (~ 6-11k) **relays**, connected through
@@ -902,6 +1005,12 @@ This is a payload collection and references for CTF challenges.
 > and received.
 >
 > -- <cite>[microlab.red](https://microlab.red/2024/09/03/tor-internals-for-those-of-us-who-also-have-a-life-1-n/)</cite>
+
+> [The Tor Project](https://www.torproject.org/)  
+> [TOR internals, for those of us who also have a life (1/n) | microlab.red](https://microlab.red/2024/09/03/tor-internals-for-those-of-us-who-also-have-a-life-1-n/)  
+> [TOR internals, for those of us who also have a life (2/n) | microlab.red](https://microlab.red/2024/09/23/tor-internals-for-those-of-us-who-also-have-a-life-2-n/)  
+> [Creating a Testing Tor Network From Scratch | dax](https://medium.com/@dax_dev/creating-a-testing-tor-network-from-scratch-e952d76a18cb)  
+> [Decentralized Routing in Tor Hidden Services](https://medium.com/@kyodo-tech/decentralized-routing-in-tor-hidden-services-40e0bc0793d5)
 
 - Directory Authority
   > They are a set of specialized servers within the Tor network that
