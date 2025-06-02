@@ -1,0 +1,36 @@
+# Introduction
+
+This is a payload collection and references for CTF challenges.
+- Guide
+  - [HackTricks](https://book.hacktricks.xyz/welcome/readme)  
+  - [Red Team Notes](https://www.ired.team/)
+  - [Bamboofox](https://bamboofox.cs.nctu.edu.tw/courses)
+  - [Computer Security](https://edu-ctf.csie.org/)
+  - [Hacker101](https://www.hacker101.com/resources)
+- Practice
+  - [CTF Time](https://ctftime.org/)
+  - [Google CTF](https://capturetheflag.withgoogle.com/)
+  - [picoCTF](https://play.picoctf.org/)
+  - [OverTheWire](https://overthewire.org/wargames/)
+  - [pwnable.tw](https://pwnable.tw/)
+  - [Hack The Box](https://www.hackthebox.com/)
+  - [prompt(1) to win](https://prompt.ml/0)
+  - [TryHackMe](https://tryhackme.com)
+  - [Hackerone Bug Bounty](https://hackerone.com/directory/programs)
+- Threat Hunting
+  - [MITRE ATT&CK](https://attack.mitre.org/)
+  - [Hunting Queries Detection Rules | Bert-JanP](https://github.com/Bert-JanP/Hunting-Queries-Detection-Rules)
+  - [SOCPrime](https://tdm.socprime.com/light-search/) - SIGMA Rules  
+  - [AlienVault](https://otx.alienvault.com/api) - STIX/TAXII Feed
+  - [Anomali Limo](https://www.anomali.com/blog/anomali-limo-service) - STIX/TAXII Feed
+  - [Malpedia](https://malpedia.caad.fkie.fraunhofer.de/library)
+- News
+  - [CISA](https://www.cisa.gov/)
+  - [MS-ISAC]
+  - [BleepingComputer](https://www.bleepingcomputer.com/)
+  - [The Hacker News](https://thehackernews.com/)
+  - [PENETRATION TESTING BLOG](https://securityonline.info/)
+- Certification
+  - CEHP
+  - OSCP
+  - C|PENT
