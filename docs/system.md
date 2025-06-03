@@ -3,6 +3,12 @@
 
 ## Tool
 
+### Vulnerability Assessment
+- OpenVAS
+- metasploit
+- nmap
+- cobaltstrike
+
 ### Malware Scanner
 - [Microsoft Safety Scanner](https://docs.microsoft.com/en-us/windows/security/threat-protection/intelligence/safety-scanner-download)
 - [MSRT (Windows Malicious Software Removal Tool)](https://www.microsoft.com/en-us/download/details.aspx?id=9905)
@@ -11,23 +17,88 @@
 - [nodistribute](https://nodistribute.com/)
 
 ### System Forensic
-- wireshark
-- autopsy
-- sleuthkit
-- OSForensic
-- regsnap
-- Process Monitor (SysinternalsSuite)
-- Porcess Explorer (SysinternalsSuite)
-- WinObj (SysinternalsSuite)
-- Task Explorer (ExplorerSuite)
-- Driver List (ExplorerSuite)
-- FTK Imager
+- File
+  - Disk Forensic
+    - autopsy
+    - OSForensic
+    - FTK Imager
+    - Sleuth Kit
+  - Search
+    - `$ forfile`
+    - `C:\$Recycle.Bin`
+- Registry
+  - Query 
+    - `PS$ dir "Registry::HKLM\"`
+  - Essential Registry
 
-### Vulnerability Assessment
-- OpenVAS
-- metasploit
-- nmap
-- cobaltstrike
+    | Path | Description |
+    |------|-------------|
+    | `HKLM\System\CurrentControlSet\Control\HiveList` | reg file location |
+    | `{HKLM\|HKCU}\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders` | user shell folders (`shell:<ValueName>`)
+    | `HKCR\` | `{HKLM,HKCU}\Software\Classes` |
+
+- Windows Event
+  - Event File Location
+    - `%SystemRoot%\System32\winevt\Logs\`
+  - Event List
+
+    ```
+    PS# Get-WinEvent -ListProvider * -Erroraction Silentlycontinue | Select ProviderName -ExpandProperty Events | Select * -ExpandProperty LogLink | Format-Table LogName,ProviderName,Version,ID,Description
+    ```
+
+  - Event Filter
+
+    ```
+    Get-EventLog
+    ```
+
+    ```
+    Get-WinEvent -Path C:\Windows\System32\Winevt\Logs\System.evtx
+    Get-WinEvent -ListLog *
+    Get-WinEvent -ListLog System | Format-List -Property *
+    (Get-WinEvent -ListLog *).ProviderNames
+    (Get-WinEvent -ListProvider *).Events | Format-Table Id, Description
+    ```
+
+  - Channel
+    - Sysmon
+      > [SysmonSimulator](https://rootdse.org/posts/understanding-sysmon-events/)
+
+- Autoruns
+  - Startup
+    - 🟦 `shell:Startup`  
+      🟦 `shell:Common Startup`
+    - 🟦 `{HKLM|HKCU}\Software\Microsoft\Windows\CurrentVersion\Run\`  
+      🟦 `{HKLM|HKCU}\Software\Microsoft\Windows\CurrentVersion\RunOnce\`  
+    - 🐧 `/etc/profile`
+  - Service
+    - 🟦 `HKLM\SYSTEM\CurrentControlSet\Services\`  
+      🟦 `HKLM\SYSTEM\CurrentControlSet\Control\SafeBoot\`
+  - Task Scheduler
+    - 🟦 `$ taskschd.msc`  
+      🟦 `$ schtasks /query /FO list /V`  
+    - 🟦 `%SystemRoot%\System32\Tasks\`  
+      🟦 `%SystemRoot%\Tasks\`  
+    - 🟦 `HKLM\Software\Microsoft\Windows NT\CurrentVersion\Schedule\Taskcache\Tasks\`  
+      🟦 `HKLM\Software\Microsoft\Windows NT\CurrentVersion\Schedule\Taskcache\Tree\`
+    - 🐧 `/etc/crontab`  
+      🐧 `/etc/cron.d/`
+  - GPO
+- Process
+  - Process List
+    - `$ tasklist`
+    - `$ wmic process`
+    - `$ Get-CimInstance -ClassName Win32_Process`
+  - Advanced Tool
+    - Process Monitor (SysinternalsSuite)
+    - Process Explorer (SysinternalsSuite)
+    - Task Explorer (ExplorerSuite)
+    - Driver List (ExplorerSuite)
+    - WinObj (SysinternalsSuite)
+- Network
+  - Sniffer
+    - Wireshark
+    - FakeNet-NG
 
 
 ## Background
@@ -47,46 +118,76 @@
   | `winver` | 
   | `msinfo32` |
 
-- Forensic Artifacts
-  - Essential Folder
-
-    | Folder | Usage |
-    |--------|-------|
-    | `%SystemRoot%\System32\Tasks` | Schedule Tasks |
-    | `%SystemRoot%\Tasks` | Schedule Tasks (Legacy) |
-    | `%SystemRoot%\System32\winevt\Logs` | Event Logs |
-    | `%SystemRoot%\System32\config` | HKLM |
-    | `%USERPROFILE%\NTUSER.DAT` | HKCU |
-    | `%LOCALAPPDATA%\Microsoft\Windows\Usrclass.dat` | |
-    | `C:\$Recycle.Bin` |
-
-  - Essential Registry
-
-    | Path | Usage |
-    |------|-------|
-    | `HKCR\` | `{HKLM,HKCU}\Software\Classes` |
-    | `HKLM\SYSTEM\CurrentControlSet\Control\SafeBoot`
-    | `HKLM\System\CurrentControlSet\Control\HiveList` | Reg mapping to file |
-    | `HKLM\SYSTEM\CurrentControlSet\Services\` |
-    | `HKLM\System\CurrentControlSet\Services\BFE\Parameters\Policy\Persistent\Filter\{GUID}` | WFP |
-    | `HKLM\System\CurrentControlSet\Services\BFE\Parameters\Policy\Persistent\Provider\{GUID}` | WFP |
-    | `HKLM\System\CurrentControlSet\Services\SharedAccess\Parameters\FirewallPolicy\FirewallRules\{GUID}` | Firewall Policy |
-
-  - File
-    - `$ fsutil file queryfileid <file>`
-    - `$ (Get-Item filename).lastwritetime=(Get-Date "mm/dd/yyyy hh:mm am/pm")`
-  - Process
-    - `$ tasklist`
-    - `$ wmic process`
-    - `$ Get-CimInstance -ClassName Win32_Process`
-  - Task Scheduler
-    - `$ schtasks`
-
 - `SET __COMPAT_LAYER=RunAsInvoker`
 - Registry data reference to a dll file
   > [Understanding a negative offset of a registry data reference to a dll file](https://stackoverflow.com/questions/7350480/understanding-a-negative-offset-of-a-registry-data-reference-to-a-dll-file)
   > - Positive numbers are resource indices. Negative numbers (once you've removed the minus sign) are resource identifiers  
   > - `EmbedCtxt=@FirewallAPI.dll,-32252`
+
+#### File System
+- NTFS Stream
+  > [NTFS File Structure](https://www.researchgate.net/profile/Costas_Katsavounidis2/publication/363773832_Master_File_Table_MFT_on-disk_Structures_NTFS_31_httpsgithubcomkacos2000MFT_Browser/links/632da89086b22d3db4d9afad/Master-File-Table-MFT-on-disk-Structures-NTFS-31-https-githubcom-kacos2000-MFT-Browser.pdf)  
+  > [NTFS Streams](https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-fscc/c54dec26-1551-4d3a-a0ea-4fa40f848eb3)  
+  > [File Streams (Local File Systems)](https://docs.microsoft.com/en-us/windows/win32/fileio/file-streams)  
+
+  - `CMD$ fsutil file layout <file>`
+  - Alternative Data Stream (ADS)
+    ```cmd
+    echo abc > note.txt:abc.txt
+    echo C:\Windows\System32\cmd.exe > note.txt:cmd.exe
+    dir /R
+
+    wmic process call create note.txt:cmd.exe
+    forfiles /M note.txt /C "note.txt:cmd.exe"
+
+    Get-Content note.txt -stream abc.txt
+    more < note.txt:abc.txt:$DATA
+    ```
+
+- Additional File Information
+  - `CMD$ fsutil file queryEA <file>`
+    - Extended Attribute
+    - WSL metadata
+  - `CMD$ fsutil file queryfileid <file>`
+  - `PS$ (Get-Item filename).lastwritetime=(Get-Date "mm/dd/yyyy hh:mm am/pm")`
+
+- File Naming
+  > [Naming Files, Paths, and Namespaces | Microsoft](https://docs.microsoft.com/en-us/windows/win32/fileio/naming-a-file)
+
+  - Namespace
+    - Win32 File Namespace
+      - `\\?\`
+        > tells the Windows APIs to disable all string parsing and to send the string that follows it straight to the file system
+      - `\\?\GLOBALROOT\Device\ConDrv\Console`
+        > `\\?\GLOBALROOT` ensures that the path following it looks in the true root path of the system object manager and not a session-dependent path
+    - Win32 Device Namespace
+      - `\\.\`
+        > access the Win32 device namespace instead of the Win32 file namespace
+    - NT Namespace
+      - `\??\` 
+        > NT Object Manager paths that can look up DOS-style devices like drive letters
+        > 1. process's `DosDevices` table
+        > 2. `\GLOBAL??` Object Manager directory
+        >
+        > A "fake" prefix which refers to per-user Dos devices
+        >
+        > ![file path handling, user / kernal mode](https://i.sstatic.net/LOeeO.png)
+      - | Path         | Content             |
+        |:-------------|:--------------------|
+        | `\Global??\` | Win32 namespace     |
+        | `\Device\`   | Named device object |
+  - Reserved Name (`\Global??\`)
+
+    | Filename | Meaning |
+    |:----|:---------------------------|
+    | CON | console (input and output) |
+    | AUX | an auxiliary device. In CP/M 1 and 2, PIP used PUN: (paper tape punch) and RDR: (paper tape reader) instead of AUX: |
+    | LST | list output device, usually the printer |
+    | PRN | as LST:, but lines were numbered, tabs expanded and form feeds added every 60 lines |
+    | NUL | null device, akin to /dev/null |
+    | EOF | input device that produced end-of-file characters, ASCII 0x1A |
+    | INP | custom input device, by default the same as EOF: |
+    | OUT | custom output device, by default the same as NUL: |
 
 #### Active Directory (AD)
 - Command
@@ -186,62 +287,6 @@
   | `root/cimv2` | `Win32_LoggedOnUser` |
   | `root/cimv2` | `Win32_Process` |
 
-#### NTFS Stream
-> [NTFS File Structure](https://www.researchgate.net/profile/Costas_Katsavounidis2/publication/363773832_Master_File_Table_MFT_on-disk_Structures_NTFS_31_httpsgithubcomkacos2000MFT_Browser/links/632da89086b22d3db4d9afad/Master-File-Table-MFT-on-disk-Structures-NTFS-31-https-githubcom-kacos2000-MFT-Browser.pdf)  
-> [NTFS Streams](https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-fscc/c54dec26-1551-4d3a-a0ea-4fa40f848eb3)  
-> [File Streams (Local File Systems)](https://docs.microsoft.com/en-us/windows/win32/fileio/file-streams)  
-- `fsutil file layout <file>`
-- Extended Attribute
-  - `fsutil file queryEA <file>`
-  - WSL metadata
-- Alternative Data Stream
-  ```cmd
-  echo abc > note.txt:abc.txt
-  echo C:\Windows\System32\cmd.exe > note.txt:cmd.exe
-  dir /R
-
-  wmic process call create note.txt:cmd.exe
-  forfiles /M note.txt /C "note.txt:cmd.exe"
-
-  Get-Content note.txt -stream abc.txt
-  more < note.txt:abc.txt:$DATA
-  ```
-
-#### [Naming Files, Paths, and Namespaces](https://docs.microsoft.com/en-us/windows/win32/fileio/naming-a-file)
-- Namespace
-  - Win32 File Namespace
-    - `\\?\`
-      > tells the Windows APIs to disable all string parsing and to send the string that follows it straight to the file system
-    - `\\?\GLOBALROOT\Device\ConDrv\Console`
-      > `\\?\GLOBALROOT` ensures that the path following it looks in the true root path of the system object manager and not a session-dependent path
-  - Win32 Device Namespace
-    - `\\.\`
-      > access the Win32 device namespace instead of the Win32 file namespace
-  - NT Namespace
-    - `\??\` 
-      > NT Object Manager paths that can look up DOS-style devices like drive letters
-      > 1. process's `DosDevices` table
-      > 2. `\GLOBAL??` Object Manager directory
-      >
-      > A "fake" prefix which refers to per-user Dos devices
-      >
-      > ![file path handling, user / kernal mode](https://i.sstatic.net/LOeeO.png)
-    - | Path         | Content             |
-      |:-------------|:--------------------|
-      | `\Global??\` | Win32 namespace     |
-      | `\Device\`   | Named device object |
-- Reserved Name (`\Global??\`)
-
-  | Filename | Meaning |
-  |:----|:---------------------------|
-  | CON | console (input and output) |
-  | AUX | an auxiliary device. In CP/M 1 and 2, PIP used PUN: (paper tape punch) and RDR: (paper tape reader) instead of AUX: |
-  | LST | list output device, usually the printer |
-  | PRN | as LST:, but lines were numbered, tabs expanded and form feeds added every 60 lines |
-  | NUL | null device, akin to /dev/null |
-  | EOF | input device that produced end-of-file characters, ASCII 0x1A |
-  | INP | custom input device, by default the same as EOF: |
-  | OUT | custom output device, by default the same as NUL: |
 
 #### Remote Command
   - psexec
@@ -263,28 +308,12 @@
 
   - winrm
 
-#### Windows Event
-- Command
-
-  ```
-  Get-EventLog
-  ```
-
-  ```
-  Get-WinEvent -ListLog *
-  Get-WinEvent -ListLog System | Format-List -Property *
-  (Get-WinEvent -ListLog Application).ProviderNames
-  (Get-WinEvent -ListProvider <Provider>).Events | Format-Table Id, Description
-  Get-WinEvent -Path C:\Windows\System32\Winevt\Logs\System.evtx
-  ```
-
-- Channel
-  - Sysmon
-    - [SysmonSimulator](https://rootdse.org/posts/understanding-sysmon-events/)
-
 #### minifilter
 
 #### WFP
+- `HKLM\System\CurrentControlSet\Services\BFE\Parameters\Policy\Persistent\Filter\<GUID>`
+- `HKLM\System\CurrentControlSet\Services\BFE\Parameters\Policy\Persistent\Provider\<GUID>`
+- `HKLM\System\CurrentControlSet\Services\SharedAccess\Parameters\FirewallPolicy\FirewallRules\<GUID>`
 
 #### AMSI
 

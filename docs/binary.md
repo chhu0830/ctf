@@ -100,8 +100,12 @@
 - Library
   - `$ patchelf --set-interpreter ./libc/ld-linux.so.2 --set-rpath ./libc/ <bin>`
   - `$ env LD_PRELOAD=<lib> <bin>`
-- API Hook
+- Behavior
+  - sandboxie
+  - regsnap
+  - regshot
   - [Microsoft Research Detours Package](https://github.com/microsoft/Detours)
+  - Process Monitor (SysinternalsSuite)
   - pintool
   - strace / ltrace
 
