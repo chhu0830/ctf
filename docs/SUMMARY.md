@@ -10,6 +10,8 @@
 - [Misc](./misc.md)
 - [System](./system.md)
   - [DLL Injection](./technique/dll-injection.md)
+  - [Persistence](./technique/persistence.md)
+  - [Privilege Escalation](./technique/privilege-escalation.md)
 - [Web](./web.md)
   - [Broken Access Control](./technique/broken-access-control.md)
   - [Cache Poisoning]()
