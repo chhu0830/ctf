@@ -15,11 +15,24 @@
   - [sagemath](https://sagecell.sagemath.org/)
   - [CoCalc](https://cocalc.com/)
 
-### Brute Force
-- hashcat
-- hydra
-  - crunch
+### Recover
 - unt-wister
+
+### Brute Force
+- Password Cracker
+  - hashcat
+  - John the Ripper
+- Login Cracker
+  - hydra
+
+    ```
+    $ hydra -l <username> -P /usr/share/wordlists/nmap.lst <server> http-post-form "/login.php:username=^USER^&password=^PASS^&sub=Login:Invalid username or password"
+    ```
+
+- Word List
+  - wordlists
+  - seclists
+  - crunch
 
 ### openssl
 - Generate

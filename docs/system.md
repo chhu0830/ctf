@@ -1,4 +1,6 @@
 # System
+> [ShellSpeels](https://www.shellspells.net/)
+
 <!-- toc -->
 
 ## Tool
@@ -6,7 +8,6 @@
 ### Vulnerability Assessment
 - OpenVAS
 - metasploit
-- nmap
 - cobaltstrike
 
 ### Malware Scanner
@@ -17,14 +18,17 @@
 - [nodistribute](https://nodistribute.com/)
 
 ### System Forensic
+> [Windows Forensic Handbook](https://psmths.gitbook.io/windows-forensics)
+
 - File
   - Disk Forensic
     - autopsy
-    - OSForensic
+    - OSForensic / OSFClone
     - FTK Imager
     - Sleuth Kit
   - Search
     - `$ forfile`
+  - Directory
     - `C:\$Recycle.Bin`
 - Registry
   - Query 
@@ -34,11 +38,56 @@
     | Path | Description |
     |------|-------------|
     | `HKLM\System\CurrentControlSet\Control\HiveList` | reg file location |
-    | `{HKLM\|HKCU}\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders` | user shell folders (`shell:<ValueName>`)
+    | `{HKLM\|HKCU}\SOFTWARE\WOW6432Node` | redirected key |
+    | `{HKLM\|HKCU}\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\{Shell Folders\|User Shell Folders}` | user shell folders (`shell:<ValueName>`)
     | `HKCR\` | `{HKLM,HKCU}\Software\Classes` |
 
+- Autoruns
+  - Overall
+    - 🟦 Autoruns (SysinternalsSuite)
+  - Startup
+    - 🟦 `RUN$ shell:Startup`  
+      🟦 `RUN$ shell:Common Startup`
+    - 🟦 `{HKLM|HKCU}\Software[\WOW6432Node]\Microsoft\Windows\CurrentVersion\Run\`  
+      🟦 `{HKLM|HKCU}\Software[\WOW6432Node]\Microsoft\Windows\CurrentVersion\RunOnce\`  
+      🟦 `{HKLM|HKCU}\Software[\WOW6432Node]\Microsoft\Windows\CurrentVersion\RunOnceEx\`  
+      > Can be triggered by `CMD$ RunOnce.exe /explorer`.
+    - 🟦 `{HKLM|HKCU}\Software[\WOW6432Node]\Microsoft\Windows NT\CurrentVersion\Winlogon\`  
+      🟦 `HKLM\SYSTEM\CurrentControlSet\Control\Print\Monitors\`  
+    - 🐧 `/etc/profile`
+  - Service
+    - 🟦 `HKLM\SYSTEM\CurrentControlSet\Services\`  
+      🟦 `HKLM\SYSTEM\CurrentControlSet\Control\SafeBoot\`
+  - Scheduled Task
+    - 🟦 `CMD$ taskschd.msc`  
+      🟦 `$ schtasks /query /FO list /V`  
+    - 🟦 `%SystemRoot%\{System32|SysWOW64}\Tasks\`  
+      🟦 `%SystemRoot%\Tasks\`  
+    - 🟦 `HKLM\Software\Microsoft\Windows NT\CurrentVersion\Schedule\Taskcache\Tasks\`  
+      🟦 `HKLM\Software\Microsoft\Windows NT\CurrentVersion\Schedule\Taskcache\Tree\`
+    - 🐧 `/etc/crontab`  
+      🐧 `/etc/cron.d/`
+  - GPO
+- Process
+  - Process List
+    - `$ tasklist`
+    - `$ wmic process`
+    - `$ Get-CimInstance -ClassName Win32_Process`
+  - Advanced Tool
+    - Process Monitor (SysinternalsSuite)
+    - Process Explorer (SysinternalsSuite)
+    - Task Explorer (ExplorerSuite)
+    - Driver List (ExplorerSuite)
+    - WinObj (SysinternalsSuite)
+- Network
+  - Sniffer
+    - Wireshark
+    - FakeNet-NG
+- Memory
+  - Dumpit
+  - Volatility Workbench
 - Windows Event
-  - Event File Location
+  - Event Log File
     - `%SystemRoot%\System32\winevt\Logs\`
   - Event List
 
@@ -64,41 +113,6 @@
     - Sysmon
       > [SysmonSimulator](https://rootdse.org/posts/understanding-sysmon-events/)
 
-- Autoruns
-  - Startup
-    - 🟦 `shell:Startup`  
-      🟦 `shell:Common Startup`
-    - 🟦 `{HKLM|HKCU}\Software\Microsoft\Windows\CurrentVersion\Run\`  
-      🟦 `{HKLM|HKCU}\Software\Microsoft\Windows\CurrentVersion\RunOnce\`  
-    - 🐧 `/etc/profile`
-  - Service
-    - 🟦 `HKLM\SYSTEM\CurrentControlSet\Services\`  
-      🟦 `HKLM\SYSTEM\CurrentControlSet\Control\SafeBoot\`
-  - Task Scheduler
-    - 🟦 `$ taskschd.msc`  
-      🟦 `$ schtasks /query /FO list /V`  
-    - 🟦 `%SystemRoot%\System32\Tasks\`  
-      🟦 `%SystemRoot%\Tasks\`  
-    - 🟦 `HKLM\Software\Microsoft\Windows NT\CurrentVersion\Schedule\Taskcache\Tasks\`  
-      🟦 `HKLM\Software\Microsoft\Windows NT\CurrentVersion\Schedule\Taskcache\Tree\`
-    - 🐧 `/etc/crontab`  
-      🐧 `/etc/cron.d/`
-  - GPO
-- Process
-  - Process List
-    - `$ tasklist`
-    - `$ wmic process`
-    - `$ Get-CimInstance -ClassName Win32_Process`
-  - Advanced Tool
-    - Process Monitor (SysinternalsSuite)
-    - Process Explorer (SysinternalsSuite)
-    - Task Explorer (ExplorerSuite)
-    - Driver List (ExplorerSuite)
-    - WinObj (SysinternalsSuite)
-- Network
-  - Sniffer
-    - Wireshark
-    - FakeNet-NG
 
 
 ## Background

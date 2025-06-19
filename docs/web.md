@@ -61,18 +61,24 @@
     |:------|:------------|
     | `$ nmap -A ${host:?}` | Scan with default setting. |
     | `$ nmap --script "http-*" -p 80 ${host:?}` | Scan HTTP service. |
-    | `$ nmap -T4 -sT -p T:1-65535 ${host:?}` | Scan all tcp port. |
+    | `$ nmap -v -T5 -sS -n -p- ${host:?}` | Scan all ports. |
 
   - Directory Enumeration
 
     | Usage | Description |
     |:------|:------------|
-    | `$ gobuster dir --url ${url:?} --wordlist ${wordlist:-/usr/share/wordlists/dirb/common.txt}` | General scan. |
-    | `$ dirb ${url:?} ${wordlist}` |
+    | `$ dirsearch -r -u ${url:?}`
     | `$ dirbuster` |
-    | `$ dirsearch -u ${url:?}`
-    | `$ wfuzz -c -z file,/raft-large-files.txt -hc 404 "${URL}"` |
+    | `$ dirb ${url:?} ${wordlist}` |
+    | `$ gobuster dir --url ${url:?} --wordlist ${wordlist:-/usr/share/wordlists/dirb/common.txt} -t ${threads:-100}` | General scan. |
+    | `$ wfuzz -c -z file,${wordlist:-/usr/share/wordlists/dirb/common.txt} -hc ${hidecode:-404} ${url:?}/FUZZ` |
     | `$ ffuf` |
+
+  - Parameter Enumeration
+
+    | Usage | Description |
+    |:------|:------------|
+    | `$ wfuzz -c -z file,${wordlist:?} -hl ${hideline:-BBB} ${url:?}/?FUZZ{<arg1>}=,FUZ2Z{<arg2>}=` | Hide all results with same line count to the result queried by parameter <arg1> and <arg2>. |
 
   - Dumper
     - git-dumper

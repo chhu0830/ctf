@@ -104,6 +104,9 @@
   - [PHP Truth Table](https://www.php.net/manual/en/types.comparisons.php)
   - [String to Number Comparison](https://www.php.net/manual/en/migration80.incompatible.php#migration80.incompatible.core.string-number-comparision)
   - `0eXXXX == 0eYYYY`
+    - md5(240610708) = 0e462097431906509019562988736854
+    - md5(314282422) = 0e990995504821699494520356953734
+    - md5(QLTHNDT) = 0e405967825401955372549139051580
   - PHP Array
     - $arr[idx] <-> $arr{idx}
     - strcmp([], []) -> NULL
