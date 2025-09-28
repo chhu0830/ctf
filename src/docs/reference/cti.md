@@ -19,25 +19,25 @@
 
 ### Entry Point
 - deepdarkCTI
-  - github[.]com/fastfire/deepdarkCTI
+    - github[.]com/fastfire/deepdarkCTI
 
 ### Search Engine
 - Ahmia
-  - juhanurmihxlp77nkq76byazcldy2hlmovfu2epvl5ankdibsot4csyd[.]onion
+    - juhanurmihxlp77nkq76byazcldy2hlmovfu2epvl5ankdibsot4csyd[.]onion
 
 ### Ransome
 - Ransomware Live
-  - ransomeware[.]live
+    - ransomeware[.]live
 - DARKFEED
-  - darkfeed[.]io
+    - darkfeed[.]io
 
 ### Data Leak
 - Breachforums
-  - breached26tezcofqla4adzyn22notfqwcac7gpbrleg4usehljwkgqd[.]onion
+    - breached26tezcofqla4adzyn22notfqwcac7gpbrleg4usehljwkgqd[.]onion
 - leakbase
-  - leakbase[.]io
-  - leakbase[.]la
+    - leakbase[.]io
+    - leakbase[.]la
 
 ### Hacker Forum
 - Dark Forums
-  - qeei4m7a2tve6ityewnezvcnf647onsqbmdbmlcw4y5pr6uwwfwa35yd[.]onion
+    - qeei4m7a2tve6ityewnezvcnf647onsqbmdbmlcw4y5pr6uwwfwa35yd[.]onion
