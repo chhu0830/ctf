@@ -1,8 +1,0 @@
-[book]
-title = "Cybersecurity Cheatsheet"
-authors = ["Chia-Hsuan Hu"]
-src = "./docs"
-
-[preprocessor.toc]
-command = "mdbook-toc"
-renderer = ["html"]

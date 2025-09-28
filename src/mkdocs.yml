@@ -1,0 +1,42 @@
+site_name: CTF Handbook
+site_url: https://chhu0830.github.io/ctf
+theme:
+  name: material
+  palette:
+    scheme: default
+    primary: black
+  icon:
+    logo: fontawesome/solid/cat
+  features:
+    - navigation.instant
+    - navigation.instant.progress
+    - navigation.indexes
+    # - navigation.expand
+    # - navigation.path
+    - navigation.sections
+    # - navigation.tabs
+    - navigation.footer
+    - content.tabs.link
+    - toc.follow
+    - toc.integrate
+# plugins:
+#   - tags:
+#       tags_hierarchy: true
+markdown_extensions:
+  - toc:
+      permalink: true
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.highlight:
+      # anchor_linenums: true
+      # linenums: true
+      # auto_title: true
+  # - pymdownx.tasklist:
+  #     custom_checkbox: true
+  #     clickable_checkbox: true
+  - pymdownx.superfences
+  # - pymdownx.tabbed:
+  #     alternate_style: true
