@@ -2,7 +2,7 @@ name: Deploy MkDocs site to Pages
 
 on:
   push:
-    branches: ["main", "migrate-to-mkdocs"]
+    branches: ["main"]
   workflow_dispatch:
 permissions:
   contents: read
