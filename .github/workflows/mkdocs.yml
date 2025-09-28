@@ -16,14 +16,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Setup pages
+        id: pages
+        uses: actions/configure-pages@v5
       - name: Install MkDocs
         run: |
           pip install --upgrade pip
           pip install --upgrade mkdocs mkdocs-material
-      - name: Setup Pages
-        id: pages
-        uses: actions/configure-pages@v5
-      - name: Build with mdBook
+      - name: Build with MkDocs
         run: |
           mkdocs build -f ./src/mkdocs.yml
       - name: Upload artifact
@@ -35,7 +35,7 @@ jobs:
     needs: build
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+      url: ${{ steps.deployment.outputs.page_url  }}
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
