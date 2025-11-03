@@ -10,12 +10,23 @@
 
 ## Tool
 
-### Recon
+### Information Gathering
 
-#### Target
-- [SHODAN](https://www.shodan.io/)
+#### Search Engine
+- [SHODAN](https://www.shodan.io/search/examples)
 
     > Search Engine for the Internet of Everything
+
+    ```
+    # Search Query
+    #   <keyword> ...
+    #   [{[-(filter out)]<attr>:<value>,...(or)} ...(and)]
+    #     country:{<country>|tw|us}
+
+    hostname:google.com,facebook.com
+    http.html:"index of" country:tw
+    Microsoft-IIS port:8530,8531 country:tw -http.status:403  # WSUS
+    ```
 
 - [Censys](https://search.censys.io/)
 
@@ -24,110 +35,212 @@
 
 - [Google Hacking Database](https://www.exploit-db.com/google-hacking-database)
 
-#### Domain
-- DNS Enumeration
-    - [dnsdumpster](https://dnsdumpster.com/)
 
-        > dns recon & research, find & lookup dns records
-
-    - [crt.sh](https://crt.sh/)
-
-        > Enter an Identity (Domain Name, Organization Name, etc)
-
-    - [robtex](https://www.robtex.com/)
-
-        > Subdomains
-
-    - dnsenum
-
-        ```bash
-        # dnsenum [--noreverse] [--recursion] <domain>
-        dnsenum google.com
-        ```
-
-    - gobuster
-
-        ```bash
-        $ gobuster vhost --append-domain --domain <domain> -u http://<domain> -w /usr/share/wordlists/seclists/Discovery/DNS/subdomains-top1million-5000.txt
-        ```
-
-    - `knockpy.py`
-
-- Domain Information
-    - [IANA WHOIS Service](https://www.iana.org/whois)
-    - [DomainTools](https://whois.domaintools.com/)
-- DNS Lookup
-    - dig
-
-        ```bash
-        #  dig [@<server>] <name> [<type> | A | MX | NS | TXT | CNAME | ANY | ...] [+<option> +trace +https +nssearch ...]
-        dig @8.8.8.8 www.google.com A
-        dig www.google.com A +trace
-        dig google.com +nssearch
-
-        # dig -x <addr>
-        dig -x 8.8.8.8
-        ```
-
-    - nslookup
-
-        ```bash
-        # nslookup [-<option>] <name> [server]
-        nslookup -type=A www.google.com 8.8.8.8
-
-        # nslookup <addr>
-        nslookup 8.8.8.8
-        ```
-
-    - drill
-
-        ```bash
-        # drill [-T] <name> [@<server>] [<type> | A | ... ]
-        drill www.google.com @8.8.8.8 A
-        drill -T www.google.com  # trace
-
-        # drill -x <addr>
-        drill -x 8.8.8.8
-        ```
-
-#### Site Information
-- [Netcraft Site Report](https://sitereport.netcraft.com/)
-
-    > Find out the infrastructure and technologies used by any site
-
+#### OSINT
+- [OSINT Framework](https://osintframework.com/)
 - maltego
 
     > A platform for open-source intelligence (OSINT) and cyber investigations
 
-#### Site Enumeration
-- Port Scanning
+##### DNS Enumeration
+- [dnsdumpster](https://dnsdumpster.com/)
 
-    | Usage | Description |
-    |:------|:------------|
-    | `$ nmap -A ${host:?}` | Scan with default setting. |
-    | `$ nmap --script "http-*" -p 80 ${host:?}` | Scan HTTP service. |
-    | `$ nmap -v -T5 -sS -n -p- ${host:?}` | Scan all ports. |
-    | `$ nmap -v -sCV -n -p- ${host:?}` | Scan all ports with extra info. |
+    > dns recon & research, find & lookup dns records
 
-- Directory Enumeration
+- [crt.sh](https://crt.sh/)
 
-    | Usage | Description |
-    |:------|:------------|
-    | `$ dirsearch -r -u ${url:?}`
-    | `$ dirbuster` |
-    | `$ dirb ${url:?} ${wordlist}` |
-    | `$ gobuster dir --url ${url:?} --wordlist ${wordlist:-/usr/share/wordlists/dirb/common.txt} -t ${threads:-100}` | General scan. |
-    | `$ wfuzz -c -z file,${wordlist:-/usr/share/wordlists/dirb/common.txt} -hc ${hidecode:-404} ${url:?}/FUZZ` |
-    | `$ ffuf` |
+    > Enter an Identity (Domain Name, Organization Name, etc)
 
-- Parameter Enumeration
+- [robtex](https://www.robtex.com/)
+
+    > Subdomains
+
+- dnsenum
+
+    ```bash
+    # dnsenum
+    #   [--noreverse]
+    #   [--recursion]
+    #   <domain>
+
+    dnsenum google.com
+    ```
+
+- gobuster
+
+    ```bash
+    # gobuster vhost
+    #   [-H, --headers="<key>:<value>" ...]
+    #   [--exclude-length={<length>|<length>-<length>},...]
+    #   [--append-domain] --domain=<domain>
+    #   -w, --wordlist=<wordlist>
+    #   -u, --url=<url>
+
+    gobuster vhost --exclude-length=100,200-300 --append-domain --domain=${domain:?} --wordlist=/usr/share/wordlists/seclists/Discovery/DNS/subdomains-top1million-5000.txt --url=http://${domain:?}
+    ```
+
+- `knockpy.py`
+
+
+##### Domain Information
+- [IANA WHOIS Service](https://www.iana.org/whois)
+- [DomainTools](https://whois.domaintools.com/)
+- [VirusTotal](https://www.virustotal.com/gui/home/search)
+
+##### DNS Lookup
+- dig
+
+    ```bash
+    # dig
+    #   [@<server>]
+    #   {<name>|-x <addr>} ...
+    #   [<type>|A|MX|NS|TXT|CNAME]
+    #   [{+<option>|+trace|+https|+nssearch} ...]
+
+    dig @8.8.8.8 www.google.com A
+    dig www.google.com A +trace
+    dig google.com +nssearch
+
+    dig -x 8.8.8.8
+    ```
+
+- nslookup
+
+    ```bash
+    # nslookup
+    #   [{-type={<type>|A}|-<option>[=<value>]} ...]
+    #   {<name>|<addr>}
+    #   [<server>]
+
+    nslookup -type=A www.google.com 8.8.8.8
+
+    nslookup 8.8.8.8
+    ```
+
+- drill
+
+    ```bash
+    # drill
+    #   [-T(enable trace)]
+    #   {<name>|-x <addr>}
+    #   [@<server>]
+    #   [<type>|A]
+
+    drill www.google.com @8.8.8.8 A
+    drill -T www.google.com          # trace
+
+    drill -x 8.8.8.8
+    ```
+
+#### Recon
+
+##### Port Scanning
+
+- Nmap
+
+    ```bash
+    # nmap
+    #   [-v(verbose)]
+    #   [-n(disable DNS resolution)]
+    #   [-T{0..5}(5 is fastest)]
+    #   [-A(same as -O -sV -sC --traceroute)]
+    #   [-Pn(skip host discovery)]
+    #   [-sn(disable port scan)]
+    #   [-O(enable OS detection)]
+    #   [-sS(TCP SYN, default)]
+    #   [-sU(UDP scan)]
+    #   [-sC(same as --script=default)]
+    #   [-sV(show service version info)]
+    #   [--script={<pattern>|"http-*"|default|*},...]
+    #   [--script-trace]
+    #   [--script-help <pattern>(/usr/share/nmap/scripts)]
+    #   [-p {-|{[T:|U:]{<port>|<port>-<port>},...},...}]
+    #   {<hostname>|<ip>|<ip range>|<subnet>}
+
+    nmap -A ${host:?}                      # Scan with default setting.
+    nmap --script="http-*" -p80 ${host:?}  # Scan HTTP service.
+    nmap -v -n -T5 -sS -p- ${host:?}       # Scan all ports.
+    nmap -v -n -sCV -p- ${host:?}          # Scan all ports with extra info.
+    ```
+
+##### Directory Enumeration
+- dirsearch
+
+    ```bash
+    # dirsearch
+    #   [-m, --http-method=<method>]
+    #   [-H, --header="<name>: <value>" ...]
+    #   [--cookie="<name>=<value>;..."]
+    #   [-e, --extensions={<extension>|php|asp},...(only replaces %EXT% by default)]
+    #   [-f, --force-extensions]
+    #   [--prefixes=<prefix>,...]
+    #   [--suffixes=<suffix>,...]
+    #   [-r, --recursive]
+    #   [--crawl]
+    #   [-i, --include-status={<code>|<code>-<code>},...]
+    #   [-x, --exclude-status={<code>|<code>-<code>},...]
+    #   [--exclude-text=<text> ...]
+    #   [--exclude-regex=<regex> ...]
+    #   [--exclude-redirect=<redirect url> ...]
+    #   -u, --url=<url>
+
+    dirsearch -r -u ${url:?}
+    ```
+
+- gobuster
+
+    ```bash
+    # gobuster dir
+
+    gobuster dir --url ${url:?} --wordlist ${wordlist:-/usr/share/wordlists/dirb/common.txt} -t ${threads:-100}
+    ```
+
+- dirbuster
+
+    ```bash
+    # dirbuster
+    ```
+
+- dirb
+
+    ```bash
+    # dirb
+    #   [-H <header_string>]
+    #   [-c <cookie_string]
+    #   [-X {<extension>|.html}]
+    #   [-N <status_code>(ignore responses with this code)]
+    #   <url>
+    #   [<wordlist>,...]
+
+    dirb ${url:?} ${wordlist}
+    ```
+
+- wfuzz
+
+    ```bash
+    wfuzz -c -z file,${wordlist:-/usr/share/wordlists/dirb/common.txt} -hc ${hidecode:-404} ${url:?}/FUZZ
+    ```
+
+- ffuf
+
+##### Secret Dumper
+- git-dumper
+
+##### Fuzzing
+
+- wfuzz
 
     | Usage | Description |
     |:------|:------------|
     | `$ wfuzz -c -z file,${wordlist:?} -hl ${hideline:-BBB} ${url:?}/?FUZZ{<baseArg1>}=,FUZ2Z{<baseArg2>}=` | Hide all results with same line count to the result queried by parameter <arg1> and <arg2>. |
 
-- Dumper
-    - git-dumper
+##### Tech Stack
+- [Netcraft Site Report](https://sitereport.netcraft.com/)
+
+    > Find out the infrastructure and technologies used by any site
+
+- [Wappalyzer](https://www.wappalyzer.com/?utm_source=popup&utm_medium=extension&utm_campaign=wappalyzer)
+
 
 ### Exploit
 - Burpsuit

@@ -118,7 +118,7 @@
 ## Background
 
 ### Calling Convention
-- Compare
+- Comparison
 
     | Type                             | Platform            | Ret     | Parameters                  | Stack Cleaner | Note                                      | 
     |----------------------------------|---------------------|---------|-----------------------------|---------------|-------------------------------------------|
@@ -170,6 +170,28 @@
         call eax
         ...
         ```
+
+### Special Section
+- .init / .fini
+
+    ```C
+    #include <stdio.h>
+    __attribute__((constructor(101))) void func1() {
+    }
+
+    __attribute__((constructor(102))) void func2() {
+    }
+
+    __attribute__((constructor)) void func3() {
+    }
+
+    __attribute__((destructor)) void func4() { // Run after main function.
+    }
+
+    int main() {
+        return 0;
+    }
+    ```
 
 ### File Format
 - segment register / index in descripter table

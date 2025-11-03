@@ -20,6 +20,8 @@
 ### System Forensic
 > [Windows Forensic Handbook](https://psmths.gitbook.io/windows-forensics)
 
+- General
+    - Sysinternals (`https://live.sysinternals.com/` `\\live.sysinternals.com\tools\`)
 - File
     - Disk Forensic
         - autopsy
@@ -45,6 +47,7 @@
         | `{HKLM\|HKCU}\SOFTWARE\WOW6432Node` | redirected key |
         | `{HKLM\|HKCU}\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\{Shell Folders\|User Shell Folders}` | user shell folders (`shell:<ValueName>`)
         | `HKCR\` | `{HKLM,HKCU}\Software\Classes` |
+        | `HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options` | IFEO controls binary executive behavior |
 
 - Autoruns
     - Overall
@@ -263,6 +266,34 @@
             vssadmin delete shadows /for=C: /quiet
             ```
 
+    - `HKLM\SECURITY\Cache`
+        - AD cached logon credentials
+        - cache count is controlled by `HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon:CachedLogonsCount`
+
+    - LSASS
+        - Can be protected by Credential Guard (Starting in Windows 10)
+
+            > LSA process communicates with LSAIso.exe, the isolated
+              LSA process that is protected by using VBS, when
+              Credential Guard is enabled
+
+            - `HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\DeviceGuard`
+        - Store plaintext password
+            - `HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\SecurityProviders\WDigest`
+                - `UseLogonCredential = 1`
+        - Configuration
+            - `HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Lsa`
+                - `RunAsPPL`
+- Credential Manager
+    - List
+        - `cmdkey /list`
+        - `vaultcmd /list`
+        - `vaultcmd /listcreds:"<Vault Name>"`
+    - File
+        - `C:\Users\<user>\AppData\Roaming\Microsoft\Credntials`
+        - `C:\Users\<user>\AppData\Local\Microsoft\Protect\<SID>`
+        - `C:\Users\<user>\AppData\Local\Microsoft\Vault\<SID>`
+        - `C;\Windows\ServiceProfiles\<Account>\Appdata\...`
 - Security Group
     - Domain Admins
     - Enterprise Admins Group
@@ -272,6 +303,11 @@
     - Domain Users
     - Domain Computers
     - Domain Controllers
+
+- Security Support Provider (SSP)
+    - `Kerberos SSP` `%Windir%\System32\kerberos.dll`
+    - `NTLM SSP` `%Windir%\System32\msv1_0.dll`
+    - `Digest SSP` `%Windir%\System32\Wdigest.dll`
 
 #### Active Directory (AD)
 - Command

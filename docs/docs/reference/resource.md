@@ -1,6 +1,4 @@
-# Introduction
-
-This is a payload collection and references for CTF challenges.
+# Resource
 
 ## Guide
 - [HackTricks](https://book.hacktricks.xyz/welcome/readme)  

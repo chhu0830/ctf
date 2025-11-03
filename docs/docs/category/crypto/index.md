@@ -124,6 +124,62 @@
         EOF
         )
         ```
+
+    - Sign Binary
+
+        ```bash
+		set -e
+
+		readonly dir=demoCA
+		readonly revoke_server=${1:?revoke server}
+
+		mkdir ${dir}
+		touch ${dir}/index.txt
+		openssl rand -hex 16 > ${dir}/serial
+		openssl rand -hex 16 > ${dir}/crlnumber
+
+		openssl req -new -out ca.csr -sha256 \
+		  -newkey rsa:4096 -keyout ca.key -nodes \
+		  -subj "/C=TW/ST=Taiwan/L=Hsinchu/O=Organization/OU=Organization Unit/CN=Test CA"
+
+		openssl req -new -out codesign.csr -sha256 \
+		  -newkey rsa:4096 -keyout codesign.key -nodes \
+		  -subj "/C=TW/ST=Taiwan/L=Hsinchu/O=Organization/OU=Organization Unit/CN=Test Code Signing"
+
+		openssl ca -selfsign -cert ca.crt -keyfile ca.key -in ca.csr -outdir . -out ca.crt \
+		  -startdate 20200101000000Z -enddate 20300101000000Z \
+		  -extensions x509v3_config -extfile <(cat <<EOF
+		[ x509v3_config  ]
+		subjectKeyIdentifier = hash
+		authorityKeyIdentifier = keyid:always,issuer
+		basicConstraints = critical,CA:true, pathlen:0
+		crlDistributionPoints = URI:http://${revoke_server}/ca.crl
+		EOF
+		)
+
+		openssl ca -cert ca.crt -keyfile ca.key -in codesign.csr -outdir . -out codesign.crt \
+		  -startdate 20200101000000Z -enddate 20300101000000Z \
+		  -extensions x509v3_config -extfile <(cat <<EOF
+		[ x509v3_config  ]
+		subjectKeyIdentifier = hash
+		authorityKeyIdentifier = keyid:always,issuer
+		basicConstraints = critical,CA:false, pathlen:0
+		keyUsage = critical,digitalSignature
+		extendedKeyUsage = codeSigning
+		crlDistributionPoints = URI:http://${revoke_server}/ca.crl
+		EOF
+		)
+
+		openssl pkcs12 -export -passout pass: -out codesign.pfx -inkey codesign.key -in codesign.crt -certfile ca.crt
+        # openssl ca -revoke ${crt:?cert to revoke} -cert ca.crt -keyfile ca.key
+		openssl ca -gencrl -cert ca.crt -keyfile ca.key -out ca.crl
+        ```
+
+        ```powershell
+        $cert = New-Object System.Security.Cryptography.X509Certificates.X509Certificate2
+        $cert.Import("C:\Users\user\Desktop\codesign.pfx", $null, "Exportable,PersistKeySet")
+        Set-AuthenticodeSignature -FilePath "C:\Users\user\Desktop\xvrshell.exe" -Certificate $cert
+        ```
     
 - Verify
     - Cert Chain

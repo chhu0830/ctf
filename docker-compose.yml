@@ -2,9 +2,9 @@ services:
   server:
     image: localhost${PWD}
     build: .
-    working_dir: /mnt/src
+    working_dir: /mnt/docs
     volumes:
-      - ./src:/mnt/src:ro
+      - ./docs:/mnt/docs:ro
     ports:
       - 8000:8000
     command: ["serve", "-a", "0.0.0.0:8000"]

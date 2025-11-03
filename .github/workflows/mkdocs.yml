@@ -25,17 +25,17 @@ jobs:
           pip install --upgrade mkdocs mkdocs-material
       - name: Build with MkDocs
         run: |
-          mkdocs build -f ./src/mkdocs.yml
+          mkdocs build -f ./docs/mkdocs.yml
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./src/site
+          path: ./docs/site
   deploy:
     runs-on: ubuntu-latest
     needs: build
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url  }}
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
