@@ -5,7 +5,18 @@
 
 ## Tool
 
-### Vulnerability Assessment
+### Credential Harvesting
+- Responder
+- Inveigh
+- Mimikatz
+- ntdsutil
+- secretsdump
+
+### Monitoring
+- wireshark
+- pspy
+
+### Exploit
 - OpenVAS
 - metasploit
 - cobaltstrike
@@ -266,18 +277,29 @@
             vssadmin delete shadows /for=C: /quiet
             ```
 
-    - `HKLM\SECURITY\Cache`
-        - AD cached logon credentials
-        - cache count is controlled by `HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon:CachedLogonsCount`
+    - Logon Credential Cache
+        - `HKLM\SECURITY\Cache`
+            - cached AD logon credentials
+        - `HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon:CachedLogonsCount`
+            - control cache count
 
     - LSASS
         - Can be protected by Credential Guard (Starting in Windows 10)
 
             > LSA process communicates with LSAIso.exe, the isolated
               LSA process that is protected by using VBS, when
-              Credential Guard is enabled
+              Credential Guard is enabled.
+            >
+            > To verify if the guard is enabled, use
+            > ```powershell
+            > (Get-CimInstance -ClassName Win32_DeviceGuard -Namespace root\Microsoft\Windows\DeviceGuard).SecurityServicesRunning
+            > ```
 
             - `HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\DeviceGuard`
+                - `EnableVirtualizationBasedSecurity`
+                - `RequirePlatformSecurityFeatures`
+            - `HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Lsa`
+                - `LsaCfgFlags`
         - Store plaintext password
             - `HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\SecurityProviders\WDigest`
                 - `UseLogonCredential = 1`
@@ -452,7 +474,9 @@
 
 
 ### Linux 🐧
-> https://gtfobins.github.io/
+
+#### Open Port
+- `sudo ip -all netns exec ss -ltnp`
 
 ### macOS 🍎
 - Resource Fork

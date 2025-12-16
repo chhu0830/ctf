@@ -486,3 +486,13 @@
 
     - Rendezvous Point
         - verify secret from both side
+
+
+### DNS
+
+| Type | Port | Note |
+|------|------|------|
+| DNS | 53/tcp,udp |
+| mDNS | 5353/udp | multicast to `224.0.0.251` for `.local` domain only |
+| LLMNR | 5355/udp | multicast to `224.0.0.252` |
+| NetBIOS | 137/udp (NBNS) | broadcast / wins |
