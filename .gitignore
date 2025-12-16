@@ -1,1 +1,2 @@
-src/docs/tool
+src/docs/tool/*
+!src/docs/tool/**/*.md

@@ -22,6 +22,9 @@ theme:
 # plugins:
 #   - tags:
 #       tags_hierarchy: true
+exclude_docs: |
+  tool/**/*.zip
+  tool/**/*.7z
 markdown_extensions:
   - toc:
       permalink: true
