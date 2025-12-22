@@ -1,40 +1,83 @@
 # Crypto
-<!-- toc -->
 
-## Tool
+## Cryptanalysis
+- Kerckhoff's Principle
+- Classical Cryptanalysis
+    - Mathmatical Analysis
+    - Brute-Force Attacks
+        - Substitution Cipher
 
-### Decrypt
-- pyCryptodome
-- Crypto.Util.number
+            > Caesar Cipher
 
-    | Function | Comment         |
-    |:---------|:----------------|
-    | inverse  | modulus inverse |
+            - Exhaustive Key Search
+            - Letter Frequency Analysis
+- Implementation Attacks
+- Social Engineering
 
-- Sage
-    - [sagemath](https://sagecell.sagemath.org/)
-    - [CoCalc](https://cocalc.com/)
+## Symmetric Cipher
+- Stream Cipher
 
-### Recover
-- unt-wister
-
-### Brute Force
-- Password Cracker
-    - hashcat
-    - John the Ripper
-- Login Cracker
-    - hydra
+    > encrypt bits individually
+    > 
+    > usually small and fast  
+    > 
+    > security dependes entirely on key stream (sync, async), which is random and reproducible
+    
+    - vulnerable to reused key attack
 
         ```
-        $ hydra -l <username> -P /usr/share/wordlists/nmap.lst <server> http-post-form "/login.php:username=^USER^&password=^PASS^&sub=Login:Invalid username or password"
+        E(A) = A xor C
+        E(B) = B xor C
+        E(A) xor E(B) = A xor B
         ```
 
-- Word List
-    - wordlists
-    - seclists
-    - crunch
+    - key stream generator
 
-### openssl
+        > the key stream generator works like a Pseudorandom Number Generator (RNG),
+        > which generate sequences from initial seed (key) value
+        > 
+        > ![](<https://latex.codecogs.com/gif.latex?s_0 = seed, s_{i+1} = f(s_i, s_{i-1}, ..., s_{i-t})>)
+    
+        - Linear Congruential Generator (LCG)
+        
+            ![](<https://latex.codecogs.com/gif.latex?S_0 = seed, S_{i+1} = AS_i + B\ mod\ m>)  
+        
+            Assume
+
+            - unknown A, B and S0 as key
+            - m = 2^32
+            - S1, S2, S3 are known  
+        
+            Solving  
+
+            - ![](<https://latex.codecogs.com/gif.latex?S_2 = AS_1 + B\ (mod\ m)>)
+            - ![](<https://latex.codecogs.com/gif.latex?S_3 = AS_2 + B\ (mod\ m)>)
+        
+            Answer
+
+            - ![](<https://latex.codecogs.com/gif.latex?A = (S_2 - S_3) \times inverse(S_1 - S_2, m)\ (mod\ m)>)
+            - ![](<https://latex.codecogs.com/gif.latex?B = (S_2 - AS_1)\ (mod\ m)>)
+        
+        - MT19937
+
+            > python's default RNG
+
+            - can be recovered by 32x624 consecutive bits
+                - `from randcrack import RandCrack`
+
+        - Lineare Feedback Shift Register (LFSR)
+
+            ![](<https://latex.codecogs.com/gif.latex?S_{i+3} = S_{i+1} \oplus S_{i}>)
+            
+            - Characteristic Polynomial
+                - ![](<https://latex.codecogs.com/gif.latex?P(x) = x^m + p_{m-1}x^{m-1} + ... + p_1x + p_0>)
+
+
+- Block Cipher
+    > - always encrypt a full block (several bits)
+    > - common for internet applications
+
+## OpenSSL
 - Generate
 
     > [Generate cert chain](https://blog.davy.tw/posts/use-openssl-to-sign-intermediate-ca/)  
@@ -288,81 +331,3 @@
     - [Signed Certificate Timestamp (SCT) Validation | Google](https://github.com/google/certificate-transparency/blob/master/docs/SCTValidation.md)
 
 
-## Background
-
-### Cryptanalysis
-- Kerckhoff's Principle
-- Classical Cryptanalysis
-    - Mathmatical Analysis
-    - Brute-Force Attacks
-        - Substitution Cipher
-
-            > Caesar Cipher
-
-            - Exhaustive Key Search
-            - Letter Frequency Analysis
-- Implementation Attacks
-- Social Engineering
-
-### Symmetric Cipher
-- Stream Cipher
-
-    > encrypt bits individually
-    > 
-    > usually small and fast  
-    > 
-    > security dependes entirely on key stream (sync, async), which is random and reproducible
-    
-    - vulnerable to reused key attack
-
-        ```
-        E(A) = A xor C
-        E(B) = B xor C
-        E(A) xor E(B) = A xor B
-        ```
-
-    - key stream generator
-
-        > the key stream generator works like a Pseudorandom Number Generator (RNG),
-        > which generate sequences from initial seed (key) value
-        > 
-        > ![](<https://latex.codecogs.com/gif.latex?s_0 = seed, s_{i+1} = f(s_i, s_{i-1}, ..., s_{i-t})>)
-    
-        - Linear Congruential Generator (LCG)
-        
-            ![](<https://latex.codecogs.com/gif.latex?S_0 = seed, S_{i+1} = AS_i + B\ mod\ m>)  
-        
-            Assume
-
-            - unknown A, B and S0 as key
-            - m = 2^32
-            - S1, S2, S3 are known  
-        
-            Solving  
-
-            - ![](<https://latex.codecogs.com/gif.latex?S_2 = AS_1 + B\ (mod\ m)>)
-            - ![](<https://latex.codecogs.com/gif.latex?S_3 = AS_2 + B\ (mod\ m)>)
-        
-            Answer
-
-            - ![](<https://latex.codecogs.com/gif.latex?A = (S_2 - S_3) \times inverse(S_1 - S_2, m)\ (mod\ m)>)
-            - ![](<https://latex.codecogs.com/gif.latex?B = (S_2 - AS_1)\ (mod\ m)>)
-        
-        - MT19937
-
-            > python's default RNG
-
-            - can be recovered by 32x624 consecutive bits
-                - `from randcrack import RandCrack`
-
-        - Lineare Feedback Shift Register (LFSR)
-
-            ![](<https://latex.codecogs.com/gif.latex?S_{i+3} = S_{i+1} \oplus S_{i}>)
-            
-            - Characteristic Polynomial
-                - ![](<https://latex.codecogs.com/gif.latex?P(x) = x^m + p_{m-1}x^{m-1} + ... + p_1x + p_0>)
-
-
-- Block Cipher
-    > - always encrypt a full block (several bits)
-    > - common for internet applications

@@ -1,146 +1,7 @@
 # System
-> [ShellSpeels](https://www.shellspells.net/)
+> [ShellSpells](https://www.shellspells.net/)
 
-<!-- toc -->
-
-## Tool
-
-### Credential Harvesting
-- Responder
-- Inveigh
-- Mimikatz
-- ntdsutil
-- secretsdump
-
-### Monitoring
-- wireshark
-- pspy
-
-### Exploit
-- OpenVAS
-- metasploit
-- cobaltstrike
-
-### Malware Scanner
-- [Microsoft Safety Scanner](https://docs.microsoft.com/en-us/windows/security/threat-protection/intelligence/safety-scanner-download)
-- [MSRT (Windows Malicious Software Removal Tool)](https://www.microsoft.com/en-us/download/details.aspx?id=9905)
-- [Trend Micro Anti-Threat Toolkit](https://www.trendmicro.com/zh_tw/business/capabilities/solutions-for/ransomware/free-tools.html)
-- [VirusTotal](https://www.virustotal.com/gui/)
-- [nodistribute](https://nodistribute.com/)
-
-### System Forensic
-> [Windows Forensic Handbook](https://psmths.gitbook.io/windows-forensics)
-
-- General
-    - Sysinternals (`https://live.sysinternals.com/` `\\live.sysinternals.com\tools\`)
-- File
-    - Disk Forensic
-        - autopsy
-        - OSForensic / OSFClone
-        - FTK Imager
-        - Sleuth Kit
-    - Search
-        - `CMD$ forfile`
-        - `CMD$ dir /s *filename*`
-        - `SH$ find -name *filename*`
-        - `SH$ find -perm /4000`
-        - `SH$ find -mtime +3`
-    - Directory
-        - `C:\$Recycle.Bin`
-- Registry
-    - Query 
-        - `PS$ dir "Registry::HKLM\"`
-    - Essential Registry
-
-        | Path | Description |
-        |------|-------------|
-        | `HKLM\System\CurrentControlSet\Control\HiveList` | reg file location |
-        | `{HKLM\|HKCU}\SOFTWARE\WOW6432Node` | redirected key |
-        | `{HKLM\|HKCU}\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\{Shell Folders\|User Shell Folders}` | user shell folders (`shell:<ValueName>`)
-        | `HKCR\` | `{HKLM,HKCU}\Software\Classes` |
-        | `HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options` | IFEO controls binary executive behavior |
-
-- Autoruns
-    - Overall
-        - 🟦 Autoruns (SysinternalsSuite)
-    - Startup
-        - 🟦 `RUN$ shell:Startup`  
-          🟦 `RUN$ shell:Common Startup`
-        - 🟦 `{HKLM|HKCU}\Software[\WOW6432Node]\Microsoft\Windows\CurrentVersion\Run\`  
-          🟦 `{HKLM|HKCU}\Software[\WOW6432Node]\Microsoft\Windows\CurrentVersion\RunOnce\`  
-          🟦 `{HKLM|HKCU}\Software[\WOW6432Node]\Microsoft\Windows\CurrentVersion\RunOnceEx\`  
-
-              > Can be triggered by `CMD$ RunOnce.exe /explorer`.
-
-        - 🟦 `{HKLM|HKCU}\Software[\WOW6432Node]\Microsoft\Windows NT\CurrentVersion\Winlogon\`  
-          🟦 `HKLM\SYSTEM\CurrentControlSet\Control\Print\Monitors\`  
-        - 🐧 `/etc/profile`
-    - Service
-        - 🟦 `HKLM\SYSTEM\CurrentControlSet\Services\`  
-          🟦 `HKLM\SYSTEM\CurrentControlSet\Control\SafeBoot\`
-    - Scheduled Task
-        - 🟦 `CMD$ taskschd.msc`  
-          🟦 `$ schtasks /query /FO list /V`  
-        - 🟦 `%SystemRoot%\{System32|SysWOW64}\Tasks\`  
-          🟦 `%SystemRoot%\Tasks\`  
-        - 🟦 `HKLM\Software\Microsoft\Windows NT\CurrentVersion\Schedule\Taskcache\Tasks\`  
-          🟦 `HKLM\Software\Microsoft\Windows NT\CurrentVersion\Schedule\Taskcache\Tree\`
-        - 🐧 `/etc/crontab`  
-          🐧 `/etc/cron.d/`
-
-    - GPO
-
-- Process
-    - Process List
-        - `$ tasklist`
-        - `$ wmic process`
-        - `$ Get-CimInstance -ClassName Win32_Process`
-    - Advanced Tool
-        - Process Monitor (SysinternalsSuite)
-        - Process Explorer (SysinternalsSuite)
-        - Task Explorer (ExplorerSuite)
-        - Driver List (ExplorerSuite)
-        - WinObj (SysinternalsSuite)
-- Network
-    - Sniffer
-        - Wireshark
-        - FakeNet-NG
-- Memory
-    - Dumpit
-    - Volatility Workbench
-- Windows Event
-    - Event Log File
-        - `%SystemRoot%\System32\winevt\Logs\`
-    - Event List
-
-        ```powershell
-        PS# Get-WinEvent -ListProvider * -Erroraction Silentlycontinue | Select ProviderName -ExpandProperty Events | Select * -ExpandProperty LogLink | Format-Table LogName,ProviderName,Version,ID,Description
-        ```
-
-    - Event Filter
-
-        ```powershell
-        Get-EventLog
-        ```
-
-        ```powershell
-        Get-WinEvent -Path C:\Windows\System32\Winevt\Logs\System.evtx
-        Get-WinEvent -ListLog *
-        Get-WinEvent -ListLog System | Format-List -Property *
-        (Get-WinEvent -ListLog *).ProviderNames
-        (Get-WinEvent -ListProvider *).Events | Format-Table Id, Description
-        ```
-
-    - Channel
-        - Sysmon
-
-            > [SysmonSimulator](https://rootdse.org/posts/understanding-sysmon-events/)
-
-
-
-## Background
-
-### Windows 🟦
+## Windows 🟦
 > https://lolbas-project.github.io/
 
 - Common Command
@@ -162,7 +23,7 @@
     > - Positive numbers are resource indices. Negative numbers (once you've removed the minus sign) are resource identifiers  
     > - `EmbedCtxt=@FirewallAPI.dll,-32252`
 
-#### File System
+### File System
 - NTFS Stream
 
     > [NTFS File Structure](https://www.researchgate.net/profile/Costas_Katsavounidis2/publication/363773832_Master_File_Table_MFT_on-disk_Structures_NTFS_31_httpsgithubcomkacos2000MFT_Browser/links/632da89086b22d3db4d9afad/Master-File-Table-MFT-on-disk-Structures-NTFS-31-https-githubcom-kacos2000-MFT-Browser.pdf)  
@@ -240,7 +101,7 @@
         | INP | custom input device, by default the same as EOF: |
         | OUT | custom output device, by default the same as NUL: |
 
-#### User Credential
+### User Credential
 - Hash Files
     - `C:\Windows\System32\config\SAM` (`HKLM\SAM`)
 
@@ -331,14 +192,14 @@
     - `NTLM SSP` `%Windir%\System32\msv1_0.dll`
     - `Digest SSP` `%Windir%\System32\Wdigest.dll`
 
-#### Active Directory (AD)
+### Active Directory (AD)
 - Command
     - `$ Get-ADObject -Filter * -Properties *`  
     - `$ Get-ADObject -Filter {ObjectGUID -eq <GUID>} -Properties *`
 - Event
     - `Security` `5137` `A directory service object was created`
 
-#### WMI
+### WMI
 > **WMI** (Windows Management Instrumentation) is the Microsoft
 > implementation of **WBEM** (Web-Based Enterprise Management), a set
 > of specifications published by **DMTF** (Distributed Management Task
@@ -441,7 +302,7 @@
     | `root/cimv2` | `Win32_Process` |
 
 
-#### Remote Command
+### Remote Command
 - psexec
     - Make sure `\\<host>\admin$` can be accessed
 
@@ -461,24 +322,24 @@
 
 - winrm
 
-#### minifilter
+### minifilter
 
-#### WFP
+### WFP
 - `HKLM\System\CurrentControlSet\Services\BFE\Parameters\Policy\Persistent\Filter\<GUID>`
 - `HKLM\System\CurrentControlSet\Services\BFE\Parameters\Policy\Persistent\Provider\<GUID>`
 - `HKLM\System\CurrentControlSet\Services\SharedAccess\Parameters\FirewallPolicy\FirewallRules\<GUID>`
 
-#### AMSI
+### AMSI
 
-#### UWP (app container)
+### UWP (app container)
 
 
-### Linux 🐧
+## Linux 🐧
 
-#### Open Port
+### Open Port
 - `sudo ip -all netns exec ss -ltnp`
 
-### macOS 🍎
+## macOS 🍎
 - Resource Fork
 - Named Fork
 - Data Fork
