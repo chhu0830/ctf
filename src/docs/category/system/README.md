@@ -15,6 +15,12 @@
     | `services.msc` | `服務` |
     | `winver` | 
     | `msinfo32` |
+    | `msconfig` |
+    | `ver` |
+    | `systeminfo` |
+    | `chkdsk` |
+    | `driverquery` |
+    | `sfc /scannow` |
 
 - `SET __COMPAT_LAYER=RunAsInvoker`
 - Registry data reference to a dll file
@@ -192,6 +198,10 @@
     - `NTLM SSP` `%Windir%\System32\msv1_0.dll`
     - `Digest SSP` `%Windir%\System32\Wdigest.dll`
 
+- Authentication Method ([Active Directory Basics | TryHackMe](https://tryhackme.com/room/winadbasics))
+    - Kerberos
+    - NetNTLM
+
 ### Active Directory (AD)
 - Command
     - `$ Get-ADObject -Filter * -Properties *`  
@@ -338,6 +348,10 @@
 
 ### Open Port
 - `sudo ip -all netns exec ss -ltnp`
+
+### Linux Security Modules (LSM)
+- AppArmor
+- SELinux
 
 ## macOS 🍎
 - Resource Fork

