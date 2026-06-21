@@ -41,7 +41,8 @@
 ### Command & Control (C2)
 - cobaltstrike
 
-## Obfuscation
+
+## Defense Evation
 
 ### Evasion 
 - veil
