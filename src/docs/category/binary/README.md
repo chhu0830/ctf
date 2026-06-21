@@ -104,3 +104,13 @@
     | Null    |                               |
     | .rsrc   |                               |
     | Null    |                               |
+
+### DLL
+- Write a code to run function in a DLL.
+
+    ```
+    HMODULE dll = LoadLibraryA("DLL.DLL");
+    typedef void(WINAPI* Add_TypeDef)(int, int); // Add(int x, int y)
+    Add_TypeDef Add = (Add_TypeDef)GetProcAddress(dll, "Add_MangledName");
+    Add(1, 2);
+    ```

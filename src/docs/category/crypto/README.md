@@ -330,4 +330,33 @@
 - Signed Certificate Timestamp (SCT)
     - [Signed Certificate Timestamp (SCT) Validation | Google](https://github.com/google/certificate-transparency/blob/master/docs/SCTValidation.md)
 
+## Cracker
+- unt-wister
+- c-jwt-cracker
+- Password Cracker
+    - hashcat
+    - John the Ripper
 
+- Login Cracker
+    - hydra
+
+        ```
+        $ hydra -l <username> -P /usr/share/wordlists/nmap.lst <server> http-post-form "/login.php:username=^USER^&password=^PASS^&sub=Login:Invalid username or password"
+        ```
+
+### Word List
+- wordlists
+- seclists
+- crunch
+
+## Decrypt
+- pyCryptodome
+- Crypto.Util.number
+
+    | Function | Comment         |
+    |:---------|:----------------|
+    | inverse  | modulus inverse |
+
+- Sage
+    - [sagemath](https://sagecell.sagemath.org/)
+    - [CoCalc](https://cocalc.com/)

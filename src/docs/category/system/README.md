@@ -82,8 +82,8 @@
 
                 > NT Object Manager paths that can look up DOS-style devices like drive letters
                 >
-                > 1. process's `DosDevices` table
-                > 2. `\GLOBAL??` Object Manager directory
+                > 1. process's `DosDevices` table (for each user)
+                > 2. `\GLOBAL??` Object Manager directory (shared with all users)
                 >
                 > A "fake" prefix which refers to per-user Dos devices
                 >
