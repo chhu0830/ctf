@@ -1,4 +1,2 @@
 *.swp
-src/docs/tool/**
-!src/docs/tool/*
-!src/docs/tool/**/*.md
+tools
